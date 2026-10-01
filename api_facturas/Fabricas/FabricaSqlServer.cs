@@ -36,4 +36,7 @@ public class FabricaSqlServer : IFabricaRepositorios
     // contrato de la fabrica, asi que los DOS motores lo tienen: una
     // fabrica a medias no compila, y eso es lo que la hace util.
     public IRepositorioUsuarioConRoles CrearRepositorioUsuarioConRoles() => new RepositorioUsuarioConRolesSqlServer(_cadenaConexion);
+
+    // v3 — el control de acceso.
+    public IRepositorioAcceso CrearRepositorioAcceso() => new RepositorioAccesoSqlServer(_cadenaConexion);
 }

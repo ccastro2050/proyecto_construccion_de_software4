@@ -2,11 +2,11 @@
 // IFabricaRepositorios — el contrato de la FÁBRICA (v4).
 //
 // El patrón fábrica abstracta: quien implementa esta interfaz
-// decide el motor de las DOCE rebanadas a la vez. El ensamblador
+// decide el motor de las TRECE rebanadas a la vez. El ensamblador
 // (Program.cs) elige UNA fábrica al arrancar y le pide todo; nadie
 // más en el sistema vuelve a pensar en motores.
 //
-// Los 12 métodos "aburridos" SON la lección: la fábrica promete la
+// Los 13 métodos "aburridos" SON la lección: la fábrica promete la
 // familia COMPLETA de repositorios, no repositorios sueltos — por
 // eso agregar un motor (MariaDB, v5) costará UNA clase, y agregar
 // una entidad obligará a los DOS motores a soportarla (el compilador
@@ -35,4 +35,11 @@ public interface IFabricaRepositorios
     /// (v2). Al estar aqui, el compilador obliga a los DOS motores a
     /// soportarlo — y eso es la promesa de la fabrica, no un estorbo.</summary>
     IRepositorioUsuarioConRoles CrearRepositorioUsuarioConRoles();
+
+    /// <summary>El control de acceso (v3). Tambien pasa por aqui, y es
+    /// importante que sea asi: con el motor puesto en sqlserver, un
+    /// repositorio de acceso que siguiera hablando con PostgreSQL no se
+    /// notaria -los dos motores tienen los mismos datos- hasta que dejaran
+    /// de tenerlos.</summary>
+    IRepositorioAcceso CrearRepositorioAcceso();
 }

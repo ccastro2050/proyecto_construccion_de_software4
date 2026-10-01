@@ -35,4 +35,7 @@ public class FabricaPostgres : IFabricaRepositorios
     // contrato de la fabrica, asi que los DOS motores lo tienen: una
     // fabrica a medias no compila, y eso es lo que la hace util.
     public IRepositorioUsuarioConRoles CrearRepositorioUsuarioConRoles() => new RepositorioUsuarioConRolesPostgres(_cadenaConexion);
+
+    // v3 — el control de acceso.
+    public IRepositorioAcceso CrearRepositorioAcceso() => new RepositorioAccesoPostgres(_cadenaConexion);
 }
