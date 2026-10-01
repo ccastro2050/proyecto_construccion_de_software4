@@ -109,7 +109,7 @@ builder.Services.AddScoped<IServicioProducto, ServicioProducto>();
 // … (mismo par para las otras 10 rebanadas)
 ```
 
-La cuenta didáctica: agregar MariaDB en la v5 costará **una clase**
+La cuenta didáctica: agregar MariaDB al anexo costará **una clase**
 (`FabricaMariaDb`) **y un case** — no 11 registros nuevos. Eso compra la
 fábrica.
 

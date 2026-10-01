@@ -45,7 +45,7 @@ diagnóstico pasa a `"version": "v4"` y estrena `"motor"` · la prueba de
 capas crece con la fábrica.
 
 **No incluye (deliberado — [mapa](../0_mapa_versiones.md)):**
-- **MariaDB** (v5): el tercer motor esperará — con la fábrica puesta,
+- **MariaDB**: el tercer motor NO tiene version propia —son cuatro versiones— y esperara — con la fábrica puesta,
   costará una clase.
 - **Selección de motor por petición**: descartada del curso. En v4 el motor se elige UNA vez, al arrancar.
 - Cambios de contrato: ningún endpoint nuevo, ningún campo nuevo (salvo
@@ -106,14 +106,14 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
   algo de ahí "necesitara" cambiar, la v4 está mal planteada.
 - **RNF3 — Paridad de semillas:** ambos motores arrancan con datos
   idénticos (mismos ids, mismos stocks) — el smoke test es EL MISMO.
-- **RNF4 — Sin anticipación:** nada de MariaDB (v5) ni selección
-  dinámica de motor por petición (v6).
+- **RNF4 — Sin anticipación:** nada de MariaDB ni selección
+  dinámica de motor por petición.
 
 ## 5. Criterios de aceptación
 
 1. **Regresión total contra PostgreSQL (motor por defecto):** `docker
    compose up -d --build` y los smoke tests COMPLETOS de
-   [v1](../v1_producto/7_quickstart.md) §2,
+   [v1](../v1_sin_fk/7_quickstart.md) §2,
    [v2](../v2_persona_factura/7_quickstart.md) §3 y
    [v3](../v3_resto_entidades/7_quickstart.md) §3 pasan tal cual (solo
    cambia el diagnóstico: `"version":"v4"`, `"motor":"postgres"`).
@@ -135,7 +135,7 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
 ## 6. Definición de TERMINADA
 
 Los 5 criterios pasan → commit + tag `v4` → la API es bi-motor → recién
-entonces se especifica la v5 (MariaDB: la fábrica pagará su promesa).
+entonces se agrega MariaDB al anexo (la fábrica pagará su promesa).
 
 ## 7. Clarificaciones
 

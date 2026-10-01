@@ -41,7 +41,7 @@ estructura y nombre. Los modelos C# no notan la diferencia.
   "ya está anulada" — los que la API traduce a 404/409).
 - **Los SPs de usuarios/roles/permisos** también viajan en el script:
   la v4 no los llama, pero mantienen la paridad entre los dos dialectos
-  — y quedan listos para el login del front (v6).
+  — y quedan listos para el login, que es de la v3.
 
 ## 3. Los mensajes que la API traduce (paridad de negocio)
 

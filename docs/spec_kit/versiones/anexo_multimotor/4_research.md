@@ -12,7 +12,7 @@
 motor.
 
 **Decisión: (c).** Con (a), la decisión del motor se repite 11 veces (y
-en la v5 serían 33 ramas). Con (b), la magia del contenedor esconde el
+con un tercer motor serían 33 ramas). Con (b), la magia del contenedor esconde el
 patrón que el curso quiere ENSEÑAR. La fábrica es el patrón clásico GoF
 visible en dos archivos leíbles: agregarle un motor = una clase + un
 case. El costo (11 métodos "aburridos" en la interfaz) ES la lección: la
