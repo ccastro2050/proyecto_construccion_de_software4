@@ -2,7 +2,7 @@
 
 > El contrato de la API es EXACTAMENTE el de las versiones anteriores:
 > los 51 endpoints de [v1](../v1_sin_fk/6_contracts.md),
-> [v2](../v2_persona_factura/6_contracts.md) y
+> [v2](../v2_con_fk/6_contracts.md) y
 > [v3](../v3_resto_entidades/6_contracts.md) siguen vigentes **tal cual,
 > con ambos motores**. Esta página existe para decir formalmente qué NO
 > cambió — y la única línea que sí.
