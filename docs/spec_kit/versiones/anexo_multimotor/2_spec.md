@@ -115,7 +115,7 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
    compose up -d --build` y los smoke tests COMPLETOS de
    [v1](../v1_sin_fk/7_quickstart.md) §2,
    [v2](../v2_con_fk/7_quickstart.md) §3 y
-   [v3](../v3_resto_entidades/7_quickstart.md) §3 pasan tal cual (solo
+   [v3](../v3_control_acceso/7_quickstart.md) §3 pasan tal cual (solo
    cambia el diagnóstico: `"version":"v4"`, `"motor":"postgres"`).
 2. **El interruptor:** `MOTOR_BD=sqlserver` + recrear SOLO la API → el
    diagnóstico dice `"motor":"sqlserver"` y la MISMA regresión total

@@ -29,7 +29,7 @@ curl.exe http://localhost:8045/     # → "version":"v4", "motor":"postgres"
 Correr COMPLETOS los smoke tests de la
 [v1](../v1_sin_fk/7_quickstart.md) §2, la
 [v2](../v2_con_fk/7_quickstart.md) §3 y la
-[v3](../v3_resto_entidades/7_quickstart.md) §3. **Pasan tal cual.**
+[v3](../v3_control_acceso/7_quickstart.md) §3. **Pasan tal cual.**
 
 ### 2b. El interruptor: los MISMOS tests contra SQL Server
 
