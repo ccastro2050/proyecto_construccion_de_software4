@@ -22,7 +22,7 @@ NO el contrato (cero endpoints nuevos).
 ## A.1 Qué subirle al chat (los 9 de la v4)
 
 `docs/spec_kit/1_constitution.md` + los 7 documentos de
-`docs/spec_kit/versiones/anexo_multimotor/` (2_spec a 8_tasks). Además esta
+`docs/spec_kit/versiones/v5_otros_motores/` (2_spec a 8_tasks). Además esta
 vez la IA necesita ver DOS archivos suyos completos: `Program.cs` (lo va
 a reescribir alrededor de la fábrica) y un repositorio Postgres
 cualquiera (el molde del calco — por ejemplo
@@ -34,8 +34,8 @@ cualquiera (el molde del calco — por ejemplo
    primera ruta):
 
    ```powershell
-   mkdir docs\spec_kit\versiones\anexo_multimotor
-   Copy-Item ..\proyecto_construccion_de_software4\docs\spec_kit\versiones\anexo_multimotor\* docs\spec_kit\versiones\anexo_multimotor\
+   mkdir docs\spec_kit\versiones\v5_otros_motores
+   Copy-Item ..\proyecto_construccion_de_software4\docs\spec_kit\versiones\v5_otros_motores\* docs\spec_kit\versiones\v5_otros_motores\
    ```
 
 2. **La BD SQL Server y su inicializador** — cópielos tal cual del clon

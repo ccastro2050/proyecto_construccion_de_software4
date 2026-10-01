@@ -21,7 +21,7 @@ GET /
   "mensaje": "API Facturas funcionando",
   "version": "v4",
   "motor": "postgres",
-  "contratos": "docs/spec_kit/versiones/anexo_multimotor/6_contracts.md"
+  "contratos": "docs/spec_kit/versiones/v5_otros_motores/6_contracts.md"
 }
 ```
 

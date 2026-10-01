@@ -4,7 +4,7 @@
 -- El espejo de db/bdfacturas_postgres.sql: 12
 -- tablas, triggers de totales/stock, SPs de factura y las MISMAS
 -- semillas con los MISMOS ids (IDENTITY_INSERT alinea los ids).
--- Equivalencias: docs/spec_kit/versiones/anexo_multimotor/5_data_model.md
+-- Equivalencias: docs/spec_kit/versiones/v5_otros_motores/5_data_model.md
 --
 -- OJO: a diferencia de PostgreSQL y MariaDB, SQL Server NO ejecuta
 -- scripts montados — por eso existe el contenedor sqlserver-init

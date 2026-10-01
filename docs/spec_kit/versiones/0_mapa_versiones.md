@@ -21,26 +21,45 @@
 | v3 | **El control de acceso**: la contraseña con hash, la sesión con token, y el permiso resuelto por `verificar_acceso_ruta`. **No agrega tablas**: le pone la puerta a lo que ya existe | **Cerrada** · tag `v3` |
 | **v4** | **10 consultas multitabla** (4+ tablas cada una), dashboard con gráficos, **imagen corporativa con su manual de marca**, páginas corporativas, responsive/PWA y **publicación** en un servidor | **En curso** ([spec](v4_aplicativo/2_spec.md)) |
 
-> **Son cuatro, y no más.** Si aparece una quinta, es que algo de las cuatro
-> se dejó a medias y se está aplazando.
+> **Las cuatro del curso son estas.** Si aparece una quinta *dentro* de
+> ellas, es que algo se dejó a medias y se está aplazando. La v5 que sí
+> existe está **después**, y es de otra naturaleza — ver abajo.
 >
 > **Este repositorio está en la v4 — «el resto»**, y trae las tres anteriores
 > funcionando: la regresión es obligatoria.
 
-## El anexo: el segundo motor
+### Y una v5, que está FUERA de las cuatro del curso
 
-Este repositorio trae además **`anexo_multimotor/`** y una implementación
-completa de los repositorios contra **SQL Server**, con sus servicios en el
-`docker-compose.yml`.
+| Versión | Qué agrega | Estado |
+|---|---|---|
+| **v5** | **Otros motores de base de datos**: una segunda y una tercera implementación del repositorio —SQL Server, MariaDB— y la **fábrica** que elige cuál usar por configuración | Futura |
 
-**Eso NO es la v4.** Es el ejercicio del segundo motor, y está aquí porque ya
-estaba construido cuando el mapa pasó de seis versiones a cuatro.
+**Por qué está fuera de las cuatro, y no es un desprecio:**
 
 | | |
 |---|---|
-| **Qué demuestra** | Que la interfaz del repositorio servía: se agregó una segunda implementación **sin tocar el servicio ni el controlador**. Es la inversión de dependencias, comprobada |
-| **Por qué no es una versión** | Cambiar de motor **no agrega funcionalidad** al producto: agrega una implementación de la misma interfaz. El usuario del sistema no nota nada |
-| **Dónde queda entonces** | Como anexo del repositorio, disponible para quien lo estudie. La v4 de verdad —el aplicativo completo— **está sin especificar** |
+| **El curso son cuatro** | `0_METODOLOGIA.md` §2 fija cuatro, y el calendario del semestre está armado sobre esas cuatro |
+| **No agrega funcionalidad al producto** | Cambiar de motor agrega **una implementación de la misma interfaz**. Quien usa el sistema no nota nada |
+| **Y aun así vale la pena** | Es **la prueba** de que la interfaz del repositorio servía: se agrega un motor **sin tocar el servicio ni el controlador**. La inversión de dependencias, comprobada en vez de prometida |
+
+> **Es la única versión cuyo criterio de éxito es que NO haya que cambiar
+> nada.** En las otras cuatro, terminar significa que algo nuevo funciona; en
+> la v5, terminar significa que lo viejo **siguió** funcionando con otro motor
+> debajo.
+
+## La v5 ya tiene su adelanto en este repositorio
+
+Este repositorio trae **`v5_otros_motores/`** y una implementación completa de
+los repositorios contra **SQL Server**, con sus servicios en el
+`docker-compose.yml`.
+
+**No es la v4** —la v4 es el aplicativo completo— sino **el adelanto de la
+v5**, y está aquí porque ya estaba construido.
+
+| | |
+|---|---|
+| **Qué demuestra** | Que la interfaz del repositorio servía: se agregó un segundo motor **sin tocar el servicio ni el controlador** |
+| **Qué falta para cerrar la v5** | El tercer motor (MariaDB) y **la fábrica** que elige por configuración. Con dos motores se puede resolver con un `if`; con tres, el `if` ya no se sostiene — y ahí nace la fábrica de verdad |
 
 > **Se conservó a propósito.** Era código que funcionaba y que enseña algo
 > real; tirarlo por un cambio de mapa habría sido peor que reubicarlo.
@@ -106,14 +125,13 @@ el front quedaba en la **v6**.
 | | |
 |---|---|
 | **El front en la v6** | Era el error que el método existe para evitar. Doce entidades de API esperando un front que nace al final, con el contrato ya equivocado tres versiones atrás |
-| **Una versión por motor** | Cambiar de motor **no agrega funcionalidad**: agrega una implementación de la misma interfaz. Es un ejercicio legítimo, pero no es una versión del producto — es una variante del repositorio |
+| **UNA versión POR MOTOR** | Eran tres versiones —v4 SQL Server, v5 MariaDB— para lo que es **una sola**: la v5, con la fábrica. Tres motores no son tres versiones |
 | **Seis versiones** | `0_METODOLOGIA.md` fija **cuatro**, y el calendario del semestre está armado sobre esas cuatro |
 
-> **El multi-motor no desapareció del curso: cambió de lugar.** La fábrica de
-> repositorios y la segunda implementación son un ejercicio **dentro** de la
-> versión que corresponda, cuando el patrón ya esté sostenido — no una versión
-> aparte. Una interfaz con dos implementaciones se demuestra en una tarde; un
-> front no.
+> **El multi-motor no desapareció: es la v5**, después de las cuatro del
+> curso. Lo que se corrigió fue repartirlo en TRES versiones —una por
+> motor— y poner el front al final. Un motor más se agrega en una tarde;
+> una interfaz gráfica no.
 
 ## Reglas del mapa
 
