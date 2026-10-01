@@ -105,6 +105,25 @@ services:
         condition: service_completed_successfully
         # ↑ v4: …y cuando el inicializador de SQL Server TERMINÓ BIEN.
 
+  # --- FRONT Blazor Server — la otra mitad de la versión ---
+  front-blazor:
+    build: ./front_blazor
+    container_name: facturas-front-v4
+    restart: unless-stopped
+    ports:
+      - "8051:8051"
+    volumes:
+      - ./front_blazor:/app
+      - /app/bin
+      - /app/obj
+    environment:
+      # El NOMBRE del servicio, no localhost: dentro del contenedor del front,
+      # localhost seria el front mismo.
+      - UrlApi=http://api-facturas:8045
+    depends_on:
+      - api-facturas
+      # NO depende de postgres: el front no tiene nada que hacer con la base.
+
 volumes:
   pgdata:      # declaración del volumen nombrado (la "memoria" de la BD)
   mssqldata:   # v4: la "memoria" del segundo motor

@@ -27,7 +27,7 @@ curl.exe http://localhost:8045/     # → "version":"v4", "motor":"postgres"
 ```
 
 Correr COMPLETOS los smoke tests de la
-[v1](../v1_producto_postgres/7_quickstart.md) §2, la
+[v1](../v1_producto/7_quickstart.md) §2, la
 [v2](../v2_persona_factura/7_quickstart.md) §3 y la
 [v3](../v3_resto_entidades/7_quickstart.md) §3. **Pasan tal cual.**
 

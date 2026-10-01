@@ -113,7 +113,7 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
 
 1. **Regresión total contra PostgreSQL (motor por defecto):** `docker
    compose up -d --build` y los smoke tests COMPLETOS de
-   [v1](../v1_producto_postgres/7_quickstart.md) §2,
+   [v1](../v1_producto/7_quickstart.md) §2,
    [v2](../v2_persona_factura/7_quickstart.md) §3 y
    [v3](../v3_resto_entidades/7_quickstart.md) §3 pasan tal cual (solo
    cambia el diagnóstico: `"version":"v4"`, `"motor":"postgres"`).

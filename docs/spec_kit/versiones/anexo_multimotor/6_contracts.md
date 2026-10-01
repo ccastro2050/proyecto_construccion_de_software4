@@ -1,7 +1,7 @@
 # Contratos — Versión 4: CERO endpoints nuevos (esa es la gracia)
 
 > El contrato de la API es EXACTAMENTE el de las versiones anteriores:
-> los 51 endpoints de [v1](../v1_producto_postgres/6_contracts.md),
+> los 51 endpoints de [v1](../v1_producto/6_contracts.md),
 > [v2](../v2_persona_factura/6_contracts.md) y
 > [v3](../v3_resto_entidades/6_contracts.md) siguen vigentes **tal cual,
 > con ambos motores**. Esta página existe para decir formalmente qué NO
@@ -21,7 +21,7 @@ GET /
   "mensaje": "API Facturas funcionando",
   "version": "v4",
   "motor": "postgres",
-  "contratos": "docs/spec_kit/versiones/v4_sqlserver/6_contracts.md"
+  "contratos": "docs/spec_kit/versiones/anexo_multimotor/6_contracts.md"
 }
 ```
 

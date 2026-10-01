@@ -141,7 +141,7 @@ app.MapGet("/", () => Results.Json(new
     mensaje = "API Facturas funcionando",
     version = "v4",
     motor,      // v4: a cuál motor le está hablando la API (el interruptor)
-    contratos = "docs/spec_kit/versiones/v4_sqlserver/6_contracts.md"
+    contratos = "docs/spec_kit/versiones/anexo_multimotor/6_contracts.md"
 }));
 
 // MapControllers enciende las rutas declaradas con atributos en los

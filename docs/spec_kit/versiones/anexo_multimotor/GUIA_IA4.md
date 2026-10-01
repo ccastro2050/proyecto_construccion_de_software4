@@ -2,7 +2,7 @@
 
 > Guía de la **v4** (acumulativa: se construye encima de su proyecto con
 > v1, v2 y v3 terminadas). El método general es el de la
-> [guía de la v1](../v1_producto_postgres/GUIA_IA1.md) y los ajustes de
+> [guía de la v1](../v1_producto/GUIA_IA1.md) y los ajustes de
 > trabajo acumulativo son los de la
 > [guía de la v2](../v2_persona_factura/GUIA_IA2.md): aquí está SOLO lo
 > propio de la v4.
@@ -22,7 +22,7 @@ NO el contrato (cero endpoints nuevos).
 ## A.1 Qué subirle al chat (los 9 de la v4)
 
 `docs/spec_kit/1_constitution.md` + los 7 documentos de
-`docs/spec_kit/versiones/v4_sqlserver/` (2_spec a 8_tasks). Además esta
+`docs/spec_kit/versiones/anexo_multimotor/` (2_spec a 8_tasks). Además esta
 vez la IA necesita ver DOS archivos suyos completos: `Program.cs` (lo va
 a reescribir alrededor de la fábrica) y un repositorio Postgres
 cualquiera (el molde del calco — por ejemplo
@@ -34,8 +34,8 @@ cualquiera (el molde del calco — por ejemplo
    primera ruta):
 
    ```powershell
-   mkdir docs\spec_kit\versiones\v4_sqlserver
-   Copy-Item ..\proyecto_construccion_de_software4\docs\spec_kit\versiones\v4_sqlserver\* docs\spec_kit\versiones\v4_sqlserver\
+   mkdir docs\spec_kit\versiones\anexo_multimotor
+   Copy-Item ..\proyecto_construccion_de_software4\docs\spec_kit\versiones\anexo_multimotor\* docs\spec_kit\versiones\anexo_multimotor\
    ```
 
 2. **La BD SQL Server y su inicializador** — cópielos tal cual del clon
