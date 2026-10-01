@@ -28,7 +28,7 @@ var builder = WebApplication.CreateBuilder(args);
 //   - pide IServicioProducto    → recibe ServicioProducto
 // El controlador y el servicio JAMÁS hacen "new" de clases concretas:
 // las reciben por constructor (inyección de dependencias).
-// Cuando la v3 agregue otro motor, SOLO estas líneas cambiarán.
+// Cuando la v5 agregue otro motor, SOLO estas líneas cambiarán.
 
 // Las cadenas de conexión: vienen de appsettings.json, y en Docker las
 // sobreescriben las variables ConnectionStrings__Postgres / __SqlServer.
@@ -49,37 +49,61 @@ IFabricaRepositorios fabrica = motor switch
         $"Motor desconocido: '{motor}' (use postgres o sqlserver)."),
 };
 
-// AddScoped = "una instancia por petición HTTP" (cada request estrena la suya):
+// AddScoped = "una instancia por peticion HTTP" (cada request estrena la suya).
+//
+// Y FIJESE EN QUE AQUI NO APARECE NI UNA VEZ LA PALABRA «Postgres» NI
+// «SqlServer»: todo se le pide a la FABRICA, que ya decidio arriba. Ese es el
+// sentido del patron — el motor se escoge en UNA linea y el resto del
+// ensamblador no vuelve a pensar en el.
+//
+// Comparelo con el Program.cs de los proyectos 1 a 3, que dicen
+// `new RepositorioProductoPostgres(cadena)` doce veces: ahi el motor esta
+// escrito doce veces, y cambiarlo son doce cambios.
+
+// ------------------------------------------------------------
+// LA v1 — las SEIS tablas SIN clave foranea
+// ------------------------------------------------------------
+// El criterio de la v1 es ese y no otro: ninguna de estas seis depende de
+// otra fila para existir, asi que se pueden construir en cualquier orden.
 builder.Services.AddScoped<IRepositorioProducto>(_ => fabrica.CrearRepositorioProducto());
 builder.Services.AddScoped<IServicioProducto, ServicioProducto>();
-
-// v2 — el ensamblador CRECE (y es lo único de la v1 que crece):
-// las rebanadas nuevas se registran igual que la primera.
-builder.Services.AddScoped<IRepositorioPersona>(_ => fabrica.CrearRepositorioPersona());
-builder.Services.AddScoped<IServicioPersona, ServicioPersona>();
-builder.Services.AddScoped<IRepositorioFactura>(_ => fabrica.CrearRepositorioFactura());
-builder.Services.AddScoped<IServicioFactura, ServicioFactura>();
-
-// v3 — las 8 rebanadas que completan la BD. (En la v3 esta lista
-// "dolía": cada línea repetía el motor. La v4 curó el dolor: la lista
-// sigue — una rebanada es una rebanada — pero el motor ya no aparece
-// en ninguna: lo decide la fábrica, en un solo lugar.)
 builder.Services.AddScoped<IRepositorioEmpresa>(_ => fabrica.CrearRepositorioEmpresa());
 builder.Services.AddScoped<IServicioEmpresa, ServicioEmpresa>();
-builder.Services.AddScoped<IRepositorioCliente>(_ => fabrica.CrearRepositorioCliente());
-builder.Services.AddScoped<IServicioCliente, ServicioCliente>();
-builder.Services.AddScoped<IRepositorioVendedor>(_ => fabrica.CrearRepositorioVendedor());
-builder.Services.AddScoped<IServicioVendedor, ServicioVendedor>();
-builder.Services.AddScoped<IRepositorioUsuario>(_ => fabrica.CrearRepositorioUsuario());
-builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
+builder.Services.AddScoped<IRepositorioPersona>(_ => fabrica.CrearRepositorioPersona());
+builder.Services.AddScoped<IServicioPersona, ServicioPersona>();
 builder.Services.AddScoped<IRepositorioRol>(_ => fabrica.CrearRepositorioRol());
 builder.Services.AddScoped<IServicioRol, ServicioRol>();
 builder.Services.AddScoped<IRepositorioRuta>(_ => fabrica.CrearRepositorioRuta());
 builder.Services.AddScoped<IServicioRuta, ServicioRuta>();
+builder.Services.AddScoped<IRepositorioUsuario>(_ => fabrica.CrearRepositorioUsuario());
+builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
+
+// ------------------------------------------------------------
+// LA v2 — las SEIS tablas CON clave foranea, y con ellas estan las 12
+// ------------------------------------------------------------
+// La v2 INCLUYE la v1: no se reinicia nada. Lo de arriba sigue en pie y esto
+// se le suma.
+builder.Services.AddScoped<IRepositorioCliente>(_ => fabrica.CrearRepositorioCliente());
+builder.Services.AddScoped<IServicioCliente, ServicioCliente>();
+builder.Services.AddScoped<IRepositorioVendedor>(_ => fabrica.CrearRepositorioVendedor());
+builder.Services.AddScoped<IServicioVendedor, ServicioVendedor>();
+builder.Services.AddScoped<IRepositorioFactura>(_ => fabrica.CrearRepositorioFactura());
+builder.Services.AddScoped<IServicioFactura, ServicioFactura>();
 builder.Services.AddScoped<IRepositorioRolUsuario>(_ => fabrica.CrearRepositorioRolUsuario());
 builder.Services.AddScoped<IServicioRolUsuario, ServicioRolUsuario>();
 builder.Services.AddScoped<IRepositorioRutaRol>(_ => fabrica.CrearRepositorioRutaRol());
 builder.Services.AddScoped<IServicioRutaRol, ServicioRutaRol>();
+
+// El recurso MAESTRO-DETALLE sobre la tabla puente: el usuario Y sus roles en
+// una sola operacion (RF9). No es una tabla mas -son las mismas dos-, es otra
+// forma de operarlas, y es la que usa la interfaz grafica.
+//
+// Y al agregarlo a la fabrica, el compilador OBLIGO a escribir su version de
+// SQL Server. Eso no es un castigo: es la fabrica cumpliendo su promesa de
+// entregar la familia COMPLETA. Un motor a medias no compila.
+builder.Services.AddScoped<IRepositorioUsuarioConRoles>(
+    _ => fabrica.CrearRepositorioUsuarioConRoles());
+builder.Services.AddScoped<IServicioUsuarioConRoles, ServicioUsuarioConRoles>();
 
 // ------------------------------------------------------------
 // 2. Los controladores y la validación de la petición (el 422)

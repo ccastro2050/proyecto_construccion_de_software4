@@ -30,4 +30,9 @@ public class FabricaPostgres : IFabricaRepositorios
     public IRepositorioRuta CrearRepositorioRuta() => new RepositorioRutaPostgres(_cadenaConexion);
     public IRepositorioRolUsuario CrearRepositorioRolUsuario() => new RepositorioRolUsuarioPostgres(_cadenaConexion);
     public IRepositorioRutaRol CrearRepositorioRutaRol() => new RepositorioRutaRolPostgres(_cadenaConexion);
+
+    // v2 — el recurso maestro-detalle sobre la tabla puente. Lo exige el
+    // contrato de la fabrica, asi que los DOS motores lo tienen: una
+    // fabrica a medias no compila, y eso es lo que la hace util.
+    public IRepositorioUsuarioConRoles CrearRepositorioUsuarioConRoles() => new RepositorioUsuarioConRolesPostgres(_cadenaConexion);
 }

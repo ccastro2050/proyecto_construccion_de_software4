@@ -31,4 +31,9 @@ public class FabricaSqlServer : IFabricaRepositorios
     public IRepositorioRuta CrearRepositorioRuta() => new RepositorioRutaSqlServer(_cadenaConexion);
     public IRepositorioRolUsuario CrearRepositorioRolUsuario() => new RepositorioRolUsuarioSqlServer(_cadenaConexion);
     public IRepositorioRutaRol CrearRepositorioRutaRol() => new RepositorioRutaRolSqlServer(_cadenaConexion);
+
+    // v2 — el recurso maestro-detalle sobre la tabla puente. Lo exige el
+    // contrato de la fabrica, asi que los DOS motores lo tienen: una
+    // fabrica a medias no compila, y eso es lo que la hace util.
+    public IRepositorioUsuarioConRoles CrearRepositorioUsuarioConRoles() => new RepositorioUsuarioConRolesSqlServer(_cadenaConexion);
 }
