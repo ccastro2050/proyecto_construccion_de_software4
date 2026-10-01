@@ -1371,30 +1371,30 @@ SET IDENTITY_INSERT rol OFF;
 --  Los nombres de `ruta` NO son rutas HTTP, y por eso no empiezan con /
 --
 --  Antes decian '/producto', '/usuario'… y se confundian con los endpoints de
---  la API —/api/producto—, que son otra cosa: estos son PANTALLAS del front y
+--  la API —/api/producto—, que son otra cosa: estos son INTERFACES GRÁFICAS del front y
 --  PERMISOS, y los consume verificar_acceso_ruta.
 --
 --  La notacion con punto lo deja claro:
---     pantalla.productos    una pantalla a la que un rol entra o no
+--     interfaz.productos    una interfaz gráfica a la que un rol entra o no
 --     permiso.crear         una accion concreta
 --
 --  Y el procedimiento usa el ID, no el texto: cambiar estos nombres no rompe
 --  nada. Lo que arregla es la confusion de quien lee.
 -- ---------------------------------------------------------------------------
 INSERT INTO ruta (ruta, descripcion) VALUES
-(N'pantalla.inicio', N'Página principal - Dashboard'),
-(N'pantalla.usuarios', N'Gestión de usuarios'),
-(N'pantalla.facturas', N'Gestión de facturas'),
-(N'pantalla.clientes', N'Gestión de clientes'),
-(N'pantalla.vendedores', N'Gestión de vendedores'),
-(N'pantalla.personas', N'Gestión de personas'),
-(N'pantalla.empresas', N'Gestión de empresas'),
-(N'pantalla.productos', N'Gestión de productos'),
-(N'pantalla.roles', N'Gestión de roles'),
-(N'pantalla.permisos', N'Gestión de permisos (asignación rol-ruta)'),
+(N'interfaz.inicio', N'Página principal - Dashboard'),
+(N'interfaz.usuarios', N'Gestión de usuarios'),
+(N'interfaz.facturas', N'Gestión de facturas'),
+(N'interfaz.clientes', N'Gestión de clientes'),
+(N'interfaz.vendedores', N'Gestión de vendedores'),
+(N'interfaz.personas', N'Gestión de personas'),
+(N'interfaz.empresas', N'Gestión de empresas'),
+(N'interfaz.productos', N'Gestión de productos'),
+(N'interfaz.roles', N'Gestión de roles'),
+(N'interfaz.permisos', N'Gestión de permisos (asignación rol-ruta)'),
 (N'permiso.crear', N'Crear permiso (POST)'),
 (N'permiso.eliminar', N'Eliminar permiso (POST)'),
-(N'pantalla.rutas', N'Gestión de rutas del sistema'),
+(N'interfaz.rutas', N'Gestión de rutas del sistema'),
 (N'ruta.crear', N'Crear ruta (POST)'),
 (N'ruta.eliminar', N'Eliminar ruta (POST)');
 
