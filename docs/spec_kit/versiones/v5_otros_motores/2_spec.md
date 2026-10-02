@@ -1,29 +1,29 @@
-# Especificación — Versión 4: el segundo motor (SQL Server) y la fábrica
+# Especificación — Versión 5: el segundo motor (SQL Server) y la fábrica
 
-> **Versión 4** del desarrollo incremental ([mapa de versiones](../0_mapa_versiones.md)).
+> **Versión 5** del desarrollo incremental ([mapa de versiones](../0_mapa_versiones.md)).
 > Rige la constitución: [../../1_constitution.md](../../1_constitution.md).
-> **Acumulativa:** contiene TODO lo de v1 a v3 — los 51 endpoints
+> **Acumulativa:** contiene TODO lo de v1 a v4 — los 80 endpoints
 > existentes no se tocan y sus contratos siguen vigentes tal cual.
 >
 > | Documento de esta versión | Contenido |
 > |---|---|
-> | **2_spec.md** (este) | QUÉ agrega la v4 y sus criterios de aceptación |
-> | [3_plan.md](3_plan.md) | CÓMO: la fábrica, los 11 repositorios SqlServer y el interruptor |
+> | **2_spec.md** (este) | QUÉ agrega la v5 y sus criterios de aceptación |
+> | [3_plan.md](3_plan.md) | CÓMO: la fábrica, los 14 repositorios SqlServer y el interruptor |
 > | [4_research.md](4_research.md) | Decisiones y alternativas *(lectura opcional)* |
 > | [5_data_model.md](5_data_model.md) | La MISMA bdfacturas, ahora en dialecto SQL Server |
 > | [6_contracts.md](6_contracts.md) | CERO endpoints nuevos — esa es la gracia |
 > | [7_quickstart.md](7_quickstart.md) | La regresión DOBLE: todo pasa en ambos motores |
 > | [8_tasks.md](8_tasks.md) | Orden de construcción por fases verificables |
-> | [GUIA_IA4.md](GUIA_IA4.md) | Construirla con IA, sobre su proyecto v3 |
+> | [GUIA_IA5.md](GUIA_IA5.md) | Construirla con IA, sobre su proyecto v4 |
 
 ---
 
-## 1. Propósito de la v4
+## 1. Propósito de la v5
 
 **Demostrar que las capas eran verdad.** Desde la v1 el proyecto repite
-que controlador y servicio "no saben qué motor hay debajo". La v4 lo
+que controlador y servicio "no saben qué motor hay debajo". La v5 lo
 somete a la prueba definitiva: aparece un **segundo motor (SQL Server)**
-con la MISMA bdfacturas, y la API entera — 51 endpoints, validaciones,
+con la MISMA bdfacturas, y la API entera — 80 endpoints, validaciones,
 errores de negocio, BCrypt, triggers y SPs — funciona idéntica contra
 cualquiera de los dos. **Sin tocar UNA línea por encima de los
 repositorios.**
@@ -38,16 +38,16 @@ inicializador** por contraste con PostgreSQL.
 ## 2. Alcance
 
 **Incluye:** servicios `sqlserver` + `sqlserver-init` en el compose
-(misma BD semilla) · los 11 repositorios en dialecto SqlClient ·
+(misma BD semilla) · los 14 repositorios en dialecto SqlClient ·
 `IFabricaRepositorios` + `FabricaPostgres` + `FabricaSqlServer` · el
 **interruptor** `MOTOR_BD` (configuración, no código; default postgres) ·
-diagnóstico pasa a `"version": "v4"` y estrena `"motor"` · la prueba de
+diagnóstico pasa a `"version": "v5"` y estrena `"motor"` · la prueba de
 capas crece con la fábrica.
 
 **No incluye (deliberado — [mapa](../0_mapa_versiones.md)):**
 - **MariaDB**: el tercer motor NO tiene version propia —son cuatro versiones— y esperara — con la fábrica puesta,
   costará una clase.
-- **Selección de motor por petición**: descartada del curso. En v4 el motor se elige UNA vez, al arrancar.
+- **Selección de motor por petición**: descartada del curso. En v5 el motor se elige UNA vez, al arrancar.
 - Cambios de contrato: ningún endpoint nuevo, ningún campo nuevo (salvo
   `motor` en el diagnóstico).
 
@@ -59,7 +59,7 @@ capas crece con la fábrica.
 - `FabricaPostgres` y `FabricaSqlServer`: cada una entrega los 11
   repositorios de su dialecto, con su cadena de conexión.
 - El ensamblador (`Program.cs`) elige la fábrica UNA vez según la
-  configuración y registra los 11 repositorios pidiéndoselos a ella.
+  configuración y registra los 14 repositorios pidiéndoselos a ella.
   **Los servicios no cambian ni una letra.**
 
 ### RF2 — El motor por configuración (el interruptor)
@@ -93,7 +93,7 @@ capas crece con la fábrica.
   "ya está anulada" → 409 · el resto (stock, mínimo) → 500.
 
 ### RF4 — Diagnóstico
-`GET /` → `{mensaje, version: "v4", motor: "postgres"|"sqlserver",
+`GET /` → `{mensaje, version: "v5", motor: "postgres"|"sqlserver",
 contratos}`. El campo `motor` es la única adición visible del contrato.
 
 ## 4. Requisitos no funcionales
@@ -101,9 +101,9 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
 - **RNF1 — Los de v1 a v3 siguen todos** (capas, sin ORM, SQL
   parametrizado, async, errores uniformes, 422 con `errores[]`, el
   secreto nunca viaja).
-- **RNF2 — La frontera es el repositorio:** el diff de la v4 NO toca
+- **RNF2 — La frontera es el repositorio:** el diff de la v5 NO toca
   Controllers/, Servicios/, Peticiones/, Modelos/ ni Excepciones/. Si
-  algo de ahí "necesitara" cambiar, la v4 está mal planteada.
+  algo de ahí "necesitara" cambiar, la v5 está mal planteada.
 - **RNF3 — Paridad de semillas:** ambos motores arrancan con datos
   idénticos (mismos ids, mismos stocks) — el smoke test es EL MISMO.
 - **RNF4 — Sin anticipación:** nada de MariaDB ni selección
@@ -116,7 +116,7 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
    [v1](../v1_sin_fk/7_quickstart.md) §2,
    [v2](../v2_con_fk/7_quickstart.md) §3 y
    [v3](../v3_control_acceso/7_quickstart.md) §3 pasan tal cual (solo
-   cambia el diagnóstico: `"version":"v4"`, `"motor":"postgres"`).
+   cambia el diagnóstico: `"version":"v5"`, `"motor":"postgres"`).
 2. **El interruptor:** `MOTOR_BD=sqlserver` + recrear SOLO la API → el
    diagnóstico dice `"motor":"sqlserver"` y la MISMA regresión total
    pasa contra SQL Server. Ni una recompilación del código fuente.
@@ -134,7 +134,7 @@ contratos}`. El campo `motor` es la única adición visible del contrato.
 
 ## 6. Definición de TERMINADA
 
-Los 5 criterios pasan → commit + tag `v4` → la API es bi-motor → recién
+Los 5 criterios pasan → commit + tag `v5` → la API es bi-motor → recién
 entonces se agrega MariaDB al anexo (la fábrica pagará su promesa).
 
 ## 7. Clarificaciones

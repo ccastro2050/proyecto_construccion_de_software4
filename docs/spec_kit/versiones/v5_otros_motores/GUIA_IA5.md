@@ -1,11 +1,11 @@
 # Cómo construir la VERSIÓN 4 con IA — sobre su proyecto de la v3
 
-> Guía de la **v4** (acumulativa: se construye encima de su proyecto con
+> Guía de la **v5** (acumulativa: se construye encima de su proyecto con
 > v1, v2 y v3 terminadas). El método general es el de la
 > [guía de la v1](../v1_sin_fk/GUIA_IA1.md) y los ajustes de
 > trabajo acumulativo son los de la
 > [guía de la v2](../v2_con_fk/GUIA_IA2.md): aquí está SOLO lo
-> propio de la v4.
+> propio de la v5.
 
 ---
 
@@ -19,7 +19,7 @@ NO el contrato (cero endpoints nuevos).
 **Sus puertos:** API 8145 · PostgreSQL 15545 · **SQL Server 11545**
 (la regla +100 de siempre).
 
-## A.1 Qué subirle al chat (los 9 de la v4)
+## A.1 Qué subirle al chat (los 9 de la v5)
 
 `docs/spec_kit/1_constitution.md` + los 7 documentos de
 `docs/spec_kit/versiones/v5_otros_motores/` (2_spec a 8_tasks). Además esta
@@ -48,7 +48,7 @@ cualquiera (el molde del calco — por ejemplo
    ```
 
 3. **Cree los ARCHIVOS VACÍOS nuevos** — los 14 que la IA irá llenando
-   (1 carpeta + 3 de fábrica + 11 repositorios SqlServer):
+   (1 carpeta + 3 de fábrica + 14 repositorios SqlServer):
 
    ```powershell
    mkdir api_facturas\Fabricas
@@ -56,7 +56,7 @@ cualquiera (el molde del calco — por ejemplo
    ```
 
 4. Archivos de la v3 que **CRECEN** (la IA le entrega la versión completa
-   actualizada): `Program.cs` (la fábrica + el switch + diagnóstico v4
+   actualizada): `Program.cs` (la fábrica + el switch + diagnóstico v5
    con `motor`), `ApiFacturas.csproj` (paquete Microsoft.Data.SqlClient),
    `docker-compose.yml` (sqlserver + sqlserver-init + variables de la
    API), `appsettings.json` (cadena SqlServer + clave Motor) y
@@ -70,7 +70,7 @@ cambiando:
 - "VERSIÓN 2" → "VERSIÓN 4", y el CONTEXTO CLAVE: *"Mi proyecto YA TIENE
   v1, v2 y v3 construidas y funcionando (las 12 tablas cubiertas contra
   PostgreSQL); NO toques Controllers/, Servicios/, Peticiones/, Modelos/
-  ni Excepciones/ — la v4 vive de los repositorios hacia abajo. Solo
+  ni Excepciones/ — la v5 vive de los repositorios hacia abajo. Solo
   crecen Program.cs, ApiFacturas.csproj, docker-compose.yml,
   appsettings.json y pruebas/Programa.cs."*
 - Regla de alcance: *"nada de MariaDB (versión futura); el motor se
@@ -91,7 +91,7 @@ cambiando:
    [2_spec.md](2_spec.md) exige que el diff no cruce la frontera de los
    repositorios.
 2. Si la IA propone un ORM, EF Core o "un provider genérico" para no
-   escribir los 11 repositorios: recháselo — la constitución prohíbe
+   escribir los 14 repositorios: recháselo — la constitución prohíbe
    ORM, y escribir el calco ES la lección (el conocimiento ADO.NET se
    transfiere entre motores).
 
@@ -100,4 +100,4 @@ cambiando:
 El cierre de esta versión es DOBLE de verdad: la regresión completa
 (v1+v2+v3) debe pasar **contra PostgreSQL** y, con el interruptor
 `MOTOR_BD=sqlserver`, **contra SQL Server** —
-[7_quickstart.md](7_quickstart.md) §2, con sus puertos +100 → tag `v4`.
+[7_quickstart.md](7_quickstart.md) §2, con sus puertos +100 → tag `v5`.

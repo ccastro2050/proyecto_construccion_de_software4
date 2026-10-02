@@ -1,4 +1,4 @@
-# Lista de chequeo de requisitos — Versión 4
+# Lista de chequeo de requisitos — Versión 5
 
 > **La compuerta 3** del método (ver [SDD_SPECKIT](../../../SDD_SPECKIT.md)). Esta lista
 > revisa **la ESPECIFICACIÓN, no el código**: se pasa cuando los documentos

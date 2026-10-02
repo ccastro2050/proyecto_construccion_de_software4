@@ -1,6 +1,6 @@
-# Modelo de datos — Versión 4: la MISMA bdfacturas, en SQL Server
+# Modelo de datos — Versión 5: la MISMA bdfacturas, en SQL Server
 
-> La v4 no agrega ni una tabla ni una columna: agrega un DIALECTO.
+> La v5 no agrega ni una tabla ni una columna: agrega un DIALECTO.
 > `db/bdfacturas_sqlserver.sql` crea en SQL Server la misma base que
 > `db/bdfacturas_postgres.sql` crea en PostgreSQL: 12 tablas, el trigger
 > de totales/stock, los SPs de factura y las mismas semillas (mismos
@@ -10,7 +10,7 @@
 
 ## 1. Equivalencias de dialecto (lo que cambia al portar el DDL)
 
-| Concepto | PostgreSQL (v1) | SQL Server (v4) |
+| Concepto | PostgreSQL (v1) | SQL Server (v5) |
 |---|---|---|
 | Autonumérico | `SERIAL` (secuencia `tabla_col_seq`) | `INT IDENTITY(1,1)` |
 | Insertar ids explícitos | insertar y luego `setval('t_col_seq', MAX)` | `SET IDENTITY_INSERT t ON/OFF` |
@@ -40,12 +40,12 @@ estructura y nombre. Los modelos C# no notan la diferencia.
   `sp_borrar…` y **`sp_anular_factura`** (THROW **50010**: "no existe" /
   "ya está anulada" — los que la API traduce a 404/409).
 - **Los SPs de usuarios/roles/permisos** también viajan en el script:
-  la v4 no los llama, pero mantienen la paridad entre los dos dialectos
+  la v5 no los llama, pero mantienen la paridad entre los dos dialectos
   — y quedan listos para el login, que es de la v3.
 
 ## 3. Los mensajes que la API traduce (paridad de negocio)
 
-| Situación | PostgreSQL (v2/v3) | SQL Server (v4) | API |
+| Situación | PostgreSQL (v2/v3) | SQL Server (v5) | API |
 |---|---|---|---|
 | Consultar factura inexistente | `Factura N no existe` (P0001) | THROW **50003** `…no existe` | **404** |
 | Anular factura inexistente | `Factura N no existe` (P0001) | THROW **50010** `…no existe` | **404** |

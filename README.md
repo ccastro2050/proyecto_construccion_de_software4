@@ -216,7 +216,7 @@ es **reconstruirla usted mismo, en una carpeta propia (fuera del clon)**,
 siguiendo las especificaciones — con o sin ayuda de IA:
 
 > 🤖 ¿Va a trabajar con IA? Siga la **[Guía para construir la versión con
-> IA](docs/spec_kit/versiones/v5_otros_motores/GUIA_IA4.md)** — cubre los dos caminos con su prompt exacto listo
+> IA](docs/spec_kit/versiones/v5_otros_motores/GUIA_IA5.md)** — cubre los dos caminos con su prompt exacto listo
 > para copiar: **chat web** (Gemini, DeepSeek, ChatGPT: qué archivos
 > subirle) e **IDE agéntico** (Antigravity, Cursor, Claude Code: cómo
 > supervisar al agente).

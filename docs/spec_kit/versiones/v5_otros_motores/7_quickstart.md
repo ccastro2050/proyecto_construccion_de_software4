@@ -1,6 +1,6 @@
-# Quickstart — Versión 4: arranque y la regresión DOBLE
+# Quickstart — Versión 5: arranque y la regresión DOBLE
 
-> **Versión 4** · Validación rápida de la versión ya construida. Si aún no
+> **Versión 5** · Validación rápida de la versión ya construida. Si aún no
 > hay nada construido, empiece por [8_tasks.md](8_tasks.md).
 
 ---
@@ -18,12 +18,12 @@ inicializador, prometida desde la v1)** y `api-facturas` arriba.
 
 > ⚠️ SQL Server necesita ~2 GB de RAM libres en Docker Desktop.
 
-## 2. La regresión doble (criterios 1 y 2 — el corazón de la v4)
+## 2. La regresión doble (criterios 1 y 2 — el corazón de la v5)
 
 ### 2a. TODO contra PostgreSQL (el motor por defecto)
 
 ```powershell
-curl.exe http://localhost:8045/     # → "version":"v4", "motor":"postgres"
+curl.exe http://localhost:8045/     # → "version":"v5", "motor":"postgres"
 ```
 
 Correr COMPLETOS los smoke tests de la
@@ -69,7 +69,7 @@ git diff v3 --stat
 ```
 
 NADA de `Controllers/`, `Servicios/`, `Peticiones/`, `Modelos/` ni
-`Excepciones/` aparece en la lista. La v4 vive de repositorios hacia
+`Excepciones/` aparece en la lista. La v5 vive de repositorios hacia
 abajo (+ el ensamblador, que para eso existe).
 
 ## 5. La prueba de capas (criterio 5)

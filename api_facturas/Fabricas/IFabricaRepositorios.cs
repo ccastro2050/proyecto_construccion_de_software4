@@ -42,4 +42,7 @@ public interface IFabricaRepositorios
     /// notaria -los dos motores tienen los mismos datos- hasta que dejaran
     /// de tenerlos.</summary>
     IRepositorioAcceso CrearRepositorioAcceso();
+
+    /// <summary>Las 10 consultas multitabla (v4). Solo lectura.</summary>
+    IRepositorioConsultas CrearRepositorioConsultas();
 }

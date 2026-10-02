@@ -1,4 +1,4 @@
-# Research — Versión 4: decisiones y alternativas
+# Research — Versión 5: decisiones y alternativas
 
 > Lectura opcional: el PORQUÉ de cada decisión del [plan](3_plan.md).
 
@@ -24,7 +24,7 @@ lo anunciaba — hoy se cumple.)
 
 Es el cliente ADO.NET oficial de SQL Server, con las MISMAS clases
 conceptuales (`SqlConnection`/`Command`/`DataReader`) que ya se dominan
-de Npgsql. La traducción de 10 de los 11 repositorios queda mecánica —
+de Npgsql. La traducción de 13 de los 14 repositorios queda mecánica —
 eso también es didáctico: el conocimiento de ADO.NET se transfiere entre
 motores.
 
@@ -57,7 +57,7 @@ sqlserver-init` libera el motor pesado y `start` lo devuelve.
 
 ## D6 — Motor por defecto: `postgres`
 
-El default conserva el comportamiento de v1-v3 (la regresión corre
+El default conserva el comportamiento de v1-v4 (la regresión corre
 idéntica sin tocar nada) y el interruptor estrena el motor nuevo. El
 default vive en el compose (`${MOTOR_BD:-postgres}`), no en el código.
 
@@ -72,6 +72,6 @@ estudiante suma 100: **11545**.
 
 `db/bdfacturas_sqlserver.sql` inserta los MISMOS datos con los MISMOS
 ids (con `SET IDENTITY_INSERT` — el `setval` de SQL Server).
-Consecuencia valiosa: el smoke test de v1-v3 corre IGUAL en ambos
+Consecuencia valiosa: el smoke test de v1-v4 corre IGUAL en ambos
 motores — hasta la nota del quickstart v3 sobre los ids consumidos por
 inserts fallidos aplica igual (los IDENTITY también avanzan al fallar).

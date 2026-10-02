@@ -1,4 +1,4 @@
-# Plan — Versión 4: el segundo motor (SQL Server) y la fábrica
+# Plan — Versión 5: el segundo motor (SQL Server) y la fábrica
 
 > **Nota (agosto de 2026):** el curso adoptó **Dapper** como
 > micro-ejecutor en TODOS los repositorios: el SQL sigue escrito a mano
@@ -35,7 +35,7 @@ db/init_sqlserver.sh                               ← el inicializador (SQL Ser
 | `ApiFacturas.csproj` | ★ paquete **Microsoft.Data.SqlClient** |
 | `docker-compose.yml` | ★ servicios `sqlserver` (2022, :11445, healthcheck) + `sqlserver-init` + variables `Motor` y `ConnectionStrings__SqlServer` en la API |
 | `appsettings.json` | ★ cadena `SqlServer` y clave `Motor` (defaults para correr sin Docker) |
-| `Program.cs` | ★ el ensamblador se REESCRIBE alrededor de la fábrica (ver §4) + diagnóstico v4 con `motor` |
+| `Program.cs` | ★ el ensamblador se REESCRIBE alrededor de la fábrica (ver §4) + diagnóstico v5 con `motor` |
 | `pruebas/Programa.cs` | ★ criterio 5: las fábricas eligen sin conectarse |
 
 **Intocables (RNF2):** Controllers/, Servicios/, Peticiones/, Modelos/,
@@ -45,7 +45,7 @@ Excepciones/. Ese es el punto de la versión.
 
 La traducción Postgres → SqlServer es **mecánica** — la tabla completa:
 
-| PostgreSQL (v1–v3) | SQL Server (v4) |
+| PostgreSQL (v1–v4) | SQL Server (v5) |
 |---|---|
 | `using Npgsql` | `using Microsoft.Data.SqlClient` |
 | `NpgsqlConnection` / `NpgsqlCommand` / `NpgsqlDataReader` | `SqlConnection` / `SqlCommand` / `SqlDataReader` |
@@ -63,7 +63,7 @@ Los SPs de SQL Server devuelven su JSON por un parámetro
 `@p_resultado NVARCHAR(MAX) OUTPUT`. Diferencias frente al dialecto
 PostgreSQL que el curso ya conoce:
 
-| Aspecto | PostgreSQL (v2) | SQL Server (v4) |
+| Aspecto | PostgreSQL (v2) | SQL Server (v5) |
 |---|---|---|
 | Invocación | texto `CALL sp_x(…, NULL)` | `CommandType.StoredProcedure` |
 | El JSON de salida | el CALL devuelve una fila con los INOUT | parámetro OUTPUT (`SqlDbType.NVarChar, -1`) |

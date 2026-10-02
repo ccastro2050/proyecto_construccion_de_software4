@@ -1,4 +1,4 @@
-# Tareas — Versión 4: orden de construcción por fases verificables
+# Tareas — Versión 5: orden de construcción por fases verificables
 
 > Cada fase termina en un estado COMPROBABLE. No avance con una fase en
 > rojo. El detalle de diseño está en [3_plan.md](3_plan.md).
@@ -59,7 +59,7 @@ pruebas` → todos los criterios OK.
 - [ ] `docker-compose.yml`: variables `Motor: ${MOTOR_BD:-postgres}` y
       `ConnectionStrings__SqlServer` en la API + depends_on del init.
 - [ ] `Program.cs`: el switch de fábricas + los 11 registros vía fábrica
-      + diagnóstico `"version":"v4"` con `"motor"`.
+      + diagnóstico `"version":"v5"` con `"motor"`.
 
 **Verificar:** `GET /` → `"motor":"postgres"` · con
 `$env:MOTOR_BD="sqlserver"` y recrear la API → `"motor":"sqlserver"`.
@@ -71,7 +71,7 @@ pruebas` → todos los criterios OK.
       sqlserver.
 - [ ] Errores de negocio idénticos en ambos motores (criterio 3).
 - [ ] `git diff v3 --stat` respeta la frontera (criterio 4).
-- [ ] Colección Postman: nota de la v4 (mismos endpoints, campo `motor`).
-- [ ] Commit + tag `v4` + push.
+- [ ] Colección Postman: nota de la v5 (mismos endpoints, campo `motor`).
+- [ ] Commit + tag `v5` + push.
 
 **Verificar:** los 5 criterios de [2_spec.md](2_spec.md) §5 en verde.
