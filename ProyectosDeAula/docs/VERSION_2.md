@@ -7,6 +7,11 @@
 > (incluidos sus commits) + 10% de entrega en equipo. La fecha exacta la fija
 > el profesor en clase.
 >
+> **Y esta es la PRIMERA versión en la que se califica la interpretabilidad:
+> 4 de esos 20 puntos.** Salen de los 10 individuales —no de los del equipo— y
+> se ganan **hablando**, no entregando. En la v1 no se evaluaba; desde aquí sí.
+> Está en §8.1.
+>
 > El método, el calendario y la rúbrica están en
 > [0_METODOLOGIA.md](0_METODOLOGIA.md). Esto es **el detalle de la v2**.
 >
@@ -284,6 +289,48 @@ suya. Decídanla, pónganla en el servicio, y escríbanla en el `2_spec.md`.
 | **11** | La interfaz **no habla en jerga** | No dice «PUT», «PATCH», «422» ni «FK» en ninguna pantalla |
 | **12** | **La regresión de la v1 pasa completa** | §9 |
 
+### 8.1 Y el criterio que NO se comprueba corriendo: la interpretabilidad
+
+Los doce criterios de arriba se comprueban **corriendo el sistema**. Este no:
+se comprueba **hablando** — y esta versión es donde empieza a calificarse.
+
+| | |
+|---|---|
+| **Cuánto vale** | **4 de los 20 puntos de la v2** — el 20 % de la nota de la versión |
+| **De dónde salen** | De los **10 puntos individuales**. No de los del equipo |
+| **Cómo se califica** | El profesor abre **un archivo del repositorio, elegido por él**, y le pide a quien lo entregó que lo cuente: qué hace, por qué está escrito así, qué pasa si falla y qué cambiaría |
+| **Dónde** | **En voz alta y presencial.** No se recibe por escrito |
+| **A quién** | A **cada integrante por separado**, sobre **lo que ese integrante entregó** |
+
+> **Un equipo puede pasar los doce criterios y sacar 2.9 aquí.** No es un
+> descuido de la rúbrica: es el único criterio que **no se puede delegar**. La
+> API puede funcionar porque la IA la escribió bien, y el front puede verse
+> bien por lo mismo. **Decir por qué está así solo lo puede hacer quien
+> entendió.**
+
+**De ahí que la guía de IA exija que la IA comente lo que genera** — pero ojo
+con confundir comentar y entender. El comentario **facilita** la
+interpretabilidad; **no es la nota**. Un comentario se recita sin entenderlo, y
+además **puede estar equivocado**: la IA comenta lo que *cree* que hizo. Lo que
+se califica es que usted pueda decir **si es cierto**.
+
+**Las cuatro preguntas, para que nadie se sorprenda:**
+
+| | Dicho sobre esta versión |
+|---|---|
+| **Qué hace** | Cuénteme este procedimiento almacenado sin leérmelo línea por línea |
+| **Por qué así** | ¿Por qué el total lo calcula un disparador en la base de datos y no el servicio en C#? |
+| **Qué pasa si falla** | Si la base de datos rechaza la clave foránea, ¿qué recibe quien llamó y qué ve la persona en la pantalla? |
+| **Qué cambiaría** | Si mañana hubiera que agregarle un campo al detalle, ¿dónde se toca? |
+
+> **Y no empieza en la v1 a propósito.** En la v1 se está aprendiendo a mover
+> las piezas. En la v2 ya hay **código heredado** y decisiones que alguien tomó
+> —los procedimientos, el disparador, el 409 traducido—, y ahí es donde se ve
+> quién entendió lo que entregó.
+
+La rúbrica completa, con las dos franjas, está en
+[0_METODOLOGIA.md](0_METODOLOGIA.md) §7.
+
 ---
 
 ## 9. La regresión, que es obligatoria
@@ -352,6 +399,7 @@ seguir funcionando»: se corren.
 | **El sobre de la respuesta** | La API devuelve `{tabla, limite, total, datos}`, no una lista pelada. Leerlo mal deja la pantalla **vacía sin ningún error** | Una tabla sin filas y sin mensaje |
 | **La tabla puente con botón de editar** | Una pareja existe o no existe; no se edita | — |
 | **El procedimiento que no devuelve la fila** | La interfaz no puede mostrar lo que acaba de crear | — |
+| **El archivo que nadie leyó** | Se entrega código generado y nadie lo abrió. Pasa los doce criterios y **falla el único que no se puede delegar** | §8.1 — y el archivo lo elige el profesor, no usted |
 
 ---
 

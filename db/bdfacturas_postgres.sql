@@ -1,30 +1,89 @@
 ﻿-- ============================================================
--- bdfacturas_postgres_local — la base de datos COMPLETA del curso
--- Construcción de Software (infraestructura dada desde la v1)
+-- bdfacturas_postgres_local — la MISMA bdfacturas, en PostgreSQL.
 --
--- 12 tablas, el trigger de totales/stock, los SPs de factura y los
--- datos semilla. La v1 solo usa la tabla producto; el resto espera
--- a las versiones siguientes (la BD completa desde el día 1 es una
--- decisión del curso — ver 5_data_model.md).
+-- QUE ES ESTE ARCHIVO: el espejo de db/bdfacturas_sqlserver.sql (SQL Server). Las
+-- mismas 12 tablas, el mismo disparador de totales y stock, los mismos 16
+-- procedimientos y las MISMAS semillas con los MISMOS ids (setval alinea las
+-- secuencias). Dos motores, un solo comportamiento.
 --
--- PostgreSQL ejecuta este script AUTOMÁTICAMENTE: el compose lo
--- monta en /docker-entrypoint-initdb.d/ y el contenedor lo corre la
--- PRIMERA vez (con el volumen vacío).
+-- PARA QUE SIRVE QUE EXISTA: es la prueba de que la interfaz del repositorio
+-- servia. Se agrego un segundo motor sin tocar el servicio ni el controlador,
+-- y el interruptor MOTOR_BD elige cual atiende sin recompilar. Eso es el
+-- adelanto de la v5 (ver docs/spec_kit/versiones/0_mapa_versiones.md), que
+-- esta FUERA de las cuatro versiones del curso.
 --
--- Este script es idéntico al de los proyectos gemelos del curso
--- (mismas semillas): misma BD, otras APIs.
+-- ============================================================
+-- EQUIVALENCIAS DE DIALECTO — lo mismo, dicho en los dos idiomas.
+-- Medido comparando los dos archivos de esta carpeta, no de memoria:
+--
+--   SQL SERVER                        POSTGRESQL
+--   ---------------------------------  --------------------------------------
+--   NVARCHAR(n)                        VARCHAR(n)
+--   DECIMAL(18,2)                      NUMERIC        (ojo: sin precision,
+--                                                      no redondea a 2)
+--   INT IDENTITY(1,1)                  SERIAL
+--   DATETIME2 / GETDATE()              TIMESTAMP / CURRENT_TIMESTAMP
+--   SET IDENTITY_INSERT ON/OFF         setval() despues de sembrar
+--
+--   SCOPE_IDENTITY()                   RETURNING numero INTO v_numero
+--   CURSOR + FETCH + @@FETCH_STATUS    FOR v IN SELECT ... LOOP
+--   OPENJSON() + JSON_VALUE(x,'$.c')   json_array_elements() + x->>'c'
+--   CAST(... AS INT)                   (...)::INTEGER
+--   FOR JSON PATH                      json_agg(row_to_json(...))
+--   ... WITHOUT_ARRAY_WRAPPER          row_to_json(...)  a secas
+--   THROW 50001, @msg, 1               RAISE EXCEPTION '...'
+--   @p_resultado NVARCHAR(MAX) OUTPUT  INOUT p_resultado JSON
+--
+--   3 disparadores AFTER separados,    1 funcion BEFORE que pregunta TG_OP,
+--   con INSERTED y DELETED             con NEW y OLD
+--
+-- LA ULTIMA FILA ES LA QUE MAS CAMBIA EL CODIGO, y la unica diferencia
+-- conceptual de verdad: las demas son la misma idea con otras palabras.
+-- ============================================================
+--
+-- COMO SE CARGA: a diferencia de SQL Server, PostgreSQL SI ejecuta este
+-- script automaticamente. El compose lo monta en
+-- /docker-entrypoint-initdb.d/ y el contenedor lo corre la PRIMERA vez
+-- (volumen vacio) — por eso aqui no hay contenedor inicializador.
+--
+-- A diferencia de SQL Server, PostgreSQL SÍ ejecuta este script
+-- automáticamente: el compose lo monta en /docker-entrypoint-initdb.d/
+-- y el contenedor lo corre la PRIMERA vez (volumen vacío) — por eso
+-- aquí no hay contenedor inicializador.
+--
+-- Este script es idéntico al del proyecto gemelo del curso
+-- (Python + FastAPI + PostgreSQL): misma BD, otra API.
 -- ============================================================
 
 -- ============================================================
 -- TABLAS INDEPENDIENTES (sin foreign keys)
 -- ============================================================
 
+-- ------------------------------------------------------------
+-- empresa — las empresas a las que puede pertenecer un cliente.
+--
+-- PARA QUE: distinguir al cliente que compra por su cuenta del que compra a
+-- nombre de una empresa. En `cliente` esa relacion es OPCIONAL.
+--
+-- LA CLAVE ES EL CODIGO, no un autonumerico: el codigo lo pone el negocio
+-- (EM001), existe en el mundo real y se puede dictar por telefono.
+-- ------------------------------------------------------------
 CREATE TABLE empresa (
     codigo VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     CONSTRAINT pk_empresa PRIMARY KEY (codigo)
 );
 
+-- ------------------------------------------------------------
+-- persona — los DATOS de una persona: nombre, correo, telefono.
+--
+-- PARA QUE: es la tabla raiz de la gente. `cliente` y `vendedor` NO repiten
+-- el nombre ni el telefono: apuntan aqui. La misma persona puede ser las dos
+-- cosas sin que sus datos existan dos veces y se contradigan.
+--
+-- OJO CON EL CORREO: aqui NO es unico, es un dato de contacto. El correo que
+-- no se puede repetir es el de `usuario`, que si es clave primaria.
+-- ------------------------------------------------------------
 CREATE TABLE persona (
     codigo VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -33,6 +92,20 @@ CREATE TABLE persona (
     CONSTRAINT pk_persona PRIMARY KEY (codigo)
 );
 
+-- ------------------------------------------------------------
+-- producto — el catalogo: que se vende, a como, y cuanto hay.
+--
+-- PARA QUE: `valorunitario` es el precio con el que el disparador calcula el
+-- subtotal de cada renglon, y `stock` es lo que hay en bodega.
+--
+-- EL STOCK NO LO MUEVE LA API: lo mueve el disparador de mas abajo. Si
+-- alguien tambien lo baja desde C#, el stock baja DOS veces.
+--
+-- DIFERENCIA DE DIALECTO: aqui el dinero es NUMERIC sin precision —precision
+-- arbitraria— y en SQL Server es DECIMAL(18,2), que redondea a dos decimales.
+-- Es el mismo dato con dos comportamientos, y hay que saberlo antes de
+-- comparar totales entre los dos motores.
+-- ------------------------------------------------------------
 CREATE TABLE producto (
     codigo VARCHAR(10) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -41,12 +114,38 @@ CREATE TABLE producto (
     CONSTRAINT pk_producto PRIMARY KEY (codigo)
 );
 
+-- ------------------------------------------------------------
+-- rol — los perfiles del sistema: Administrador, Vendedor, Cajero, Cliente.
+--
+-- PARA QUE: el permiso no se le da a una persona, se le da a un ROL, y la
+-- persona recibe el rol. Cambiar lo que puede hacer un cargo se hace en un
+-- sitio y no usuario por usuario.
+--
+-- SERIAL es el autonumerico de PostgreSQL —en SQL Server es IDENTITY(1,1)—.
+-- Y el nombre NO es la clave: un rol se puede renombrar sin que se caigan
+-- los permisos que ya tiene asignados.
+-- ------------------------------------------------------------
 CREATE TABLE rol (
     id SERIAL NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     CONSTRAINT pk_rol PRIMARY KEY (id)
 );
 
+-- ------------------------------------------------------------
+-- ruta — LAS INTERFACES DEL SISTEMA: una fila por pantalla protegible
+-- (interfaz.usuarios, interfaz.facturas, ...).
+--
+-- PARA QUE: es el catalogo de lo que se puede permitir. El nombre que esta
+-- aqui es exactamente el que el codigo exige en C#:
+--
+--     [ExigePermiso("interfaz.usuarios")]
+--
+-- EL UNIQUE SOBRE `ruta` ES LO QUE SOSTIENE ESO: si el nombre se pudiera
+-- repetir, habria dos filas respondiendo por la misma pantalla.
+--
+-- Y UNA RUTA QUE NO ESTE DECLARADA AQUI NO LA PUEDE USAR NADIE: el
+-- repositorio responde false sin preguntarle a nadie. Falla cerrado.
+-- ------------------------------------------------------------
 CREATE TABLE ruta (
     id SERIAL NOT NULL,
     ruta VARCHAR(100) NOT NULL,
@@ -55,6 +154,19 @@ CREATE TABLE ruta (
     CONSTRAINT uq_ruta UNIQUE (ruta)
 );
 
+-- ------------------------------------------------------------
+-- usuario — quien puede entrar al sistema. El correo ES la clave.
+--
+-- PARA QUE: identificarse. `persona` es quien es alguien; `usuario` es quien
+-- tiene llave. Hay personas sin usuario.
+--
+-- `contrasena` GUARDA EL HASH, NUNCA EL TEXTO. Es un hash BCrypt —unos 60
+-- caracteres— y de ahi el VARCHAR(200): sobra espacio a proposito, para que
+-- cambiar de algoritmo no obligue a alterar la tabla.
+--
+-- Y el hash no se compara con otro hash: se VERIFICA con BCrypt. Dos hashes
+-- del mismo texto son distintos, porque cada uno lleva su propia sal dentro.
+-- ------------------------------------------------------------
 CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL,
     contrasena VARCHAR(200) NOT NULL,
@@ -63,8 +175,31 @@ CREATE TABLE usuario (
 
 -- ============================================================
 -- TABLAS DEPENDIENTES (con foreign keys)
+--
+-- Cada una apunta a alguna de las seis de arriba, y por eso van despues: una
+-- clave foranea solo se puede crear si la tabla a la que apunta YA existe.
+--
+-- SON LAS SEIS DE LA VERSION 2, y traen tres cosas que la v1 no tenia:
+--
+--   1. LA CLAVE FORANEA, que en la interfaz grafica se vuelve un
+--      desplegable: se elige un padre que existe, no se digita.
+--   2. LA RELACION MAESTRO-DETALLE: factura y productosporfactura.
+--   3. LAS TABLAS PUENTE con llave compuesta: rol_usuario y rutarol.
 -- ============================================================
 
+-- ------------------------------------------------------------
+-- cliente — una persona que COMPRA.
+--
+-- PARA QUE: guarda lo que es propio de comprar —el credito— sin repetir los
+-- datos de la persona.
+--
+-- `fkcodempresa` ES LA UNICA CLAVE FORANEA OPCIONAL DEL ESQUEMA: fijese que
+-- no dice NOT NULL. No es un descuido — es la diferencia entre el cliente que
+-- compra por su cuenta y el que compra a nombre de una empresa. En la
+-- interfaz es la opcion «(ninguna)» del desplegable, y llega como null.
+--
+-- `credito DEFAULT 0`: un cliente nuevo no nace con credito.
+-- ------------------------------------------------------------
 CREATE TABLE cliente (
     id SERIAL NOT NULL,
     credito NUMERIC NOT NULL DEFAULT 0,
@@ -75,6 +210,15 @@ CREATE TABLE cliente (
     CONSTRAINT fk_cliente_empresa FOREIGN KEY (fkcodempresa) REFERENCES empresa(codigo)
 );
 
+-- ------------------------------------------------------------
+-- vendedor — una persona que VENDE. El otro papel de `persona`.
+--
+-- PARA QUE: cada factura tiene que saber quien la hizo, y el `carnet` y la
+-- `direccion` son datos del empleado, no de la persona.
+--
+-- La misma persona puede estar en `cliente` y en `vendedor`: son dos papeles,
+-- no dos personas. Esa es toda la razon de que `persona` exista aparte.
+-- ------------------------------------------------------------
 CREATE TABLE vendedor (
     id SERIAL NOT NULL,
     carnet INTEGER NOT NULL,
@@ -84,6 +228,19 @@ CREATE TABLE vendedor (
     CONSTRAINT fk_vendedor_persona FOREIGN KEY (fkcodpersona) REFERENCES persona(codigo)
 );
 
+-- ------------------------------------------------------------
+-- factura — EL ENCABEZADO de la venta. El «maestro» del maestro-detalle.
+--
+-- PARA QUE: quien compro, quien vendio, cuando, y cuanto en total.
+--
+-- `total DEFAULT 0` Y ESO NO ES UN ERROR: la factura NACE EN CERO. El total
+-- lo calcula el disparador cada vez que entra o sale un renglon. Si la API
+-- mandara el total, estaria mandando un numero que no calculo.
+--
+-- `estado DEFAULT activa`: anular una factura NO la borra, le cambia el
+-- estado. Es el borrado logico, y es lo que permite que la consulta de
+-- anulaciones de la v4 tenga algo que contar.
+-- ------------------------------------------------------------
 CREATE TABLE factura (
     numero SERIAL NOT NULL,
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -96,6 +253,23 @@ CREATE TABLE factura (
     CONSTRAINT fk_factura_vendedor FOREIGN KEY (fkidvendedor) REFERENCES vendedor(id)
 );
 
+-- ------------------------------------------------------------
+-- productosporfactura — EL DETALLE: los renglones de cada factura.
+--
+-- PARA QUE: que producto, cuantos, y por cuanto. Es el «detalle» del
+-- maestro-detalle, y la tabla sobre la que trabaja el disparador.
+--
+-- LA CLAVE ES COMPUESTA (factura + producto), y eso decide una regla del
+-- negocio sin una linea de codigo: UN PRODUCTO NO PUEDE APARECER DOS VECES
+-- EN LA MISMA FACTURA. Intentar meterlo dos veces es el 409 de la API.
+--
+-- `subtotal DEFAULT 0`: lo calcula el disparador (cantidad x valorunitario).
+-- La API no multiplica precios.
+--
+-- ON DELETE CASCADE: borrar la factura se lleva sus renglones. Es el unico
+-- sitio del esquema donde la cascada tiene sentido — un renglon sin su
+-- factura no significa nada.
+-- ------------------------------------------------------------
 CREATE TABLE productosporfactura (
     fknumfactura INTEGER NOT NULL,
     fkcodproducto VARCHAR(10) NOT NULL,
@@ -106,6 +280,15 @@ CREATE TABLE productosporfactura (
     CONSTRAINT fk_prodfact_producto FOREIGN KEY (fkcodproducto) REFERENCES producto(codigo)
 );
 
+-- ------------------------------------------------------------
+-- rol_usuario — TABLA PUENTE: que roles tiene cada usuario.
+--
+-- PARA QUE: un usuario puede tener varios roles, y un rol lo pueden tener
+-- varios usuarios. Eso es «muchos a muchos», y necesita una tabla propia.
+--
+-- LA CLAVE ES LA PAREJA, y por eso esta tabla no tiene boton de editar en la
+-- interfaz: una pareja existe o no existe. Se asigna o se retira.
+-- ------------------------------------------------------------
 CREATE TABLE rol_usuario (
     fkemail VARCHAR(100) NOT NULL,
     fkidrol INTEGER NOT NULL,
@@ -114,6 +297,21 @@ CREATE TABLE rol_usuario (
     CONSTRAINT fk_rolusuario_rol FOREIGN KEY (fkidrol) REFERENCES rol(id)
 );
 
+-- ------------------------------------------------------------
+-- rutarol — TABLA PUENTE: a que interfaces entra cada rol.
+--
+-- ES LA TABLA DE PERMISOS DEL SISTEMA. Aqui vive la respuesta que el
+-- procedimiento `verificar_acceso_ruta` viene a buscar en CADA peticion:
+--
+--     usuario -> rol_usuario -> rutarol -> (la ruta permitida)
+--
+-- QUITAR UNA FILA DE AQUI LE QUITA EL PERMISO AL ROL DE INMEDIATO, sin que
+-- nadie vuelva a identificarse — porque el permiso no esta en el token, se
+-- consulta cada vez. Es el criterio 7 de la version 3.
+--
+-- ON DELETE CASCADE en las dos claves: si se borra una interfaz o un rol, sus
+-- permisos se van con el.
+-- ------------------------------------------------------------
 CREATE TABLE rutarol (
     fkidruta INT NOT NULL,
     fkidrol INT NOT NULL,
@@ -161,23 +359,37 @@ INSERT INTO rol (id, nombre) VALUES
 (5, 'Cliente');
 
 -- Actualizar secuencia de rol
+--
+-- QUE HACE setval: mueve el contador de la secuencia (el que alimenta a
+-- SERIAL) hasta el id mas alto que acabamos de insertar a mano.
+--
+-- PARA QUE: las semillas pusieron los ids 1..5 explicitamente, pero la
+-- secuencia sigue creyendo que el proximo es el 1. Sin este setval, el primer
+-- rol que cree la API chocaria con uno que ya existe — error de clave
+-- duplicada en una tabla recien sembrada, y nadie entiende por que.
+--
+-- Es el equivalente del IDENTITY_INSERT de SQL Server: ahi se APAGA el
+-- autonumerico y aqui se REALINEA. Mismo problema, dos soluciones.
 SELECT setval('rol_id_seq', (SELECT MAX(id) FROM rol));
 
 -- Rutas
--- ---------------------------------------------------------------------------
---  Los nombres de `ruta` NO son rutas HTTP, y por eso no empiezan con /
+-- ============================================================
+-- LOS NOMBRES DE `ruta` LLEVAN PUNTO, NO BARRA
 --
---  Antes decian '/producto', '/usuario'… y se confundian con los endpoints de
---  la API —/api/producto—, que son otra cosa: estos son INTERFACES GRÁFICAS del front y
---  PERMISOS, y los consume verificar_acceso_ruta.
+-- Decian '/producto', '/usuario', '/permiso/crear'... y se confundian con los
+-- ENDPOINTS de la API -/api/producto-, que son OTRA COSA.
 --
---  La notacion con punto lo deja claro:
---     interfaz.productos    una interfaz gráfica a la que un rol entra o no
---     permiso.crear         una accion concreta
+-- Esto no son rutas HTTP: son INTERFACES y ACCIONES PROTEGIBLES. Lo que la
+-- tabla guarda es «a que se puede entrar», y quien lo consume es
+-- verificar_acceso_ruta, no el enrutador de la API.
 --
---  Y el procedimiento usa el ID, no el texto: cambiar estos nombres no rompe
---  nada. Lo que arregla es la confusion de quien lee.
--- ---------------------------------------------------------------------------
+--   interfaz.productos   una interfaz grafica a la que un rol entra o no
+--   permiso.crear        una accion concreta
+--
+-- La notacion de punto no se puede leer como una URL, que es justamente el
+-- punto. El procedimiento usa el ID y no el texto, asi que el cambio no rompe
+-- nada.
+-- ============================================================
 INSERT INTO ruta (ruta, descripcion) VALUES
 ('interfaz.inicio', 'Página principal - Dashboard'),
 ('interfaz.usuarios', 'Gestión de usuarios'),
@@ -201,26 +413,23 @@ INSERT INTO ruta (ruta, descripcion) VALUES
 --
 -- Dos reglas, y la segunda es la que suele faltar:
 --
---   1. NINGUNA fila guarda texto legible. La columna es VARCHAR(200) -y no
---      20- precisamente porque un hash de bcrypt ocupa 60 caracteres: el
---      tamano de la columna ya anticipaba esto.
+--   1. NINGUNA fila guarda texto legible. La columna es NVARCHAR(200) -y no
+--      20- precisamente porque un hash de bcrypt ocupa 60 caracteres.
 --
---   2. Las contrasenas en claro estan ESCRITAS EN LA DOCUMENTACION, porque
---      del hash no se puede volver a la clave -eso es lo que lo hace un
---      hash-. Sin saberlas, no hay forma de iniciar sesion, y sin iniciar
---      sesion no se puede comprobar un solo criterio del control de acceso.
+--   2. Las contrasenas en claro estan ESCRITAS EN LA DOCUMENTACION, porque del
+--      hash no se puede volver a la clave -eso es lo que lo hace un hash-. Sin
+--      saberlas no hay forma de iniciar sesion, y sin iniciar sesion no se
+--      comprueba un solo criterio del control de acceso.
 --
--- EL HASH ES BCRYPT CON COSTO 12, el mismo que usa el repositorio al crear un
--- usuario por la API. El `$2a$12$` del principio lo dice: `2a` es la variante
--- y `12` es el costo. Subir el costo a 13 duplica el tiempo de calculo —y es
--- justamente para lo que se diseno bcrypt: para poder encarecerlo cuando las
+-- EL HASH ES BCRYPT CON COSTO 12. El `$2a$12$` del principio lo dice: `2a` es
+-- la variante y `12` el costo. Subir el costo a 13 duplica el tiempo de
+-- calculo — y es para lo que se diseno bcrypt: para encarecerlo cuando las
 -- maquinas sean mas rapidas, sin cambiar de funcion.
 --
 -- Y CADA HASH ES DISTINTO AUNQUE LA CLAVE SEA LA MISMA. Los dos usuarios de
--- carlos.castro comparten la contrasena y sus hash no se parecen: bcrypt trae
--- SALT incorporado -un valor aleatorio que se mezcla con la clave-. Sin salt,
--- ver dos hash iguales en la tabla delataria que esas dos personas usan la
--- misma contrasena.
+-- carlos.castro comparten contrasena y sus hash no se parecen: bcrypt trae
+-- SALT incorporado. Sin el, dos hash iguales delatarian que esas dos personas
+-- usan la misma clave.
 --
 -- Las contrasenas en claro, para las pruebas (7_quickstart.md):
 --
@@ -240,8 +449,8 @@ INSERT INTO ruta (ruta, descripcion) VALUES
 --   cliente1@correo.com    Cliente: SOLO inicio y productos
 --
 -- Con esos tres se comprueba el 403: identificarse como vendedor1 y pedir
--- /api/usuario -que es `interfaz.usuarios`- tiene que responder 403, no 401.
--- Y NO porque la interfaz esconda el boton: escribiendo la direccion a mano.
+-- /api/usuario tiene que responder 403, no 401. Y NO porque la interfaz
+-- esconda el boton: escribiendo la direccion a mano.
 -- ============================================================
 INSERT INTO usuario (email, contrasena) VALUES
 ('admin@correo.com', '$2a$12$PJf6LIuW8uL9q9hK0LsG0ebvUll.eLcJgg6lmTIPVk84p0fwD0T5u'),
@@ -339,6 +548,31 @@ INSERT INTO rutarol (fkidruta, fkidrol) VALUES
 -- Se ejecuta automáticamente al INSERT, UPDATE o DELETE en
 -- productosporfactura. Calcula subtotal, ajusta stock y
 -- recalcula el total de la factura.
+--
+-- AQUI ESTA LA REGLA MAS IMPORTANTE DEL SISTEMA: «no se vende lo que no
+-- hay». No esta en C# — esta tres niveles por debajo del boton, y por eso
+-- vale tambien para quien entre por psql y no por la API.
+--
+-- DOS COSAS QUE HAY QUE PODER EXPLICAR DE ESTE DISPARADOR:
+--
+-- 1. ES UNA SOLA FUNCION PARA LAS TRES OPERACIONES, y adentro pregunta
+--    `TG_OP` para saber si la llamaron por INSERT, UPDATE o DELETE. En SQL
+--    Server el mismo trabajo son TRES disparadores separados, porque ese
+--    motor no deja juntarlos y trabaja con las tablas virtuales INSERTED y
+--    DELETED en vez de NEW y OLD. Mismo efecto, dos escrituras distintas.
+--
+-- 2. ES «BEFORE», NO «AFTER», Y ESO NO ES UN DETALLE: al correr antes de
+--    escribir, puede hacer `NEW.subtotal := ...` y la fila entra ya con su
+--    subtotal calculado. Un AFTER tendria que escribir la fila y despues
+--    corregirla con un UPDATE — dos escrituras donde cabe una.
+--
+-- Y EL `RAISE EXCEPTION` DEL STOCK ES LO QUE LA API DEVUELVE COMO 500. Esta
+-- decidido asi a proposito: deshace la transaccion ENTERA, de modo que no
+-- queda media factura con los renglones que si alcanzaron a entrar.
+--
+-- COMO SE COMPRUEBA: pida tres productos donde el SEGUNDO no alcance. Si
+-- queda una factura con un renglon, la transaccion no existe — aunque el
+-- codigo diga lo contrario.
 -- ============================================================
 
 CREATE OR REPLACE FUNCTION actualizar_totales_y_stock()
@@ -381,6 +615,14 @@ BEGIN
 END;
 $$;
 
+-- EN POSTGRESQL UN DISPARADOR SON DOS OBJETOS: la funcion de arriba, que
+-- lleva la logica, y este CREATE TRIGGER, que la AMARRA a una tabla y a unos
+-- eventos. La funcion sola no se dispara nunca; el trigger sin funcion no
+-- compila. En SQL Server es un solo objeto, con el cuerpo adentro.
+--
+-- FOR EACH ROW: corre una vez POR RENGLON, no una vez por sentencia. Una
+-- factura de tres productos lo ejecuta tres veces — y asi tiene que ser,
+-- porque el stock que valida es el de cada producto.
 CREATE TRIGGER trg_actualizar_totales_y_stock
     BEFORE INSERT OR UPDATE OR DELETE ON productosporfactura
     FOR EACH ROW
