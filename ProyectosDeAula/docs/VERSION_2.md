@@ -69,10 +69,31 @@ abiertas, leídas del esquema:
 
 | Maestro | Sus detalles | Qué lo hace detalle |
 |---|---|---|
+| **`catedra`** | `sesion` | **La principal del sistema.** Una sesión es de **una** cátedra, y su número no se repite dentro de ella: `uq_sesion_reunion` |
+| **`sesion`** | `enlace_registro` · `registro_asistencia` | Un enlace y una asistencia son de **una** sesión |
 | **`asistente`** | `documento_asistente` · `consentimiento_datos` | Un documento es **de** un asistente. Sin él no significa nada |
 | **`encuesta`** | `pregunta` | Y su `orden` es único **dentro de la encuesta**: `uq_pregunta_ord` |
-| **`sesion`** | `enlace_registro` | Un enlace de registro es de **una** sesión |
+| **`pregunta`** | `opcion_pregunta` | Las opciones de una pregunta cerrada: `uq_opcion_orden` |
 | **`registro_asistencia`** | `respuesta_encuesta` | La respuesta cuelga del **registro**, no de la encuesta: `uq_respuesta_registro` |
+| **`respuesta_encuesta`** | `respuesta_item` | Un ítem por pregunta respondida |
+| **`programa_academico`** | `alias_programa` | Los nombres alternos de un programa |
+
+> ### Y fíjese en las dos CADENAS de tres niveles
+>
+> ```
+> encuesta  ──▶  pregunta  ──▶  opcion_pregunta
+> registro  ──▶  respuesta_encuesta  ──▶  respuesta_item
+> ```
+>
+> **El detalle de un detalle sigue siendo un detalle.** Una opción no existe
+> sin su pregunta, que no existe sin su encuesta. Si se borra la encuesta, se
+> va la cadena entera — y esa es la prueba de que son maestro-detalle y no
+> tablas sueltas que se referencian.
+
+> **Hay dos más, de la maquinaria de cargas:** `lote_carga_asistente` →
+> `novedad_carga` y `lote_migracion` → `detalle_migracion`. Son maestro-detalle
+> de verdad, pero de la importación de datos, no del negocio que se opera a
+> mano. **No se exigen en la v2.**
 
 ### Y dos que PARECEN detalle y no lo son — con su justificación
 

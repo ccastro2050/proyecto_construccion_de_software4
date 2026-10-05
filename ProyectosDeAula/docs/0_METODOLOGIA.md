@@ -66,10 +66,19 @@ pertenece.
 
 | Maestro | Sus detalles |
 |---|---|
+| **`catedra`** | `sesion` ← **la principal del sistema** |
+| **`sesion`** | `enlace_registro` · `registro_asistencia` |
 | **`asistente`** | `documento_asistente` · `consentimiento_datos` |
 | **`encuesta`** | `pregunta` |
-| **`sesion`** | `enlace_registro` |
+| **`pregunta`** | `opcion_pregunta` |
 | **`registro_asistencia`** | `respuesta_encuesta` |
+| **`respuesta_encuesta`** | `respuesta_item` |
+| **`programa_academico`** | `alias_programa` |
+
+> **Y hay dos CADENAS de tres niveles** —`encuesta → pregunta → opcion_pregunta`
+> y `registro → respuesta_encuesta → respuesta_item`—, porque el detalle de un
+> detalle sigue siendo un detalle. Si se borra la encuesta, se va la cadena
+> entera.
 
 > **Y cada una en UNA SOLA PANTALLA:** al abrir el maestro se ve su detalle
 > ahí mismo y se le agregan renglones sin salir. No un menú aparte donde haya
