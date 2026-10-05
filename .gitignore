@@ -8,3 +8,8 @@ obj/
 # Archivos de usuario de IDEs
 *.user
 .vs/
+
+# La spec de la v5 (otros motores) NO se publica: el curso son cuatro
+# versiones y el estudiante ve hasta la v4. La carpeta se queda en el disco
+# —es trabajo en curso del profesor—, pero fuera de GitHub.
+docs/spec_kit/versiones/v5_otros_motores/

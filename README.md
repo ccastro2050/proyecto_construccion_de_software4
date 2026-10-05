@@ -216,7 +216,7 @@ es **reconstruirla usted mismo, en una carpeta propia (fuera del clon)**,
 siguiendo las especificaciones — con o sin ayuda de IA:
 
 > 🤖 ¿Va a trabajar con IA? Siga la **[Guía para construir la versión con
-> IA](docs/spec_kit/versiones/v5_otros_motores/GUIA_IA5.md)** — cubre los dos caminos con su prompt exacto listo
+> IA](docs/spec_kit/versiones/v4_aplicativo/GUIA_IA4.md)** — cubre los dos caminos con su prompt exacto listo
 > para copiar: **chat web** (Gemini, DeepSeek, ChatGPT: qué archivos
 > subirle) e **IDE agéntico** (Antigravity, Cursor, Claude Code: cómo
 > supervisar al agente).
@@ -317,14 +317,23 @@ de aceptación (commit + tag). Mapa completo:
 
 | Documento | Contenido |
 |---|---|
-| [1_constitution.md](docs/spec_kit/1_constitution.md) | Las reglas permanentes del proyecto |
-| [2_spec.md](docs/spec_kit/versiones/v5_otros_motores/2_spec.md) | QUÉ construir y los criterios de aceptación |
-| [3_plan.md](docs/spec_kit/versiones/v5_otros_motores/3_plan.md) | CÓMO: stack, estructura y diseño de las capas |
-| [4_research.md](docs/spec_kit/versiones/v5_otros_motores/4_research.md) | Decisiones y alternativas (el porqué) |
-| [5_data_model.md](docs/spec_kit/versiones/v5_otros_motores/5_data_model.md) | La BD completa (dada) y la tabla producto |
-| [6_contracts.md](docs/spec_kit/versiones/v5_otros_motores/6_contracts.md) | Los 7 endpoints con formatos exactos |
-| [7_quickstart.md](docs/spec_kit/versiones/v5_otros_motores/7_quickstart.md) | Arranque y smoke test |
-| [8_tasks.md](docs/spec_kit/versiones/v5_otros_motores/8_tasks.md) | Orden de construcción por fases verificables |
+| [1_constitution.md](docs/spec_kit/1_constitution.md) | Las reglas permanentes del proyecto — **vale para las cuatro versiones** |
+| [2_spec.md](docs/spec_kit/versiones/v4_aplicativo/2_spec.md) | QUÉ construir y los criterios de aceptación de la v4 |
+| [3_plan.md](docs/spec_kit/versiones/v4_aplicativo/3_plan.md) | CÓMO: stack, estructura y diseño de las capas |
+| [4_research.md](docs/spec_kit/versiones/v4_aplicativo/4_research.md) | Decisiones y alternativas (el porqué) |
+| [5_data_model.md](docs/spec_kit/versiones/v4_aplicativo/5_data_model.md) | El modelo de datos. **La v4 no agrega tablas**: consulta las doce |
+| [6_contracts.md](docs/spec_kit/versiones/v4_aplicativo/6_contracts.md) | Los contratos. Los **70 endpoints** de v1–v3 no se tocan; la v4 **suma 10** |
+| [7_quickstart.md](docs/spec_kit/versiones/v4_aplicativo/7_quickstart.md) | Arranque y verificación |
+| [8_tasks.md](docs/spec_kit/versiones/v4_aplicativo/8_tasks.md) | Orden de construcción por fases verificables |
+| [9_checklist.md](docs/spec_kit/versiones/v4_aplicativo/9_checklist.md) | La lista que **se marca a mano** antes de poner el tag |
+| [GUIA_IA4.md](docs/spec_kit/versiones/v4_aplicativo/GUIA_IA4.md) | Los dos caminos —chat web e IDE agéntico— con su prompt exacto |
+
+> **Y las cuatro versiones tienen su spec kit completo**, cada una en su
+> carpeta: [`v1_sin_fk/`](docs/spec_kit/versiones/v1_sin_fk/),
+> [`v2_con_fk/`](docs/spec_kit/versiones/v2_con_fk/),
+> [`v3_control_acceso/`](docs/spec_kit/versiones/v3_control_acceso/) y
+> `v4_aplicativo/`. La v4 es **acumulativa**: contiene lo de las tres
+> anteriores, y por eso la regresión es obligatoria.
 
 ## 5. Material conceptual del curso
 

@@ -56,22 +56,28 @@
 > la v5, terminar significa que lo viejo **siguió** funcionando con otro motor
 > debajo.
 
-## La v5 ya tiene su adelanto en este repositorio
+## La v5 ya tiene su adelanto en este repositorio — en el CÓDIGO
 
-Este repositorio trae **`v5_otros_motores/`** y una implementación completa de
-los repositorios contra **SQL Server**, con sus servicios en el
-`docker-compose.yml`.
+**Este repositorio llega hasta la v4**, y su spec kit son las cuatro carpetas
+`v1_sin_fk/` … `v4_aplicativo/`. **La spec de la v5 no está publicada aquí**:
+es trabajo del profesor, no material del curso.
 
-**No es la v4** —la v4 es el aplicativo completo— sino **el adelanto de la
-v5**, y está aquí porque ya estaba construido.
+**Pero el código del adelanto sí está**, y conviene saber qué es para no
+confundirlo con la v4: una implementación completa de los catorce repositorios
+contra un **segundo motor**, con sus servicios en el `docker-compose.yml`.
 
 | | |
 |---|---|
-| **Qué demuestra** | Que la interfaz del repositorio servía: se agregó un segundo motor **sin tocar el servicio ni el controlador** |
-| **Qué falta para cerrar la v5** | El tercer motor (MariaDB) y **la fábrica** que elige por configuración. Con dos motores se puede resolver con un `if`; con tres, el `if` ya no se sostiene — y ahí nace la fábrica de verdad |
+| **Qué está construido** | Los repositorios de **los dos motores** —PostgreSQL y SQL Server—, la **fábrica** (`Fabricas/IFabricaRepositorios.cs` y sus dos implementaciones) y el interruptor `MOTOR_BD`, que elige cuál atiende **sin recompilar** |
+| **Qué demuestra** | Que la interfaz del repositorio servía: se agregó un segundo motor **sin tocar el servicio ni el controlador**. La inversión de dependencias **comprobada**, no prometida |
+| **Qué falta para cerrar la v5** | El **tercer motor (MariaDB)**. Con dos, la fábrica ya evita el `if` repartido por el código; con tres se ve por qué hacía falta |
 
 > **Se conservó a propósito.** Era código que funcionaba y que enseña algo
-> real; tirarlo por un cambio de mapa habría sido peor que reubicarlo.
+> real; tirarlo por un cambio de mapa habría sido peor que explicarlo.
+>
+> **Y por eso aparece en el mapa aunque esté fuera del curso:** el estudiante
+> va a ver catorce archivos `…Postgres.cs`, catorce `…SqlServer.cs` y una
+> carpeta `Fabricas/`. Dejarlos sin explicación sería peor que nombrarlos.
 
 ## La estrategia: back y front EN PARALELO
 
