@@ -74,20 +74,68 @@ abiertas, leídas del esquema:
 | **`sesion`** | `enlace_registro` | Un enlace de registro es de **una** sesión |
 | **`registro_asistencia`** | `respuesta_encuesta` | La respuesta cuelga del **registro**, no de la encuesta: `uq_respuesta_registro` |
 
-> ### Y dos que PARECEN detalle y no lo son
->
-> Conviene distinguirlas, porque se construyen distinto:
->
-> | | Qué es | Cómo se reconoce |
-> |---|---|---|
-> | **`ponencia`** | Una **tabla puente** entre `sesion` y `asistente` | Su clave es la **terna** `(fk_sesion, fk_asistente, rol)`. No tiene clave propia, y por eso **no se edita**: se asigna o se retira |
-> | **`sesion` → `encuesta`** | Una **referencia opcional** | `fk_encuesta` **no** es `NOT NULL`. Una sesión existe sin encuesta; la encuesta no es su padre |
->
-> **`registro_asistencia` es las dos cosas a la vez**, y es el caso más
-> interesante del esquema: tiene clave propia (`id_registro`) **y** una
-> restricción `UNIQUE (fk_sesion, fk_asistente)` que impide registrar dos
-> veces al mismo asistente en la misma sesión. Es puente por la regla y
-> maestro por su detalle.
+### Y dos que PARECEN detalle y no lo son — con su justificación
+
+No es una opinión: hay **tres preguntas** que lo deciden, y las tres se
+responden leyendo el esquema.
+
+| | La pregunta | Si la respuesta es… |
+|---|---|---|
+| **1** | ¿Tiene **clave propia**? | **No** → es una tabla **puente**: la fila *es* la relación, no una cosa |
+| **2** | ¿Puede **existir sin el padre**? | **Sí** → es una **referencia**, no un detalle |
+| **3** | Si se borra el padre, ¿qué debe pasar con el hijo? | **Se va con él** → es detalle. **Se queda** → es referencia |
+
+#### `ponencia` es una tabla PUENTE
+
+```sql
+CONSTRAINT pk_ponencia PRIMARY KEY (fk_sesion, fk_asistente, rol)
+```
+
+**No tiene `id_ponencia`.** Su clave son las tres columnas que la relacionan,
+y eso no es un detalle de implementación: es lo que dice qué es la fila.
+
+| | |
+|---|---|
+| **Qué relaciona** | Una sesión tiene varios ponentes **y** un asistente puede ser ponente en varias sesiones. Eso es **muchos a muchos**, y no cabe en ninguna de las dos tablas |
+| **Qué significa para la interfaz** | **No se edita.** No hay formulario de «editar ponencia»: hay **asignar** y **retirar** |
+| **Y cambiar el rol tampoco es editar** | `rol` es parte de la clave: pasar de PONENTE a MODERADOR es **retirar una fila y asignar otra** |
+| **Repetir la misma terna** | **409** |
+
+> **Compárela con `pregunta`, que sí es detalle:** tiene `id_pregunta` propio,
+> pertenece a **una** encuesta, y cambiarle el texto es un `UPDATE` normal. Esa
+> es toda la diferencia.
+
+#### `sesion` → `encuesta` es una REFERENCIA opcional
+
+```sql
+fk_encuesta  bigint,        -- sin NOT NULL
+```
+
+| | |
+|---|---|
+| **Una sesión existe sin encuesta** | La columna admite `null`. Un detalle sin su maestro no significa nada; una sesión sin encuesta, sí |
+| **La encuesta se comparte** | No hay `UNIQUE` sobre `fk_encuesta`: **varias sesiones pueden usar la misma**. Un detalle pertenece a **un** maestro; esto no |
+| **Y la prueba del borrado** | Si la encuesta fuera el maestro, borrarla debería llevarse las sesiones. Es absurdo: la sesión ocurrió |
+| **Qué es entonces en la interfaz** | Un **desplegable con «(ninguna)»** — la clave foránea opcional del §6 |
+
+#### Y `registro_asistencia`, que es las dos cosas a la vez
+
+El caso más interesante del esquema, y vale la pena mirarlo:
+
+```sql
+CONSTRAINT pk_registro_asistencia PRIMARY KEY (id_registro),
+CONSTRAINT uq_registro_sesion_asis UNIQUE (fk_sesion, fk_asistente)
+```
+
+**Tiene clave propia** —así que es una cosa, no solo una relación— **y además**
+una restricción que impide registrar dos veces al mismo asistente en la misma
+sesión. Es **puente por la regla** y **maestro** por su detalle
+(`respuesta_encuesta`).
+
+> **Por qué le pusieron clave propia y no la pareja:** porque un registro de
+> asistencia **tiene datos propios** —cuándo, por qué medio, con qué clave— y
+> otras tablas necesitan apuntarle. Una fila que es solo la relación no
+> necesita nombre; esta sí.
 
 > **Qué significa que algo sea detalle.** Una `ponencia` **no existe sin su
 > `sesion`**. No se crea suelta y después se le busca padre.
