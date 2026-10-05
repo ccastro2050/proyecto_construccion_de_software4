@@ -61,14 +61,33 @@ puente** —clave primaria compuesta, dos claves foráneas—.
 
 ## 3. Las relaciones MAESTRO-DETALLE
 
-Las que **cátedras abiertas** ya tiene en su esquema. Son estas, y hay que
-cubrirlas todas:
+**Maestro** es el que existe por sí solo. **Detalle** es el que **no existe
+sin su padre**: no se crea suelto y después se le busca a quién pertenece.
 
-| Maestro | Su detalle |
-|---|---|
-| **`asistente`** | ponencia · documento_asistente · consentimiento_datos · clave_acceso |
-| **`encuesta`** | pregunta · respuesta_encuesta · sesion |
-| **`sesion`** | ponencia · enlace_registro |
+Y sí, **un maestro puede tener varios detalles**. Estas son las de cátedras
+abiertas, leídas del esquema:
+
+| Maestro | Sus detalles | Qué lo hace detalle |
+|---|---|---|
+| **`asistente`** | `documento_asistente` · `consentimiento_datos` | Un documento es **de** un asistente. Sin él no significa nada |
+| **`encuesta`** | `pregunta` | Y su `orden` es único **dentro de la encuesta**: `uq_pregunta_ord` |
+| **`sesion`** | `enlace_registro` | Un enlace de registro es de **una** sesión |
+| **`registro_asistencia`** | `respuesta_encuesta` | La respuesta cuelga del **registro**, no de la encuesta: `uq_respuesta_registro` |
+
+> ### Y dos que PARECEN detalle y no lo son
+>
+> Conviene distinguirlas, porque se construyen distinto:
+>
+> | | Qué es | Cómo se reconoce |
+> |---|---|---|
+> | **`ponencia`** | Una **tabla puente** entre `sesion` y `asistente` | Su clave es la **terna** `(fk_sesion, fk_asistente, rol)`. No tiene clave propia, y por eso **no se edita**: se asigna o se retira |
+> | **`sesion` → `encuesta`** | Una **referencia opcional** | `fk_encuesta` **no** es `NOT NULL`. Una sesión existe sin encuesta; la encuesta no es su padre |
+>
+> **`registro_asistencia` es las dos cosas a la vez**, y es el caso más
+> interesante del esquema: tiene clave propia (`id_registro`) **y** una
+> restricción `UNIQUE (fk_sesion, fk_asistente)` que impide registrar dos
+> veces al mismo asistente en la misma sesión. Es puente por la regla y
+> maestro por su detalle.
 
 > **Qué significa que algo sea detalle.** Una `ponencia` **no existe sin su
 > `sesion`**. No se crea suelta y después se le busca padre.

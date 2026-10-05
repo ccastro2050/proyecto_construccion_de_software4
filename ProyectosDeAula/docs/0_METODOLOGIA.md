@@ -48,13 +48,44 @@ Las antiguas "entregas" ahora son **versiones** con spec kit propio:
 | Versión | Qué agrega (acumulativo) | Cierre |
 |---|---|---|
 | **v1** | CRUD de las **tablas sin FK** del módulo — API REST + Frontend funcionando | Criterios en verde + tag `v1` |
-| **v2** | CRUD de **TODAS las tablas** (FK con listas desplegables cargadas desde la API; tablas puente) | Regresión v1 + criterios + tag `v2` |
+| **v2** | CRUD de **TODAS las tablas** con **procedimientos almacenados**, **al menos UN disparador** funcionando, las FK como **listas desplegables** cargadas de la API, las **tablas puente** y las **maestro-detalle** de abajo | Regresión v1 + criterios + tag `v2` |
 | **v3** | **JWT + sesiones + control de acceso por roles** + CRUD de usuario/rol/rol_usuario (solo admin) | Regresión v1-v2 + criterios + tag `v3` |
 | **v4** | Aplicativo completo: **10 consultas multitabla** (4+ tablas c/u), **dashboard**, **imagen corporativa con su manual de marca**, páginas corporativas, responsive/PWA y **publicación** en servidor gratuito | Regresión total + criterios + tag `v4` |
 
-> **El detalle de la versión 2 —procedimientos almacenados, disparadores,
-> maestro-detalle y claves foráneas— está en
-> [VERSION_2.md](VERSION_2.md).** Léalo antes de empezarla.
+
+#### Lo que la v2 exige, fijado aquí para que no se negocie
+
+**1 · Al menos UN disparador, funcionando y comprobable.** No «uno escrito»:
+uno que se dispare. Se comprueba haciendo la operación **por la interfaz
+gráfica** y viendo que el dato cambió **sin que la API lo haya enviado**. Si
+el código manda el valor, el disparador no está demostrando nada.
+
+**2 · Las maestro-detalle de cátedras abiertas, todas.** Un **detalle** es el
+que no existe sin su padre: no se crea suelto y después se le busca a quién
+pertenece.
+
+| Maestro | Sus detalles |
+|---|---|
+| **`asistente`** | `documento_asistente` · `consentimiento_datos` |
+| **`encuesta`** | `pregunta` |
+| **`sesion`** | `enlace_registro` |
+| **`registro_asistencia`** | `respuesta_encuesta` |
+
+> **Y cada una en UNA SOLA PANTALLA:** al abrir el maestro se ve su detalle
+> ahí mismo y se le agregan renglones sin salir. No un menú aparte donde haya
+> que volver a elegir de qué maestro se trata.
+>
+> **Dos que parecen detalle y no lo son**, y se construyen distinto:
+> **`ponencia`** es una **tabla puente** entre `sesion` y `asistente` —su
+> clave es la terna, así que se asigna o se retira, no se edita—, y
+> **`sesion` → `encuesta`** es una **referencia opcional**: `fk_encuesta` no
+> es `NOT NULL`, de modo que la encuesta no es su padre.
+
+**3 · Todo el CRUD por procedimientos almacenados.** En el repositorio no
+queda SQL escrito a mano, y mucho menos armado concatenando texto.
+
+**El detalle completo —con los doce criterios de aceptación— está en
+[VERSION_2.md](VERSION_2.md).** Léalo antes de empezar la versión.
 
 ### 2.1 Calendario y evaluación del semestre (100%)
 
