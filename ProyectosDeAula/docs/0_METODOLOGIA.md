@@ -1,13 +1,10 @@
 # Proyecto de aula — Metodología de trabajo (SDD, versiones, Git y secretos)
 
 > **Léame primero.** Este documento define CÓMO se trabaja el proyecto de
-> aula — la misma metodología del ejemplo que construimos en clase. Lo QUE
-> construye cada equipo está en el documento de su módulo:
-> [Gestión Profesoral](modulo_gestion_profesoral.md) ·
-> [Investigación](modulo_investigacion.md) ·
-> [Innovación Curricular](modulo_innovacion_curricular.md) ·
-> [Mapa de Conocimiento](modulo_mapa_conocimiento.md) ·
-> [Proyecto Completo](proyecto_completo.md).
+> aula — la misma metodología del ejemplo que construimos en clase.
+>
+> **Lo QUE se construye es CÁTEDRAS ABIERTAS**, y está en su propio
+> repositorio: [proyecto_catedras2](https://github.com/ccastro2050/proyecto_catedras2). Es uno solo para todo el curso.
 
 ---
 
@@ -308,9 +305,9 @@ cobra la ventaja de ninguna.
   responsive (PWA si es posible); publicación en servidor gratuito según
   el stack (las opciones están en el documento de su módulo original y
   las valida el profesor).
-- **Datos iniciales**: las tablas de catálogo se cargan con los datos de
-  referencia del Excel del `Mapa_conocimiento/` (los conteos por tabla
-  están en el documento del módulo).
+- **Datos iniciales**: las tablas de catálogo se siembran con los datos de
+  referencia que trae el repositorio de [cátedras abiertas](https://github.com/ccastro2050/proyecto_catedras2) — no se
+  inventan, y cada fila tiene que poder decir de dónde salió.
 - **Stack**: cada equipo elige su lenguaje/framework con aprobación del
   profesor — la metodología y los contratos son los mismos en cualquier
   stack (esa es la gracia).

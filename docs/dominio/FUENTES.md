@@ -114,8 +114,7 @@ elicitación  →  reglas de negocio  →  disparadores y procedimientos
 | Carpeta | Qué es | Por qué está aquí |
 |---|---|---|
 | `ProyectosDeAula/` | La **metodología, las rúbricas y los módulos** del proyecto que hacen los estudiantes | Es el trabajo *de ellos*, no de este sistema. Vive aquí para que lo encuentren |
-| `ProyectosDeAula/Mapa_conocimiento/` | Formularios y modelo de **otro** dominio | Es el insumo de uno de los módulos del aula |
-| `ProyectosDeAula/db_scripts/` | Scripts para los proyectos de aula | Igual: son de ellos |
+| El proyecto de aula | **Cátedras abiertas**, en [su propio repositorio](https://github.com/ccastro2050/proyecto_catedras2) | Es el trabajo *de ellos*: aquí solo está el método |
 
 > **No confundir los dos proyectos es importante.** Este repositorio tiene **dos
 > cosas distintas adentro**: el sistema de facturación —que es el ejemplo— y la

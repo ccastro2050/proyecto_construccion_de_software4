@@ -409,5 +409,4 @@ seguir funcionando»: se corren.
 |---|---|
 | El método, el calendario y la rúbrica | [0_METODOLOGIA.md](0_METODOLOGIA.md) |
 | Las tablas de cada versión | `docs/spec_kit/versiones/0_mapa_versiones.md` **de su repositorio** |
-| Lo que su módulo tiene que hacer | los `modulo_*.md` de esta misma carpeta |
-| Cómo encajan los módulos | [proyecto_completo.md](proyecto_completo.md) |
+| Lo que hay que construir | **Cátedras abiertas**: [proyecto_catedras2](https://github.com/ccastro2050/proyecto_catedras2) |
