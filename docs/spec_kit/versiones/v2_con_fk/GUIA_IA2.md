@@ -391,7 +391,7 @@ cero**.
 | **Por eso el cierre empieza por la regresión** | Lo primero que hay que saber es si se rompió algo |
 | **Por eso la spec de la v2 solo describe el DELTA** | Lo acumulado está especificado en otra parte, y repetirlo es garantizar que un día las dos copias no coincidan |
 
-> **Y la trampa de esta versión, que vale la pena decir:** los cuatro errores
+> **Y lo que suele salir mal en esta versión, que vale la pena decir:** los cuatro errores
 > más probables de la v2 —el sobre deserializado mal, el alias que falta en
 > Dapper, el `JsonPropertyName` olvidado, la cadena vacía en vez de `null`—
 > **fallan en silencio**. No hay excepción ni error en el log: hay un dato

@@ -24,7 +24,7 @@
 
 ## 0. Lo que queda al terminar
 
-**Todas las tablas de su módulo operables desde la interfaz gráfica** —menos
+**Todas las tablas de cátedras abiertas operables desde la interfaz gráfica** —menos
 las del control de acceso, que son de la v3—, con:
 
 - **todo el CRUD pasando por procedimientos almacenados**,
@@ -36,7 +36,7 @@ las del control de acceso, que son de la v3—, con:
 
 ## 1. Primero se cierra la v1
 
-**La v1 son las tablas SIN clave foránea de su módulo**, y el ejemplo que les
+**La v1 son las tablas SIN clave foránea de cátedras abiertas**, y el ejemplo que les
 entregó el profesor construye **una sola**, de punta a punta, para mostrar el
 molde. Las demás son del equipo.
 
@@ -51,7 +51,7 @@ Cuáles son: la fila **v1** de `docs/spec_kit/versiones/0_mapa_versiones.md`
 
 ## 2. El alcance de la v2
 
-**Las tablas CON clave foránea de su módulo**, y entre ellas varias **tablas
+**Las tablas CON clave foránea de cátedras abiertas**, y entre ellas varias **tablas
 puente** —clave primaria compuesta, dos claves foráneas—.
 
 > Las tablas no se copian aquí: el mapa de **su** repositorio es el único sitio
@@ -61,31 +61,29 @@ puente** —clave primaria compuesta, dos claves foráneas—.
 
 ## 3. Las relaciones MAESTRO-DETALLE
 
-Las que cada módulo ya tiene en su esquema. **Busque las del suyo.**
+Las que **cátedras abiertas** ya tiene en su esquema. Son estas, y hay que
+cubrirlas todas:
 
-| Módulo | Maestro | Su detalle |
-|---|---|---|
-| Gestión Profesoral | **`docente`** | estudios_realizados · evaluacion_docente · experiecia · reconocimiento |
-|  | **`estudios_realizados`** | apoyo_profesoral · beca |
-| Innovación Curricular | **`programa`** | acreditacion · activ_academica · pasantia · premio · registro_calificado |
-|  | **`universidad`** | facultad |
-|  | **`facultad`** | programa |
-| Investigación | **`universidad`** | grupo_investigacion |
-|  | **`grupo_investigacion`** | semillero |
-|  | **`linea_investigacion`** | docente |
-| Mapa de Conocimiento | **`proyecto`** | producto |
-|  | **`tipo_producto`** | producto |
-|  | **`linea_investigacion`** | docente |
-| Cátedras | **`asistente`** | ponencia · documento_asistente · consentimiento_datos · clave_acceso |
-|  | **`encuesta`** | pregunta · respuesta_encuesta · sesion |
-|  | **`sesion`** | ponencia · enlace_registro |
+| Maestro | Su detalle |
+|---|---|
+| **`asistente`** | ponencia · documento_asistente · consentimiento_datos · clave_acceso |
+| **`encuesta`** | pregunta · respuesta_encuesta · sesion |
+| **`sesion`** | ponencia · enlace_registro |
 
-> **Qué significa que algo sea detalle.** Un `estudios_realizados` **no existe
-> sin su `docente`**. No se crea suelto y después se le busca padre.
+> **Qué significa que algo sea detalle.** Una `ponencia` **no existe sin su
+> `sesion`**. No se crea suelta y después se le busca padre.
 
-**Lo que se espera en la interfaz —sea cual sea la que elijan—:** al abrir un maestro, ver **su detalle ahí
-mismo** y poder agregarle renglones sin salir de la pantalla. No un menú aparte
-donde haya que volver a elegir de qué maestro se trata.
+**Lo que se espera en la interfaz —sea cual sea la que elijan—: UNA SOLA
+PANTALLA por maestro-detalle.** Al abrir un maestro se ve **su detalle ahí
+mismo** y se le agregan renglones sin salir de la pantalla. No un menú aparte
+donde haya que volver a elegir de qué maestro se trata, y no tres pantallas
+—listar, crear, ver— que son la misma cosa partida en pedazos.
+
+> **Así está hecho el ejemplo**, y conviene mirarlo antes de empezar: en
+> `bdfacturas`, la factura y sus renglones viven en un solo
+> `Facturas.razor`, que cambia de vista según lo que se esté haciendo. Antes
+> eran tres archivos; se juntaron justamente porque partirlo no ayudaba a
+> entenderlo.
 
 > **Y cuando se registran varios renglones de una, van en UN SOLO ENVÍO.** Tres
 > renglones no son cuatro peticiones: si la tercera fallara quedaría medio
@@ -111,29 +109,63 @@ tablas, pasan por un procedimiento almacenado.**
 ### Listar
 
 ```sql
-CREATE OR REPLACE FUNCTION sp_listar_docente()
-RETURNS SETOF docente
-LANGUAGE sql
+CREATE OR REPLACE PROCEDURE sp_listar_catedra(
+    INOUT p_resultado JSON DEFAULT NULL)
+LANGUAGE plpgsql
 AS $$
+BEGIN
     -- si la tabla tiene `activo`, EL LISTADO LO FILTRA
-    SELECT * FROM docente WHERE activo ORDER BY cedula;
+    SELECT COALESCE(json_agg(row_to_json(c)), '[]'::json)
+      INTO p_resultado
+      FROM (SELECT id_catedra, id_evento_asis, nombre, fk_tipo_evento
+              FROM catedra
+             WHERE activo
+             ORDER BY nombre) c;
+END;
 $$;
 ```
+
+> **Es `PROCEDURE`, no `FUNCTION`.** Lo que el curso pide son procedimientos
+> almacenados, y en PostgreSQL se llaman con `CALL`. El resultado sale por un
+> parámetro `INOUT` en JSON — así el contrato es **un solo valor** y la API lo
+> deserializa sin importar cuántas filas haya.
 
 ### Crear — devolviendo la fila nueva
 
 ```sql
-CREATE OR REPLACE FUNCTION sp_crear_docente(
-    p_cedula INT, p_nombres VARCHAR, p_apellidos VARCHAR)
-RETURNS docente
-LANGUAGE sql
+CREATE OR REPLACE PROCEDURE sp_crear_catedra(
+    IN    p_id_evento_asis CHAR(9),
+    IN    p_nombre         VARCHAR,
+    IN    p_fk_tipo_evento CHAR(4),
+    INOUT p_resultado      JSON DEFAULT NULL)
+LANGUAGE plpgsql
 AS $$
-    -- RETURNING devuelve la fila COMO QUEDO GUARDADA
-    INSERT INTO docente (cedula, nombres, apellidos)
-    VALUES (p_cedula, p_nombres, p_apellidos)
-    RETURNING *;
+DECLARE
+    v_id BIGINT;
+BEGIN
+    -- RETURNING trae la clave que acaba de generar el motor
+    INSERT INTO catedra (id_evento_asis, nombre, fk_tipo_evento)
+    VALUES (p_id_evento_asis, p_nombre, p_fk_tipo_evento)
+    RETURNING id_catedra INTO v_id;
+
+    -- y se devuelve la fila COMO QUEDO GUARDADA
+    SELECT row_to_json(c) INTO p_resultado
+      FROM (SELECT * FROM catedra WHERE id_catedra = v_id) c;
+END;
 $$;
 ```
+
+Llamado contra la base de datos de cátedras, esto responde:
+
+```json
+{"id_catedra":5,"id_evento_asis":"000000123","nombre":"Cátedra de prueba",
+ "nombre_asis":"Cátedra de prueba","fk_tipo_evento":"CAAB",
+ "fk_dependencia":null,"activo":true,"creado_en":"2026-10-05T04:20:26Z"}
+```
+
+> **Mire lo que viene de más:** `nombre_asis` lo calculó la base de datos,
+> `activo` y `creado_en` son valores por defecto. Nada de eso lo mandó el
+> formulario — y por eso se devuelve la fila guardada y no la recibida.
 
 > **El procedimiento devuelve la fila COMO QUEDÓ GUARDADA**, no como la mandó
 > el formulario. Así su API responde con los valores por defecto que puso la
@@ -159,11 +191,11 @@ $$;
 ## 5. AL MENOS UN DISPARADOR — elija uno de estos
 
 **Se exige mínimo uno, funcionando y comprobable.** Cinco propuestas; **elija
-al menos una**, o proponga la suya si su módulo pide otra cosa.
+al menos una**, o proponga la suya si el dominio pide otra cosa.
 
 | | Propuesta | Qué resuelve |
 |---|---|---|
-| **A** | **Contador en el maestro**: `docente.total_estudios` se mantiene solo | Saber cuántos hijos tiene sin contar en cada consulta |
+| **A** | **Contador en el maestro**: `sesion.total_ponencias` se mantiene solo | Saber cuántos hijos tiene sin contar en cada consulta |
 | **B** | **Sello de modificación**: `fecha_modificacion` se pone sola en cada `UPDATE` | Nadie se puede olvidar de actualizarla |
 | **C** | **Bitácora**: lo que se retira queda copiado en una tabla `bitacora` | Saber qué se retiró y cuándo |
 | **D** | **Validación que un `CHECK` no puede hacer**: que la fecha del detalle caiga dentro del rango del maestro | Un `CHECK` solo ve su propia fila; esto mira otra tabla |
@@ -172,22 +204,34 @@ al menos una**, o proponga la suya si su módulo pide otra cosa.
 ### La propuesta A, completa
 
 ```sql
-ALTER TABLE docente ADD COLUMN total_estudios INT DEFAULT 0;
+ALTER TABLE sesion ADD COLUMN total_ponencias INT NOT NULL DEFAULT 0;
 
-CREATE OR REPLACE FUNCTION fn_contar_estudios() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION fn_contar_ponencias() RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE docente SET total_estudios = (
-        SELECT COUNT(*) FROM estudios_realizados
-        WHERE docente = COALESCE(NEW.docente, OLD.docente) AND activo
-    )
-    WHERE cedula = COALESCE(NEW.docente, OLD.docente);
+    UPDATE sesion
+       SET total_ponencias = (SELECT COUNT(*) FROM ponencia
+                               WHERE fk_sesion = COALESCE(NEW.fk_sesion, OLD.fk_sesion))
+     WHERE id_sesion = COALESCE(NEW.fk_sesion, OLD.fk_sesion);
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_contar_estudios
-AFTER INSERT OR UPDATE OR DELETE ON estudios_realizados
-FOR EACH ROW EXECUTE FUNCTION fn_contar_estudios();
+CREATE TRIGGER trg_contar_ponencias
+AFTER INSERT OR UPDATE OR DELETE ON ponencia
+FOR EACH ROW EXECUTE FUNCTION fn_contar_ponencias();
+```
+
+> **Aquí sí es `FUNCTION`, y no es una contradicción:** PostgreSQL **no acepta
+> un procedimiento como cuerpo de un disparador**. El disparador llama a una
+> función que devuelve `TRIGGER`; esa es la única forma. Los **procedimientos**
+> son para lo que llama la API.
+
+**Probado contra el esquema de cátedras**, insertando una ponencia y borrándola:
+
+```
+antes:        total_ponencias = 0
+tras insertar: total_ponencias = 1   ← nadie lo envió
+tras borrar:   total_ponencias = 0
 ```
 
 > **Fíjese en que escucha el `INSERT`, el `UPDATE` **y** el `DELETE`.** Si su
@@ -212,36 +256,36 @@ la API**, que **muestra el nombre** y **manda la clave**.
 
 ### El ejemplo
 
-Al crear un **`estudios_realizados`** hay que decir de qué **`docente`** es.
+Al crear una **`ponencia`** hay que decir de qué **`sesion`** es.
 
 | | |
 |---|---|
-| **Lo que la persona VE** | `nombres` y `apellidos` del docente |
-| **Lo que se MANDA** | `cedula`, la clave |
-| **De dónde salen las opciones** | De la API: `GET /api/docente` |
+| **Lo que la persona VE** | el `titulo` de la sesión |
+| **Lo que se MANDA** | `id_sesion`, la clave |
+| **De dónde salen las opciones** | De la API: `GET /api/sesion` |
 
 ```html
-<!-- el desplegable: muestra el nombre, manda la clave -->
-<select name="docente">
+<!-- el desplegable: muestra el título, manda la clave -->
+<select name="fk_sesion">
   <option value="">— seleccione —</option>
-  <!-- una opción por cada fila que devolvió GET /api/docente:
+  <!-- una opción por cada fila que devolvió GET /api/sesion:
        el TEXTO es lo que la persona lee, el value es lo que viaja -->
-  <option value="1017245">Ana Torres Gómez</option>
-  <option value="1098332">Carlos Pérez Mejía</option>
+  <option value="2">Sesión 1: qué son los datos</option>
+  <option value="1">Sesión 2: datos y sociedad</option>
 </select>
 ```
 
-Si la persona elige **Ana Torres Gómez**, lo que viaja es su clave:
+Si la persona elige **Sesión 1: qué son los datos**, lo que viaja es su clave:
 
 ```json
 {
-  "docente": 1017245
+  "fk_sesion": 2
 }
 ```
 
-> **Eso es lo que hay que ver:** en la pantalla se lee «Ana Torres Gómez»; en
-> la petición viaja `1017245`. La persona reconoce nombres; la base de datos necesita
-> claves.
+> **Eso es lo que hay que ver:** en la pantalla se lee «Sesión 1: qué son los
+> datos»; en la petición viaja `2`. La persona reconoce títulos; la base de
+> datos necesita claves.
 >
 > **Y si su borrado es lógico, el desplegable solo ofrece los ACTIVOS**, porque
 > el listado del que sale ya los filtra. Ofrecer un padre retirado es ofrecer
@@ -388,7 +432,7 @@ seguir funcionando»: se corren.
 
 ---
 
-## 12. Las trampas de esta versión
+## 12. Lo que suele salir mal en esta versión
 
 | | Qué pasa | Cómo se nota |
 |---|---|---|
