@@ -104,9 +104,13 @@ h2 {
 
 .campos input:focus,
 .campos select:focus {
-    border-color: #86b7fe;
+    /* EL FOCO VA EN AZUL CORDILLERA, no en el azul de Bootstrap.
+       Dos razones: la hoja de marca ya definia un foco distinto —ambar— y
+       tener dos es tener ninguno; y el ambar da 2.09 de contraste cuando
+       WCAG pide 3.0 para un indicador de interfaz. El azul da 8.76. */
+    border-color: var(--azul-cordillera);
     outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    box-shadow: 0 0 0 .25rem rgba(var(--azul-cordillera-rgb), .25);
 }
 
 .campos input:disabled {
@@ -157,7 +161,10 @@ button:hover {
 
 button:focus-visible {
     outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+    /* EL AZUL DE LA MARCA, no el de Bootstrap. rgba(13,110,253) es #0d6efd:
+       se colo al copiar el estilo, y un grep de #rrggbb NO lo encuentra
+       porque esta escrito en rgba. Son 23,73,91 = #17495B. */
+    box-shadow: 0 0 0 .25rem rgba(var(--azul-cordillera-rgb), .25);
 }
 
 button:disabled {
@@ -172,8 +179,9 @@ button.primario {
 }
 
 button.primario:hover {
-    --color-fondo: #0b5ed7;
-    --color-borde: #0a58ca;
+    /* El hover del primario sale de la marca, no del azul de Bootstrap. */
+    --color-fondo: var(--azul-cordillera-oscuro);
+    --color-borde: var(--azul-cordillera-oscuro);
 }
 
 button.peligro {
@@ -532,4 +540,59 @@ a.card:hover {
 
 a.card:hover .card-title {
     color: var(--bs-primary);
+}
+
+/* --------------------------------------------------------------------------
+   v4 — LAS BARRAS DEL TABLERO
+
+   Un grafico de barras, sin libreria: cada barra es un `div` con el `width` en
+   porcentaje. Se ve exactamente lo que el navegador va a pintar.
+
+   La regla del proyecto es «sin CDN», y traer una libreria de graficos desde
+   el repositorio serian 200 KB para dibujar rectangulos. Una libreria se
+   justifica cuando hace falta interaccion, ejes o series temporales — nada de
+   eso hay aqui.
+   -------------------------------------------------------------------------- */
+.barra-fila {
+    display: grid;
+    grid-template-columns: minmax(0, 9rem) 1fr auto;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .5rem;
+    font-size: .875rem;
+}
+
+.barra-nombre {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--bs-body-color);
+}
+
+.barra-pista {
+    height: 1.125rem;
+    background: var(--bs-tertiary-bg);
+    border-radius: var(--bs-border-radius-sm);
+    overflow: hidden;
+}
+
+.barra {
+    height: 100%;
+    background: var(--bs-primary);
+    border-radius: var(--bs-border-radius-sm);
+    transition: width .35s ease;
+}
+
+.barra-verde   { background: var(--bs-success); }
+.barra-naranja { background: var(--bs-warning); }
+.barra-morada  { background: var(--azul-cordillera); }   /* era el morado de Bootstrap */
+
+.barra-valor {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+    .barra-fila { grid-template-columns: minmax(0, 6rem) 1fr auto; font-size: .8125rem; }
 }

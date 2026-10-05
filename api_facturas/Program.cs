@@ -307,7 +307,7 @@ app.MapGet("/", () => Results.Json(new
     mensaje = "API Facturas funcionando",
     version = "v4",
     motor,      // v4: a cuál motor le está hablando la API (el interruptor)
-    contratos = "docs/spec_kit/versiones/v5_otros_motores/6_contracts.md"
+    contratos = "docs/spec_kit/versiones/v4_aplicativo/6_contracts.md"
 }))
    // El diagnostico se queda ABIERTO, y es deliberado: sirve para
    // saber si la API esta viva, y para eso no hace falta identificarse.

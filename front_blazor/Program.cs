@@ -153,8 +153,7 @@ builder.Services.AddHttpClient<ServicioRutaRol>(cliente =>
     cliente.Timeout = TimeSpan.FromSeconds(10);
 });
 
-// v4 — las diez consultas del tablero. Mismo patron que los demas:
-// el front NO sabe SQL, le pide a la API y dibuja lo que vuelva.
+// v4 — las diez consultas del tablero.
 builder.Services.AddHttpClient<ServicioConsultas>(cliente =>
 {
     cliente.BaseAddress = new Uri(urlApi);
