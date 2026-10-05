@@ -56,7 +56,7 @@ permiso sobre `interfaz.usuarios`.
 
 ## 2. La contraseña no se guarda: se guarda su huella
 
-**Una contraseña en la base es una contraseña perdida.** Quien lea la tabla
+**Una contraseña en la base de datos es una contraseña perdida.** Quien lea la tabla
 —por una copia de seguridad mal guardada, por una inyección SQL, por un
 empleado— se las lleva todas. Y como la gente reutiliza contraseñas, se lleva
 también las de otros sistemas.
@@ -143,7 +143,7 @@ Parece eficiente guardar los permisos en el token y no volver a consultarlos.
 
 ```
 09:00  Ana recibe un token que dice: roles = [administrador]
-09:30  se le quita el rol de administrador en la base
+09:30  se le quita el rol de administrador en la base de datos
 09:31  Ana sigue entrando: su token todavía dice que lo es
        …hasta que venza, dos horas después
 ```
@@ -267,6 +267,6 @@ el menú no muestra /usuarios   ·   pero esto responde 200:
    fallo más frecuente en aplicaciones reales es justamente el de §5.
    <https://owasp.org/Top10/A01_2021-Broken_Access_Control/>
 8. **En este repositorio:** `verificar_acceso_ruta` y las tablas del acceso en
-   [`db/bdfacturas_postgres.sql`](../db/bdfacturas_postgres.sql); los diez
+   [`db/bdfacturas_postgres.sql`](../../db/bdfacturas_postgres.sql); los diez
    criterios en
-   [la spec de la v3](spec_kit/versiones/v3_control_acceso/2_spec.md).
+   [la spec de la v3](../spec_kit/versiones/v3_control_acceso/2_spec.md).

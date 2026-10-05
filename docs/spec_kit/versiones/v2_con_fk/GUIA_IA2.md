@@ -175,7 +175,7 @@ menú.)
 
 - [ ] `docs\spec_kit\versiones\v2_con_fk\` tiene **8** archivos `.md`.
 - [ ] Su v1 **arranca y su prueba de humo pasa**.
-- [ ] La base tiene las **12** tablas, los **procedimientos** y el
+- [ ] La base de datos tiene las **12** tablas, los **procedimientos** y el
       **disparador** — no solo las seis de la v1.
 
 ```powershell
@@ -223,7 +223,7 @@ QUÉ CONSTRUYE LA VERSIÓN 2 — las SEIS tablas CON clave foránea:
 Y un recurso más, que no es una tabla nueva:
 
   usuario_con_roles    el usuario Y sus roles en UNA operación, con los cinco
-                       procedimientos que la base ya trae. Ruta:
+                       procedimientos que la base de datos ya trae. Ruta:
                        api/usuario-con-roles
 
 Con la v2 están las 12 tablas de bdfacturas.
@@ -251,7 +251,7 @@ REGLAS DE TRABAJO (no negociables):
 
 4. Cumple 6_contracts.md al pie de la letra. En particular:
    - La API NUNCA calcula subtotales, total ni stock: eso lo hacen los
-     procedimientos y el disparador de la base.
+     procedimientos y el disparador de la base de datos.
    - Al crear una factura, el cuerpo NO lleva total ni subtotales ni fecha.
    - api/rol-usuario lleva GUION; api/rutarol NO lo lleva.
    - El 409 tiene tres causas: clave foránea inexistente, pareja repetida en
@@ -333,7 +333,7 @@ ESPERA MI CONFIRMACIÓN antes de tocar un solo archivo.
 QUÉ CONSTRUYE LA VERSIÓN 2 — las seis tablas CON clave foránea: cliente,
 vendedor, factura (+ productosporfactura), rol_usuario y rutarol. Más el
 recurso usuario_con_roles, que opera usuario y rol_usuario juntas con los
-cinco procedimientos de la base. Con la v2 están las 12 tablas.
+cinco procedimientos de la base de datos. Con la v2 están las 12 tablas.
 
 REGLAS (no negociables):
 

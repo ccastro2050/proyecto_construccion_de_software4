@@ -94,7 +94,7 @@ versión que el contrato era incómodo de pintar.
 **No incluye (y es deliberado — ver [mapa de versiones](../0_mapa_versiones.md)):**
 - **Las SEIS tablas con clave foránea** —`cliente`, `vendedor`, `factura`,
   `productosporfactura`, `rol_usuario`, `rutarol`—: son la **v2**. Existen en
-  la base desde la v1 (Artículo 5), pero el código de esta versión **no las
+  la base de datos desde la v1 (Artículo 5), pero el código de esta versión **no las
   puede nombrar**.
 - **JWT, sesiones y control de acceso por rol**: es la **v3**. Ojo: el CRUD de
   `usuario` y `rol` **sí es de esta versión** —no tienen FK—; lo que llega en
@@ -217,7 +217,7 @@ inexistente → 404.
 
 > **Qué es esta sección:** el registro de las ambigüedades detectadas ANTES
 > de planear, con la respuesta que se acordó y su razón. Es **la compuerta
-> 1** del método (ver [SDD_SPECKIT](../../../SDD_SPECKIT.md)): mientras
+> 1** del método (ver [SDD_SPECKIT](../../../conceptos/SDD_SPECKIT.md)): mientras
 > quede un `[NECESITA ACLARACIÓN: …]` en los requisitos de arriba, esta
 > versión no pasa a la planeación.
 >

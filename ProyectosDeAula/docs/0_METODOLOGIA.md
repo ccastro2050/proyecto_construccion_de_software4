@@ -124,7 +124,7 @@ prompts que llevaron de la spec al código estén entregados.
 Escribir los documentos no basta: lo que separa un spec kit de una carpeta
 con archivos son **tres puntos donde el equipo se detiene, revisa y no
 sigue hasta que quede en verde**. Están explicados con ejemplos en el
-[SDD_SPECKIT.md del ejemplo de clase](https://github.com/ccastro2050/proyecto_aplicacion_y_servicios_web1/blob/main/docs/SDD_SPECKIT.md).
+[SDD_SPECKIT.md del ejemplo de clase](https://github.com/ccastro2050/proyecto_aplicacion_y_servicios_web1/blob/main/docs/conceptos/SDD_SPECKIT.md).
 
 | | Dónde vive | Qué pregunta | Si falla |
 |---|---|---|---|
@@ -279,7 +279,7 @@ De ahí salen seis consecuencias concretas:
 **Sí existen APIs genéricas en producción**, y buenas: PostgREST, Hasura, los
 paneles de administración que exponen tablas. La diferencia es que en esos
 casos **lo genérico es el producto entero**: publican un esquema completo
-—generado de la base—, tienen su modelo de permisos por fila y por columna, y
+—generado de la base de datos—, tienen su modelo de permisos por fila y por columna, y
 su contrato *es* «esto expone la base de datos».
 
 Lo que no funciona es **la mitad**: una API de dominio, escrita a mano, con un

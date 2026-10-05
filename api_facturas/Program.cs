@@ -6,7 +6,7 @@
 // una petición no valida (422), y se encienden las rutas.
 //
 // El recorrido completo de una petición está explicado en
-// docs/FLUJO_DE_UNA_PETICION.md.
+// docs/conceptos/FLUJO_DE_UNA_PETICION.md.
 // ============================================================
 
 // "using" trae tipos de otros espacios de nombres para poder usarlos:

@@ -26,7 +26,7 @@
       nada**.
 
 > **Los seis están en
-> [CONCEPTOS_CONTROL_DE_ACCESO.md](../../../CONCEPTOS_CONTROL_DE_ACCESO.md).**
+> [CONCEPTOS_CONTROL_DE_ACCESO.md](../../../conceptos/CONCEPTOS_CONTROL_DE_ACCESO.md).**
 > Esta versión es la única del curso en la que entender mal un concepto produce
 > un sistema **que parece funcionar**.
 
@@ -69,8 +69,8 @@
 
 - [ ] La v2 **arranca y su prueba de humo pasa**.
 - [ ] Se sabe que esta versión necesita **`docker compose down -v`** una vez, y
-      por qué: el script de la base solo corre cuando el volumen nace.
-- [ ] `verificar_acceso_ruta` **existe** en la base: se comprobó con `\df`, no
+      por qué: el script de la base de datos solo corre cuando el volumen nace.
+- [ ] `verificar_acceso_ruta` **existe** en la base de datos: se comprobó con `\df`, no
       se supuso.
 - [ ] Las **15 rutas** y los **5 roles** están sembrados: se comprobó con un
       `SELECT`.

@@ -314,7 +314,7 @@ controlador, y su interfaz. Que se repitan es el punto del ejercicio.
 DOS COSAS QUE CAMBIAN SEGUN LA TABLA, y no se pueden calcar:
 
   · `rol` y `ruta` tienen llave SERIAL: el POST NO manda el id —lo genera
-    la base—, asi que su peticion de creacion no lo lleva, y su modelo NO
+    la base de datos—, asi que su peticion de creacion no lo lleva, y su modelo NO
     marca el Id como `required`. Si lo exige, el POST tendria que
     inventarle una llave.
   · En `ruta`, la COLUMNA se llama `ruta` y la PROPIEDAD tiene que
@@ -481,7 +481,7 @@ controlador, y su interfaz. Que se repitan es el punto del ejercicio.
 DOS COSAS QUE CAMBIAN SEGUN LA TABLA, y no se pueden calcar:
 
   · `rol` y `ruta` tienen llave SERIAL: el POST NO manda el id —lo genera
-    la base—, asi que su peticion de creacion no lo lleva, y su modelo NO
+    la base de datos—, asi que su peticion de creacion no lo lleva, y su modelo NO
     marca el Id como `required`. Si lo exige, el POST tendria que
     inventarle una llave.
   · En `ruta`, la COLUMNA se llama `ruta` y la PROPIEDAD tiene que

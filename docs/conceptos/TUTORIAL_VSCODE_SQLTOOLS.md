@@ -9,7 +9,7 @@
 >
 > **Prerrequisitos:** VS Code en Windows y el proyecto corriendo
 > (`docker compose up -d --build` desde la raíz — ver el
-> [README](../README.md)). PostgreSQL queda publicado en `localhost:15445`.
+> [README](../../README.md)). PostgreSQL queda publicado en `localhost:15445`.
 
 ---
 

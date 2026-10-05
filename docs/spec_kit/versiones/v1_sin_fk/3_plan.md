@@ -193,7 +193,7 @@ el `docker-compose.yml` de la raíz, comentado.
 
 ## 6. Chequeo de constitución
 
-> **La compuerta 2** del método (ver [SDD_SPECKIT](../../../SDD_SPECKIT.md)):
+> **La compuerta 2** del método (ver [SDD_SPECKIT](../../../conceptos/SDD_SPECKIT.md)):
 > antes de pasar a `8_tasks.md` se revisa la
 > [constitución](../../1_constitution.md) **artículo por artículo**. Si algo
 > no cumple, o se corrige el plan, o se enmienda la constitución. Nunca se

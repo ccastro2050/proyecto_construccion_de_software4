@@ -14,14 +14,14 @@
 > | **El orden** | [8_tasks.md](8_tasks.md) — **once** fases |
 > | **Los formatos** | [6_contracts.md](6_contracts.md) |
 > | **Cómo se verifica** | [7_quickstart.md](7_quickstart.md) |
-> | **Los conceptos, para USTED** | [CONCEPTOS_CONTROL_DE_ACCESO.md](../../../CONCEPTOS_CONTROL_DE_ACCESO.md) |
+> | **Los conceptos, para USTED** | [CONCEPTOS_CONTROL_DE_ACCESO.md](../../../conceptos/CONCEPTOS_CONTROL_DE_ACCESO.md) |
 
 ---
 
 ## 0. Antes de abrir la IA: entienda los seis conceptos
 
 **Esta vez no es opcional.** Lea
-[CONCEPTOS_CONTROL_DE_ACCESO.md](../../../CONCEPTOS_CONTROL_DE_ACCESO.md) y
+[CONCEPTOS_CONTROL_DE_ACCESO.md](../../../conceptos/CONCEPTOS_CONTROL_DE_ACCESO.md) y
 firme la sección B de [9_checklist.md](9_checklist.md).
 
 **Por qué:** en las otras versiones, si la IA se equivoca, algo no compila o no
@@ -120,7 +120,7 @@ QUÉ ES LA VERSIÓN 3 — EL CONTROL DE ACCESO, y lo primero es lo que NO es:
 
   La v3 le pone LA PUERTA a lo que ya existe. Tres cosas, en este orden:
 
-  1. LA CONTRASEÑA deja de estar en claro en la semilla de la base: las ocho
+  1. LA CONTRASEÑA deja de estar en claro en la semilla de la base de datos: las ocho
      filas con hash de bcrypt costo 12. Y las contraseñas en claro quedan
      escritas en el quickstart, porque del hash no se vuelve a la clave y sin
      saberlas no se puede probar nada. El hash ya funcionaba desde antes
@@ -132,7 +132,7 @@ QUÉ ES LA VERSIÓN 3 — EL CONTROL DE ACCESO, y lo primero es lo que NO es:
 
   3. EL PERMISO: cada operación comprueba si el rol de quien pide puede entrar
      a esa interfaz, y responde 403 si no. Lo resuelve el procedimiento
-     almacenado verificar_acceso_ruta, que YA EXISTE en la base y cruza
+     almacenado verificar_acceso_ruta, que YA EXISTE en la base de datos y cruza
      usuario -> rol_usuario -> rutarol. NO armes ese JOIN en C#.
 
 REGLAS DE TRABAJO (no negociables):
@@ -153,7 +153,7 @@ REGLAS DE TRABAJO (no negociables):
    primera lo demás es decoración; sin la segunda no hay a quién preguntarle
    nada; sin la tercera el sistema sabe quién entra y le deja hacer todo.
 
-4. LOS PERMISOS NO VAN DENTRO DEL TOKEN. Se consultan contra la base EN CADA
+4. LOS PERMISOS NO VAN DENTRO DEL TOKEN. Se consultan contra la base de datos EN CADA
    PETICIÓN, llamando a verificar_acceso_ruta. Si fueran en el token, quitarle
    un permiso a un rol no surtiría efecto hasta que el token venciera — y el
    criterio 7 dice justamente que sí tiene que surtir efecto. El token lleva
@@ -217,7 +217,7 @@ Fase 0.
 1. **Pegue y diga "listo".** Un archivo por turno.
 2. **Proteja la v1 y la v2.** Lo único que crece está en la lista de A.2.
 3. **Cuando la IA diga «listo» en la fase 5, no le crea: pruebe el criterio
-   7.** Quítele un permiso a un rol en la base y pida otra vez con el mismo
+   7.** Quítele un permiso a un rol en la base de datos y pida otra vez con el mismo
    token. Es la prueba de que los permisos no quedaron en el token.
 4. **Si responde en otro lenguaje o pierde el hilo, reinicie el chat.**
 5. **El cierre es triple:** regresión de la v1, regresión de la v2, y los diez
@@ -257,7 +257,7 @@ QUÉ CONSTRUYE: (1) POST /api/sesion que devuelve un JWT, con las credenciales
 en el cuerpo y el MISMO 401 para el correo inexistente y la contraseña
 equivocada; (2) el token exigido en los 12 recursos, con 401 si falta;
 (3) el permiso por operación con el procedimiento verificar_acceso_ruta —que
-YA EXISTE en la base— y 403 si el rol no puede; (4) la interfaz de
+YA EXISTE en la base de datos— y 403 si el rol no puede; (4) la interfaz de
 identificación y el menú armado por permisos.
 
 REGLAS (no negociables):
