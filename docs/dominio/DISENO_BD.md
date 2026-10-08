@@ -204,8 +204,8 @@ docker compose exec postgres /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa `
 
 | Qué | Dónde |
 |---|---|
-| El script completo | [`db/bdfacturas_sqlserver.sql`](../../db/bdfacturas_sqlserver.sql) |
-| El mismo esquema en SQL Server | [`db/bdfacturas_postgres.sql`](../../db/bdfacturas_postgres.sql) |
+| El script completo —**PostgreSQL**, el motor de la v1 a la v4 | [`db/bdfacturas_postgres.sql`](../../db/bdfacturas_postgres.sql) |
+| El mismo esquema en **SQL Server**, para la v5 | [`db/bdfacturas_sqlserver.sql`](../../db/bdfacturas_sqlserver.sql) |
 | Las reglas que defiende | [`REGLAS_DE_NEGOCIO.md`](REGLAS_DE_NEGOCIO.md) |
 | Los datos sembrados | [`DATOS_DE_PRUEBA.md`](DATOS_DE_PRUEBA.md) |
 | El modelo por versión | el `5_data_model.md` de cada una |

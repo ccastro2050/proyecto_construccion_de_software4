@@ -199,17 +199,24 @@ sistema que decide CUÁL IMPLEMENTACIÓN DE REPOSITORIO se usa.**
 > por eso son los únicos que pasan por la fábrica.
 
 > **Ésa es la prueba del principio abierto/cerrado, y está MEDIDA con un
-> `diff`:** agregar SQL Server fue **18 archivos y 1 373 líneas**, de los cuales
-> 12 son repositorios nuevos. Y sobre `Controllers/` y `Servicios/` el `diff`
+> `diff`:** agregar SQL Server fueron **12 archivos y 1 232 líneas**, y los
+> doce son repositorios nuevos. Sobre `Controllers/` y `Servicios/` el `diff`
 > sale **vacío**.
 >
 > ```powershell
-> git diff --stat v4..v5 -- api_facturas/Controllers api_facturas/Servicios
+> # los tags de este repositorio son del mapa VIEJO, donde el motor nuevo
+> # era la v4: el salto que agregó SQL Server es v3..v4
+> git diff --stat v3..v4 -- api_facturas/Controllers api_facturas/Servicios
+> git diff --numstat v3..v4 | Select-String SqlServer
 > ```
 >
-> **Si hubiera que tocarlos, las capas estaban mal hechas.** Nótese que el tag
-> es `v4` y no `v5`: los tags son del mapa de versiones viejo, donde el motor era
-> la v4. Hoy ese trabajo es la v5.
+> El primero no imprime **nada** —ni una línea cambiada en esas dos capas— y
+> el segundo lista los doce archivos con sus líneas. **Si hubiera que tocar
+> los controladores o los servicios, las capas estaban mal hechas.**
+>
+> **Y ojo con el nombre de la versión:** hoy ese trabajo es la **v5** del mapa
+> nuevo. No hay tag `v5` todavía, así que el `diff` se pide contra `v3..v4` —
+> está explicado en [`CRONOGRAMA.md`](CRONOGRAMA.md).
 
 ---
 

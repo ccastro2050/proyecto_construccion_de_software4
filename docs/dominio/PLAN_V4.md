@@ -135,7 +135,7 @@ await Task.WhenAll(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 
 | | Qué pasa | Cómo se nota |
 |---|---|---|
-| **1 · El tipo que el compilador no ve** | `COUNT()` devuelve `bigint` en SQL Server e `int` en PostgreSQL. Un modelo con `int` **revienta al deserializar** en uno de los dos motores | Se cae, y se arregla. **Este es el bueno** |
+| **1 · El tipo que el compilador no ve** | `COUNT()` y `SUM(entero)` devuelven **`bigint`** —64 bits— en **los dos** motores. Un modelo con `int` **revienta al deserializar**: *«A parameterless default constructor or one matching signature … System.Int64 unidades»* | Se cae, y se arregla. **Este es el bueno**: avisa |
 | **2 · El promedio truncado** | `SUM(decimal) / COUNT(*)` con enteros **trunca** y no se queja | Un ticket promedio de 1 250 000 que sale 1 250 000**0** menos. **Este es el caro**: entrega un número equivocado que parece bien |
 | **3 · Las diez en fila** | Se piden una tras otra. Funciona | El tablero tarda diez veces lo necesario, y nadie lo llama error |
 | **4 · Cero filas tratado como falla** | `productos-sin-vender` puede venir vacía — y eso **es** la respuesta | Un «error al cargar» donde debía decir «todos los productos se han vendido» |
@@ -145,6 +145,26 @@ await Task.WhenAll(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 > minutos; el 2 pasa las pruebas, se ve bien en la pantalla, y lleva un número
 > equivocado a una decisión. En la sustentación es la pregunta más justa que se
 > puede hacer sobre esta versión: *¿por qué su promedio es `decimal` y no `int`?*
+>
+> ### Y una corrección que vale la pena contar, porque se descubrió midiendo
+>
+> Este documento decía antes que `COUNT()` devuelve `int` en PostgreSQL y
+> `bigint` en SQL Server, o sea que el tropiezo 1 solo aparecía **en uno de
+> los dos motores**. **Es falso**, y se comprueba en diez segundos:
+>
+> ```powershell
+> docker exec proyecto_construccion_de_software4-postgres-1 `
+>   psql -U postgres -d bdfacturas_postgres_local `
+>   -c "SELECT pg_typeof(COUNT(*)), pg_typeof(SUM(cantidad)) FROM productosporfactura;"
+> ```
+>
+> Responde **`bigint` y `bigint`**. Los dos motores devuelven 64 bits, el
+> tropiezo aparece en los dos, y el código ya lo decía sin que nadie lo
+> leyera: el `CAST(… AS INT)` está en los **dos** repositorios de consultas
+> —13 veces en el de PostgreSQL y 14 en el de SQL Server—, no en uno.
+>
+> **Lo que un documento afirma sobre un motor se comprueba preguntándole al
+> motor.** Esa es la lección, y es más útil que el dato.
 
 ---
 

@@ -349,6 +349,55 @@ de aceptación (commit + tag). Mapa completo:
 | [Principios ACID](docs/conceptos/PRINCIPIOS_ACID.md) | Las 4 garantías transaccionales, por qué una facturación las exige |
 | [Conceptos de Docker](docs/conceptos/CONCEPTOS_DOCKER.md) | Imagen, contenedor, volumen, compose (con el del proyecto explicado línea por línea) y por qué NO se necesita Kubernetes |
 
+
+## 6. El dominio: qué ES este sistema
+
+Los de arriba explican **los conceptos**. Estos 18, en
+[`docs/dominio/`](docs/dominio/), describen **este sistema concreto** — y están
+escritos desde el código, el esquema y la API corriendo, no de memoria.
+
+| Documento | Qué cubre |
+|---|---|
+| [**PLAN_DE_TRABAJO**](docs/dominio/PLAN_DE_TRABAJO.md) | **El acta donde los tres acuerdan quién hace qué**: quién integra, qué herramienta usa cada uno, cómo se reparten el código **y los documentos del spec kit** |
+| [GLOSARIO](docs/dominio/GLOSARIO.md) | Cada palabra del dominio, y las que se confunden entre sí |
+| [REGLAS_DE_NEGOCIO](docs/dominio/REGLAS_DE_NEGOCIO.md) | Las reglas **con quién las defiende** — y lo que nada defiende |
+| [DISENO_BD](docs/dominio/DISENO_BD.md) | El modelo en sus cuatro etapas, y **por qué** quedó así |
+| [ARQUITECTURA](docs/dominio/ARQUITECTURA.md) | Las capas y, sobre todo, **qué tiene prohibido hacer cada una** |
+| [POLITICA_DE_ERRORES](docs/dominio/POLITICA_DE_ERRORES.md) | Qué código HTTP devuelve cada cosa, y quién lo decide |
+| [REQUISITOS_FUNCIONALES](docs/dominio/REQUISITOS_FUNCIONALES.md) | Los RF de las cinco versiones, **con los cinco verbos recurso por recurso** |
+| [REQUISITOS_NO_FUNCIONALES](docs/dominio/REQUISITOS_NO_FUNCIONALES.md) | Los RNF **con su forma de comprobarlos**, y lo que el sistema NO promete |
+| [DATOS_DE_PRUEBA](docs/dominio/DATOS_DE_PRUEBA.md) | Qué trae la base de datos sembrada y **para qué sirve cada fila** |
+| [MANUAL_DE_MARCA](docs/dominio/MANUAL_DE_MARCA.md) | La paleta **con sus contrastes WCAG calculados**, no estimados |
+| [PLAN_V1](docs/dominio/PLAN_V1.md) · [PLAN_V2](docs/dominio/PLAN_V2.md) · [PLAN_V3](docs/dominio/PLAN_V3.md) · [PLAN_V4](docs/dominio/PLAN_V4.md) | Las decisiones **antes** de programar, y los tropiezos de cada versión |
+| [**PENDIENTES**](docs/dominio/PENDIENTES.md) | **Lo que este repositorio todavía NO tiene**, con cómo se comprueba cada cosa |
+| [CRONOGRAMA](docs/dominio/CRONOGRAMA.md) | Contado de `git log`, con sus huecos dichos |
+| [FUENTES](docs/dominio/FUENTES.md) | **De dónde salió todo, y de dónde NO** |
+| [SUSTENTACION_DEL_CODIGO](docs/dominio/SUSTENTACION_DEL_CODIGO.md) | **Diez preguntas sobre este código, respondidas** |
+| [elicitacion/](docs/dominio/elicitacion/1_PREGUNTAS.md) | ⚠ **SIMULADA**, y lo advierte en su primera línea |
+
+> **Por dónde empezar, según para qué:**
+>
+> | Si usted… | Lea |
+> |---|---|
+> | va a **sustentar** su código | [SUSTENTACION_DEL_CODIGO](docs/dominio/SUSTENTACION_DEL_CODIGO.md) |
+> | no entiende **por qué** algo quedó así | [DISENO_BD](docs/dominio/DISENO_BD.md) y [FUENTES](docs/dominio/FUENTES.md) |
+> | va a **probar** el sistema | [DATOS_DE_PRUEBA](docs/dominio/DATOS_DE_PRUEBA.md) |
+> | va a **tocar** el código | [ARQUITECTURA](docs/dominio/ARQUITECTURA.md), por las prohibiciones |
+> | quiere saber **qué falta** | [PENDIENTES](docs/dominio/PENDIENTES.md) |
+
+> ### Y una advertencia sobre copiar de aquí, que en ESTE curso es la principal
+>
+> **El proyecto de aula de Construcción de Software es el de cátedras**, no
+> `bdfacturas`. Lo que usted ve aquí es el sistema que el profesor construye a
+> la vista para enseñar el método; lo que su equipo entrega es **su** proyecto,
+> con la metodología de
+> [`ProyectosDeAula/docs/0_METODOLOGIA.md`](ProyectosDeAula/docs/0_METODOLOGIA.md).
+>
+> Y este ejemplo toma decisiones que **en el proyecto de aula no se valen**, y
+> están señaladas donde aparecen: el motor **viene dado** (aquí) contra **lo
+> escoge el equipo** (allá); el modelo de datos **llegó hecho** (aquí) contra
+> **se elicita primero** (allá). Ver [FUENTES](docs/dominio/FUENTES.md).
+
 ---
 
 *Proyecto Construcción de Software · USB Medellín · Base de datos bdfacturas
