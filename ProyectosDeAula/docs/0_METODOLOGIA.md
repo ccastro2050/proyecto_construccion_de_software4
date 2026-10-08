@@ -1,10 +1,23 @@
 # Proyecto de aula — Metodología de trabajo (SDD, versiones, Git y secretos)
 
 > **Léame primero.** Este documento define CÓMO se trabaja el proyecto de
-> aula — la misma metodología del ejemplo que construimos en clase.
+> aula de **Construcción de Software** (USB Medellín) — la misma metodología
+> del ejemplo que construimos en clase, `bdfacturas`, cuyos cuatro
+> repositorios están en la §1.
 >
 > **Lo QUE se construye es CÁTEDRAS ABIERTAS**, y está en su propio
 > repositorio: [proyecto_catedras2](https://github.com/ccastro2050/proyecto_catedras2). Es uno solo para todo el curso.
+>
+> ### Y lo que más sube y baja la nota no es el código: es poder explicarlo
+>
+> Desde la **v2**, **4 de los 20 puntos de cada versión —el 20 %— son
+> INTERPRETABILIDAD**: el profesor abre un archivo que **él** elige y usted lo
+> cuenta en voz alta. Qué hace, por qué está así, qué pasa si falla y qué
+> cambiaría.
+>
+> **Un equipo puede pasar todos los criterios técnicos y sacar 2.9 ahí.** Es
+> el único criterio que **no se puede delegar** —ni a un compañero ni a una
+> IA—, y está desarrollado en la [§2.2](#22-la-interpretabilidad--4-de-los-20-puntos-de-cada-versión).
 
 ---
 
@@ -14,11 +27,26 @@ El proyecto de aula se trabaja con **Spec-Driven Development (SDD)**:
 primero la especificación, después el código, **versión por versión** —
 exactamente como el ejemplo del curso:
 
-| Ejemplo de clase | Qué demuestra |
-|---|---|
-| [proyecto_aplicacion_y_servicios_web1](https://github.com/ccastro2050/proyecto_aplicacion_y_servicios_web1) | La v1: una rebanada vertical con capas, especificada antes de codificar |
-| [proyecto_aplicacion_y_servicios_web2](https://github.com/ccastro2050/proyecto_aplicacion_y_servicios_web2) | La v2: crecer SOBRE la v1 sin romperla (regresión + spec del delta) |
-| proyecto_aplicacion_y_servicios_web3 y …web4 | Llegarán durante el semestre — la ruta continúa igual |
+**El ejemplo de clase de este curso son estos cuatro repositorios**, uno por
+versión, y los cuatro están publicados y cerrados con su tag:
+
+| Ejemplo de clase | Qué demuestra | Cerrado con |
+|---|---|---|
+| [proyecto_construccion_de_software1](https://github.com/ccastro2050/proyecto_construccion_de_software1) | La **v1**: una rebanada vertical con capas —API y front— especificada antes de codificar, y **sin una sola clave foránea** | `v1` |
+| [proyecto_construccion_de_software2](https://github.com/ccastro2050/proyecto_construccion_de_software2) | La **v2**: crecer SOBRE la v1 sin romperla —regresión y spec del delta—, con las foráneas, los procedimientos y el disparador | `v1` `v2` |
+| [proyecto_construccion_de_software3](https://github.com/ccastro2050/proyecto_construccion_de_software3) | La **v3**: el control de acceso. Contraseña con hash, token, **401 sin token y 403 sin permiso** | `v1` `v2` `v3` |
+| [proyecto_construccion_de_software4](https://github.com/ccastro2050/proyecto_construccion_de_software4) | La **v4**: el aplicativo. Diez consultas multitabla, el tablero, la marca y la publicación | `v1` `v2` `v3` `v4` |
+
+> **Un repositorio por versión, y no uno con cuatro ramas**, a propósito: así
+> cada uno se puede abrir y correr tal como quedó el día que se cerró. El
+> cuarto contiene a los otros tres —las versiones son acumulativas—, pero
+> verlos aparte deja ver **qué entró en cada paso**.
+>
+> **Y no se estudian los de otros cursos.** Aplicación y Servicios Web
+> (ITM), Diseño de Software y Paradigmas construyen **el mismo sistema**
+> cambiando el motor o el front; sus repositorios sirven para comparar
+> tecnologías, no para copiar la ruta de este curso. El de aquí es
+> **C# / ASP.NET Core con PostgreSQL y un front en Blazor**.
 
 Lo que se replica del ejemplo **es el MÉTODO, no el contenido**: la
 constitución permanente, una carpeta de specs por versión con sus
@@ -40,6 +68,10 @@ se reabre. Estudien el `docs/spec_kit/` de esos repos: ese es el molde.
 5. **Regresión obligatoria**: al cerrar la vN, los criterios de TODAS las
    versiones anteriores deben seguir pasando (las versiones son
    acumulativas).
+6. **Lo que usted entrega, usted lo explica**: desde la v2 se califica en voz
+   alta, sobre el archivo que el profesor elija, y **cuenta el 20 % de la
+   versión** (§2.2). Código que nadie del equipo puede explicar es código que
+   no se entregó: se recibió.
 
 ## 2. Las 4 versiones del proyecto de aula
 
@@ -104,16 +136,98 @@ grupo la fija el profesor en clase (anótela en el espacio en blanco).
 | Momento | Fecha general | Fecha exacta (su grupo) | Evaluación |
 |---|---|---|---|
 | **Evaluación individual teórico-práctica** | Segunda semana de **septiembre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** individual |
-| **Entrega versión 1** | Última semana de **septiembre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% sustentación individual (incluidos los commits) + 10% entrega en equipo |
-| **Entrega versión 2** | **Segunda** semana de **octubre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% sustentación individual (incluidos los commits) + 10% entrega en equipo |
-| **Entrega versión 3** | **Última** semana de **octubre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% sustentación individual (incluidos los commits) + 10% entrega en equipo |
-| **Entrega versión 4** | **Segunda** semana de **noviembre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% sustentación individual (incluidos los commits) + 10% entrega en equipo |
+| **Entrega versión 1** | Última semana de **septiembre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% sustentación individual (incluidos los commits) + 10% entrega en equipo. *Sin interpretabilidad: empieza en la v2* |
+| **Entrega versión 2** | **Segunda** semana de **octubre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% individual (**4 de interpretabilidad** + commits y sustentación) + 10% entrega en equipo |
+| **Entrega versión 3** | **Última** semana de **octubre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% individual (**4 de interpretabilidad** + commits y sustentación) + 10% entrega en equipo |
+| **Entrega versión 4** | **Segunda** semana de **noviembre** | \_\_\_\_/\_\_\_\_/\_\_\_\_\_\_\_\_ | **20%** — 10% individual (**4 de interpretabilidad** + commits y sustentación) + 10% entrega en equipo |
 
 > **"Incluidos los commits"** significa que en la sustentación individual
 > cada estudiante responde por SU rama: qué hizo, por qué, y sus commits
 > lo respaldan (frecuentes, descriptivos, propios). Una rama sin commits —
 > o con un solo commit gigante la noche anterior — es una sustentación
 > sin evidencia.
+
+**Y así se reparten los 20 puntos de cada versión**, para que nadie se
+entere el día de la entrega:
+
+| | Puntos | Quién responde |
+|---|---|---|
+| **Entrega en equipo** | **10** | El equipo: lo que el sistema hace, contra los criterios de aceptación |
+| **Sustentación individual** | **10**, y de esos **4 son INTERPRETABILIDAD** (desde la v2) | **Cada uno por separado**, sobre lo que entregó |
+
+> **Los 4 puntos de interpretabilidad salen de los 10 individuales, no de los
+> del equipo**, y es a propósito: si salieran de los del equipo, uno que
+> entienda salvaría a cuatro que no.
+
+### 2.2 La interpretabilidad — 4 de los 20 puntos de cada versión
+
+Todo lo demás de la rúbrica se comprueba **corriendo el sistema**. Esto no: se
+comprueba **hablando**, y es lo que separa haber construido de haber recibido.
+
+| | |
+|---|---|
+| **Desde cuándo** | **La v2.** En la v1 se está aprendiendo a mover las piezas; en la v2 ya hay **código heredado** y decisiones que alguien tomó —los procedimientos, el disparador, el 409— y ahí se ve quién entendió |
+| **Cuánto vale** | **4 de los 20 puntos de la versión**, o sea el **20 %** de la nota, en **todas** las versiones de la v2 en adelante |
+| **De dónde salen** | De los **10 individuales**. No de los del equipo |
+| **Cómo** | El profesor abre **un archivo del repositorio, elegido por él**, y le pide a quien lo entregó que lo cuente |
+| **Dónde** | **En voz alta y presencial.** No se recibe por escrito |
+| **A quién** | A **cada integrante por separado**, sobre **lo que ese integrante entregó** |
+
+**Y en puntos, para que no haya dudas:**
+
+| | |
+|---|---|
+| Cada versión vale **20 %** del semestre | 10 % individual + 10 % en equipo |
+| La interpretabilidad es **20 % de esa versión** | **4 de los 20 puntos** |
+| Y es **individual**, no de equipo | esos 4 puntos salen de **sus 10 puntos individuales** |
+| Son **tres versiones** con interpretabilidad (v2, v3 y v4) | **12 % de la nota final del semestre** |
+
+> **En la versión 1 ese 20 % no se evalúa** —se está aprendiendo a mover las
+> piezas— y se reparte entre los demás criterios.
+>
+> **Por qué pesa tanto, dicho sin rodeos:** es el único criterio que **no se
+> puede delegar**. La API puede funcionar porque una IA la escribió bien; el
+> front puede verse bien por lo mismo. **Explicar por qué está así solo lo
+> puede hacer quien entendió.** Un equipo puede entregar un sistema perfecto y
+> sacar 2.9 en este criterio — y es correcto que así sea.
+
+**Las cuatro preguntas son siempre las mismas**, así que no hay sorpresa:
+
+| | Qué se pregunta |
+|---|---|
+| **Qué hace** | Cuénteme este archivo sin leérmelo línea por línea |
+| **Por qué así** | ¿Por qué esta decisión y no la otra? ¿Qué se gana y qué se pierde? |
+| **Qué pasa si falla** | Si esto se cae o la base de datos rechaza, ¿qué recibe quien llamó y qué ve la persona en la pantalla? |
+| **Qué cambiaría** | Si mañana hay que agregar X, ¿dónde se toca? ¿Y dónde NO? |
+
+#### Comentar no es entender, y aquí está la diferencia
+
+La guía de IA exige que **la IA comente lo que genera**, y eso ayuda. Pero:
+
+> **El comentario FACILITA la interpretabilidad; no es la nota.** Un
+> comentario se recita sin entenderlo. Y hay algo peor: **puede estar
+> equivocado** —la IA comenta lo que *cree* que hizo—. Lo que se califica es
+> que usted pueda decir **si es cierto**.
+
+Un comentario que sirve dice **por qué**, no **qué**:
+
+| Comentario que no vale nada | Comentario que sí |
+|---|---|
+| `// recorre la lista de productos` | `// el detalle viaja como JSON y el procedimiento lo abre: UN viaje a la base de datos y UNA transacción — si fuera un INSERT por renglón, un fallo a mitad dejaría media factura` |
+| `// valida el stock` | `// el stock lo valida el DISPARADOR y no el servicio, porque también tiene que valer para quien entre por pgAdmin` |
+
+> **La prueba de fuego de un comentario:** tápele el código y pregúntese si el
+> comentario sigue diciendo algo. Si solo repite el nombre del método, no
+> aporta; si dice la razón, usted acaba de dejarle escrito a su propio futuro
+> —y al profesor— lo que estaba pensando.
+
+#### Y lo que esto implica para cómo se trabaja con IA
+
+| | |
+|---|---|
+| **Se puede usar IA** | Sí, y está dicho en la guía. Nadie va a preguntar quién escribió la línea |
+| **Lo que NO se puede** | Entregar algo que usted no pueda contar. Si la IA lo escribió y usted no lo entendió, **todavía no está entregado**: está pegado |
+| **La consecuencia práctica** | Pídale a la IA que **explique** lo que genera, y después **compruébelo**: haga que falle, mire el error, bórrele una línea y vea qué se rompe. Eso es lo que no se puede recitar |
 
 ## 3. El spec kit que cada equipo ESCRIBE (por versión)
 
@@ -161,7 +275,7 @@ prompts que llevaron de la spec al código estén entregados.
 Escribir los documentos no basta: lo que separa un spec kit de una carpeta
 con archivos son **tres puntos donde el equipo se detiene, revisa y no
 sigue hasta que quede en verde**. Están explicados con ejemplos en el
-[SDD_SPECKIT.md del ejemplo de clase](https://github.com/ccastro2050/proyecto_aplicacion_y_servicios_web1/blob/main/docs/conceptos/SDD_SPECKIT.md).
+[SDD_SPECKIT.md del ejemplo de clase](https://github.com/ccastro2050/proyecto_construccion_de_software4/blob/main/docs/conceptos/SDD_SPECKIT.md).
 
 | | Dónde vive | Qué pregunta | Si falla |
 |---|---|---|---|
@@ -407,10 +521,16 @@ según la calidad de lo entregado**)** o **No cumple (de 0 a 2.9)**.
 | **Dashboard y consultas (v4)** | 10 consultas de 4+ tablas con gráficos claros | Menos de 10 consultas, consultas de menos de 4 tablas, o sin dashboard |
 | **Imagen corporativa y responsive (v4)** | **Existe un manual de marca** —propio o el del ejemplo— y la interfaz gráfica lo cumple: los colores y las tipografías salen de él, no de un gusto; todo responsive | No hay manual, o lo hay y la interfaz gráfica no lo respeta, o no es responsive |
 | **Publicación (v4)** | Publicado, funcional, con secretos en variables de entorno del servidor | No publicado o con secretos expuestos |
+| **INTERPRETABILIDAD (v2+)** · *4 de los 20 puntos* | Cada integrante **cuenta en voz alta** el archivo que el profesor elija de lo que ÉL entregó: qué hace, por qué así, qué pasa si falla y qué cambiaría. Y los comentarios del código dicen **por qué**, no qué | No puede explicar lo que entregó, o lo recita; los comentarios repiten el nombre del método —o están equivocados y no se dio cuenta— (§2.2) |
 
 Dentro de la franja "Cumple", la nota (3.0 a 5.0) refleja la calidad:
 completitud, solidez ante errores, claridad del código y de la spec, y la
 sustentación individual.
+
+> **Y una advertencia sobre la última fila, porque es la que más sorprende:**
+> un equipo puede tener los otros criterios en verde y la interpretabilidad en
+> 2.9. No es un descuido de la rúbrica —es el único criterio que no se puede
+> delegar—. Ver [§2.2](#22-la-interpretabilidad--4-de-los-20-puntos-de-cada-versión).
 
 **Entregar en cada versión:** enlaces a los 2 repos (con el tag `vN`
 puesto) + evidencia del quickstart de su spec pasando. En la v4, además:
