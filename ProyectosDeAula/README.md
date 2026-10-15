@@ -5,8 +5,9 @@
 > *Sistema de registro y control de asistencia a las cátedras abiertas de la
 > Universidad de San Buenaventura, Medellín.*
 
-**El dominio es uno solo para todo el curso**: no hay un proyecto por equipo,
-todos los equipos construyen el mismo sistema.
+**El dominio es el mismo para todos los equipos**: todos construyen cátedras
+abiertas. **Cada equipo trabaja en sus propios repositorios de GitHub** y
+entrega lo suyo.
 
 Y **todo lo que hace falta para construirlo está en este repositorio**, en
 [`docs/conceptos/`](docs/conceptos/) y [`docs/dominio/`](docs/dominio/): los

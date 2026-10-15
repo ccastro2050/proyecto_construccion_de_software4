@@ -5,8 +5,9 @@
 > ejemplo que construimos en clase, `bdfacturas`, aplicado a otro dominio:
 > **equivalente, no idéntico**. El ejemplo está en la §1.
 >
-> **Lo QUE se construye es CÁTEDRAS ABIERTAS**, uno solo para todo el curso:
-> no hay un proyecto por equipo.
+> **Lo QUE se construye es CÁTEDRAS ABIERTAS**: el **dominio** es el mismo
+> para todos los equipos. **Cada equipo de trabajo tiene sus propios
+> repositorios en GitHub** y hace su propia entrega (§4).
 >
 > ### Y lo que más sube y baja la nota no es el código: es poder explicarlo
 >
