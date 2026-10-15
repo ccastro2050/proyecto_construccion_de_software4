@@ -230,7 +230,7 @@ usted no escribe los pasos, escribe el resultado (el mismo espíritu de SDD).
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "Paradigmas123!"
+      MSSQL_SA_PASSWORD: "Construccion123!"
     volumes:
       - mssqldata:/var/opt/mssql     # volumen nombrado: los datos sobreviven
     ports:
@@ -577,7 +577,7 @@ docker compose down
 
 # Subir el OTRO: cambiarse a su carpeta y levantarlo. Ahí Compose le crea a
 # ÉL su propia red, con el nombre de ESA carpeta.
-cd ..\proyecto_php2
+cd ..\proyecto_catedras2
 docker compose up -d
 ```
 
@@ -603,26 +603,26 @@ infinitos.
 flowchart LR
     nav["🖥️ Su computador<br/>(el navegador)"]
 
-    subgraph redA["Red: proyecto_php1_default"]
+    subgraph redA["Red: proyecto_construccion_de_software4_default"]
         direction TB
-        frontA["front-php<br/>:8020"]
-        apiA["api-facturas<br/>:8022"]
-        dbA[("mariadb")]
-        frontA -->|"http://api-facturas:8022<br/>al controlador, por el NOMBRE"| apiA
-        apiA -->|"host=mariadb"| dbA
+        frontA["front-blazor<br/>:8051"]
+        apiA["api-facturas<br/>:8045"]
+        dbA[("postgres")]
+        frontA -->|"http://api-facturas:8045<br/>al controlador, por el NOMBRE"| apiA
+        apiA -->|"Host=postgres"| dbA
     end
 
-    subgraph redB["Red: proyecto_php2_default"]
+    subgraph redB["Red: proyecto_catedras2_default"]
         direction TB
-        frontB["front-php<br/>:8084"]
-        apiB["api-facturas<br/>:8086"]
-        dbB[("mariadb")]
+        frontB["front-flask<br/>:8040"]
+        apiB["api-catedras<br/>:8039"]
+        dbB[("postgres")]
         frontB --> apiB
         apiB --> dbB
     end
 
-    nav -->|"localhost:8020"| frontA
-    nav -->|"localhost:8084"| frontB
+    nav -->|"localhost:8051"| frontA
+    nav -->|"localhost:8040"| frontB
 
     classDef red fill:#eef5ff,stroke:#5b8fd6,stroke-width:2px
     class redA,redB red
@@ -632,7 +632,7 @@ flowchart LR
 `localhost` y el **puerto publicado**. Los contenedores, en cambio, se hablan
 **por el nombre del servicio**, y ese nombre **solo existe dentro de su propia
 red**: no hay una sola línea entre las dos cajas azules, y no es un olvido del
-dibujo. Parado en `proyecto_php1`, el nombre `mariadb` es la base de datos **de php1**;
+dibujo. Parado en `proyecto_construccion_de_software4`, el nombre `mariadb` es la base de datos **de php1**;
 la de php2 no tiene ahí ningún nombre que valga, aunque se llame igual y aunque
 esté en el mismo computador.
 
@@ -662,7 +662,7 @@ flowchart LR
     nav["El navegador<br/>en su computador"]
     puerta["La puerta publicada<br/>host.docker.internal:8086"]
 
-    subgraph redA["Red: proyecto_php1_default"]
+    subgraph redA["Red: proyecto_construccion_de_software4_default"]
         direction TB
         frontA["front-php<br/>:8020"]
         apiA["api-facturas<br/>:8022"]
@@ -671,7 +671,7 @@ flowchart LR
         apiA -->|"mariadb:3306<br/>POR EL NOMBRE"| dbA
     end
 
-    subgraph redB["Red: proyecto_php2_default"]
+    subgraph redB["Red: proyecto_catedras2_default"]
         direction TB
         frontB["front-php<br/>:8084"]
         apiB["api-facturas<br/>:8086"]
@@ -680,8 +680,8 @@ flowchart LR
         apiB -->|"POR EL NOMBRE"| dbB
     end
 
-    nav -->|"localhost:8020"| frontA
-    nav -->|"localhost:8084"| frontB
+    nav -->|"localhost:8051"| frontA
+    nav -->|"localhost:8040"| frontB
 
     frontA ==>|"1. sale de su red"| puerta
     puerta ==>|"2. y entra por la puerta"| apiB
@@ -736,7 +736,7 @@ Levantando varios proyectos, un día aparece esto:
 
 ```
 Error response from daemon: all predefined address pools have been fully subnetted
-failed to create network proyecto_php1_default
+failed to create network proyecto_construccion_de_software4_default
 ```
 
 Y **no es culpa del proyecto que intentó levantar**: el que falla es el
@@ -749,7 +749,7 @@ siguiente de la fila, no el culpable.
 >
 > ```
 > all predefined address pools have been fully subnetted
-> failed to create network proyecto_php1_default
+> failed to create network proyecto_construccion_de_software4_default
 > ```
 >
 > La primera reacción fue pensar que **ese** proyecto se había roto: se abrió
@@ -823,25 +823,21 @@ red está en uso, la deja quieta.
 **El caso del profesor de este curso es exactamente ese, y la cuenta explica
 por qué.**
 
-El profesor dicta **varios cursos**. Cada curso no tiene *un* repositorio:
-tiene **uno por versión**, porque cada versión es un sistema distinto que se
-levanta solo. Y cada módulo del proyecto de aula existe además **en tres
-lenguajes**. Multiplicando:
+Cada proyecto levantado se lleva **una red**, y las redes se acumulan: las
+cuatro versiones de este curso, el proyecto de aula, y lo que quede levantado
+de antes. La cuenta se ve en un comando:
 
-| Familia | Proyectos |
-|---|---|
-| Construcción de Software | 8 |
-| Diseño de Software | 8 |
-| Paradigmas | 8 |
-| Aplicación y Servicios Web | 5 |
-| PHP | 4 |
-| Evaluaciones del ITM | 3 |
-| Cátedras | 2 |
-| Módulos del proyecto de aula y variantes | 26 |
-| **Total de sistemas levantables** | **64** |
+```powershell
+# Cuántas redes hay creadas ahora mismo
+docker network ls
 
-**Sesenta y cuatro proyectos independientes, cada uno con su propia red.**
-Contra un techo de unas **30**.
+# Y cuántas de ellas no tiene ningún contenedor dentro (las que sobran)
+docker network prune --dry-run
+```
+
+**El techo son unas 30 redes** con el rango que Docker Desktop trae por
+defecto. No hace falta ser profesor para chocar con él: basta acumular las
+cuatro versiones del curso más un par de proyectos viejos sin bajar.
 
 Por eso el error no aparece por hacer algo mal: aparece porque **la suma da
 más de lo que cabe**. Y no es un caso raro de profesor — a un estudiante le
@@ -1026,14 +1022,14 @@ docker ps
 
 ```
 NAMES                              PORTS
-proyecto_php1-api-facturas-1       0.0.0.0:8022->8022/tcp
-proyecto_php1-mariadb-1            0.0.0.0:13326->3306/tcp
+proyecto_construccion_de_software4-api-facturas-1       0.0.0.0:8022->8022/tcp
+proyecto_construccion_de_software4-postgres-1            0.0.0.0:13326->3306/tcp
 ```
 
 Y después escribe **el nombre tal como aparece**, sin los signos:
 
 ```powershell
-docker stop proyecto_php1-api-facturas-1
+docker stop proyecto_construccion_de_software4-api-facturas-1
 ```
 
 Lo que **no** se escribe:
@@ -1041,8 +1037,8 @@ Lo que **no** se escribe:
 | Mal | Por qué |
 |---|---|
 | `docker stop <nombre>` | Dejó la marca en vez de reemplazarla |
-| `docker stop <proyecto_php1-api-facturas-1>` | Puso el valor, pero dejó los signos |
-| `docker stop "proyecto_php1-api-facturas-1"` | Las comillas sobran aquí |
+| `docker stop <proyecto_construccion_de_software4-api-facturas-1>` | Puso el valor, pero dejó los signos |
+| `docker stop "proyecto_construccion_de_software4-api-facturas-1"` | Las comillas sobran aquí |
 
 **Las tres marcas que verá siempre:**
 

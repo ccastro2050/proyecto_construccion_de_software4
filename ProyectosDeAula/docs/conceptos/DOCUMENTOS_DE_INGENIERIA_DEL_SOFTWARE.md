@@ -163,10 +163,9 @@ no sabe qué tendría que estar y no está. **Es el único camino que enseña.**
 Se parte de un spec kit ya hecho de un proyecto parecido y se cambia lo que
 cambia.
 
-> **El ejemplo:** es lo que hace este ecosistema. El mismo kit vive adaptado en
-> los repositorios de Construcción, Paradigmas, PHP y Diseño — **el mismo
-> contrato, tres tecnologías distintas**. Sin este camino no habría cincuenta
-> proyectos, habría uno.
+> **El ejemplo:** es lo que hace este curso. El spec kit de la v1 del ejemplo
+> se adapta para la v2 en vez de escribirse otra vez, y el del ejemplo sirve
+> de molde para el del proyecto de aula.
 
 **Y tiene un riesgo propio: arrastrar decisiones que aquí no aplican**, sin
 darse cuenta, porque el documento heredado **suena razonable**.
