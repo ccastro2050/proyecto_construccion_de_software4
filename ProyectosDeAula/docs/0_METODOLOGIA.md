@@ -148,7 +148,19 @@ Las antiguas "entregas" ahora son **versiones** con spec kit propio:
 | **v1** | CRUD de las **tablas sin FK** del módulo — API REST + Frontend funcionando | Criterios en verde + tag `v1` |
 | **v2** | CRUD de **TODAS las tablas** con **procedimientos almacenados**, **al menos UN disparador** funcionando, las FK como **listas desplegables** cargadas de la API, las **tablas puente** y las **maestro-detalle** de abajo | Regresión v1 + criterios + tag `v2` |
 | **v3** | **JWT + sesiones + control de acceso por roles** + CRUD de usuario/rol/rol_usuario (solo admin) | Regresión v1-v2 + criterios + tag `v3` |
-| **v4** | Aplicativo completo: **10 consultas multitabla** (4+ tablas c/u), **dashboard**, **imagen corporativa con su manual de marca**, páginas corporativas, responsive/PWA y **publicación** en servidor gratuito | Regresión total + criterios + tag `v4` |
+| **v4** | Aplicativo completo: **10 consultas multitabla** (4+ tablas c/u), **dashboard**, **imagen corporativa con su manual de marca**, páginas corporativas, responsive/PWA y **publicación** en servidor gratuito | Regresión total + criterios + tag `v4` + **se puede verificar el cumplimiento de TODAS las historias de usuario y de TODOS los requisitos funcionales y no funcionales** |
+
+#### Lo que la v4 exige además
+
+**En la v4 se verifica el cumplimiento de TODO lo que se pidió**, no solo de
+lo que la v4 agregó:
+
+- **todas las historias de usuario**,
+- **todos los requisitos funcionales**,
+- y **todos los requisitos no funcionales**.
+
+Una por una, y comprobable: se abre la historia o el requisito y se muestra
+dónde se cumple en el sistema publicado.
 
 #### Lo que la v2 exige, fijado aquí para que no se negocie
 
