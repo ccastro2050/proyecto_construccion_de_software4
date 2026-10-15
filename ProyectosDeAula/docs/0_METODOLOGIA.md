@@ -1,9 +1,9 @@
 # Proyecto de aula — Metodología de trabajo (SDD, versiones, Git y secretos)
 
 > **Léame primero.** Este documento define CÓMO se trabaja el proyecto de
-> aula de **Construcción de Software** (USB Medellín) — la misma metodología
-> del ejemplo que construimos en clase, `bdfacturas`, cuyos cuatro
-> repositorios están en la §1.
+> aula de **Construcción de Software** (USB Medellín). Es el método del
+> ejemplo que construimos en clase, `bdfacturas`, aplicado a otro dominio:
+> **equivalente, no idéntico**. El ejemplo está en la §1.
 >
 > **Lo QUE se construye es CÁTEDRAS ABIERTAS**, uno solo para todo el curso:
 > no hay un proyecto por equipo.
@@ -33,11 +33,12 @@ sistema que hay que construir en el tercero.**
 
 ---
 
-## 1. El método: SDD por versiones (igual que en clase)
+## 1. El método: SDD por versiones
 
 El proyecto de aula se trabaja con **Spec-Driven Development (SDD)**:
 primero la especificación, después el código, **versión por versión** —
-exactamente como el ejemplo del curso:
+de forma **equivalente** al ejemplo del curso —el mismo método, otro
+dominio—:
 
 **El ejemplo de clase de este curso es UN repositorio**, y trae las cuatro
 versiones adentro:
