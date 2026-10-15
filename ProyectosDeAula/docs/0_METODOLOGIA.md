@@ -308,6 +308,18 @@ Un comentario que sirve dice **por qué**, no **qué**:
 
 ## 3. El spec kit que cada equipo ESCRIBE (por versión)
 
+### Lo que se entrega son TRES cosas, y las tres se califican
+
+| | Qué | Cuántas |
+|---|---|---|
+| **1** | **Los `.md` del spec kit**, por versión | Una carpeta por versión. **La constitución es la MISMA para todas las versiones**: se escribe una vez y no se repite por versión |
+| **2** | **Los prompts iniciales**, de **cada estudiante** | Uno por estudiante, con su nombre. No uno del equipo |
+| **3** | **El código generado** con esos spec kit y esos prompts | El sistema de la versión |
+
+Las tres van juntas: el spec kit dice **qué** construir, el prompt es **cómo
+se le pidió**, y el código es **lo construido**. Falta una y no se puede ver
+de dónde salió lo otro.
+
 Antes de programar cada versión, el equipo escribe su especificación en
 `docs/spec_kit/` del repositorio de la API (el mismo formato del curso):
 
@@ -316,6 +328,8 @@ docs/spec_kit/
 ├── 1_constitution.md            ← UNA vez (los principios del equipo: stack
 │                                   elegido, capas, español, borrado lógico,
 │                                   secretos por variables de entorno…)
+│                                   Se escribe UNA vez: es la misma para las
+│                                   cuatro versiones, no una por versión
 └── versiones/
     ├── 0_mapa_versiones.md      ← la tabla de la sección 2, con estados
     ├── v1_<nombre>/             ← 2_spec.md · 3_plan.md · 4_research.md ·
@@ -326,9 +340,9 @@ docs/spec_kit/
     └── …
 ```
 
-\* La `GUIA_IA<N>.md` es **obligatoria en cada versión**, y lleva **los
-prompts que de verdad usaron** para generar el código a partir de la spec —el
-del chat, el del IDE agéntico, o los dos—, **con lo que tuvieron que
+\* La `GUIA_IA<N>.md` es **obligatoria en cada versión**, y lleva **el prompt
+inicial de cada estudiante** —con su nombre— y los prompts que de verdad
+usaron para generar el código a partir de la spec, **con lo que tuvieron que
 corregirle a la IA**. Copien la estructura de las guías del curso y adáptenla;
 eso ES el ejercicio.
 
