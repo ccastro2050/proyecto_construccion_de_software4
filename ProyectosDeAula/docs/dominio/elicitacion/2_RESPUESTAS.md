@@ -64,9 +64,9 @@ Estas son las fuentes derivadas de donde salen las citas:
 > volver a exportarla.
 
 **Quién habla.** Donde el material lo dice, se atribuye. El **profesor Hugo
-Nelson el usuario experto**, director del CIDEH, es el **usuario experto**: contesta por
-el negocio. El **el analista** conduce la sesión: sus intervenciones
-son de método, y van aparte al final.
+Nelson**, director del CIDEH, es el **usuario experto**: contesta por el
+negocio. El **analista** conduce la sesión: sus intervenciones son de método,
+y van aparte al final.
 
 ---
 
@@ -339,7 +339,7 @@ el link»* — `1:21:40`.
 
 Y el usuario experto describe el recorrido completo, de una sentada:
 
-> *«vamos a suponer [que] Hugo el usuario experto es asistente… llega a la cátedra
+> *«vamos a suponer [que] Hugo Nelson es asistente… llega a la cátedra
 > abierta, ingresa… estuve en la cátedra abierta hasta el final. Al final me
 > comparten el QR y yo ingreso al aplicativo para registrarme… Luego el profe
 > el analista Castro llega al aplicativo y descarga de esa cátedra abierta el
