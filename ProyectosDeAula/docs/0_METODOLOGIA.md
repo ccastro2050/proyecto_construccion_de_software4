@@ -74,7 +74,7 @@ aceptación como definición de
 "terminado", el cierre con tag, y la regla de que una versión cerrada no
 se reabre. Estudien el `docs/spec_kit/` de esos repos: ese es el molde.
 
-### 1.1 Las reglas de oro (del mapa de versiones del curso)
+### 1.1 Las reglas del trabajo por versiones
 
 1. **La especificación manda**: no se programa nada que la spec de la
    versión en curso no pida.
@@ -397,7 +397,7 @@ El chat se cierra; la spec queda.
 
 Lo que no cambia es la separación entre las dos partes:
 
-| Parte | Qué es | Regla de oro |
+| Parte | Qué es | Lo que no hace |
 |---|---|---|
 | La API (`<equipo>-api`) | El backend: REST + JSON, conecta a la BD | NO genera HTML |
 | El front (`<equipo>-frontend`) | La interfaz: consume la API por HTTP | NO se conecta a la BD |
