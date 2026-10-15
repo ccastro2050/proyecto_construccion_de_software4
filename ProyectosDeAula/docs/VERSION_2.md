@@ -1,6 +1,7 @@
 # Qué se espera de la VERSIÓN 2 del proyecto de aula
 
-> Para el **equipo**. Qué tiene que estar listo al entregar la v2, cómo se
+> **Esto es POR EQUIPO.** Cada equipo entrega su propia v2, en sus propios
+> repositorios: lo que sigue es lo que tiene que estar listo, cómo se
 > comprueba y qué se entrega.
 >
 > **Entrega: segunda semana de octubre · 20%** — 10% de sustentación individual
