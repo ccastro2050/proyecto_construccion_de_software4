@@ -31,6 +31,31 @@
 En una línea: **el método está en el primero, el tema en el segundo, y el
 sistema que hay que construir en el tercero.**
 
+### Qué hay en `docs/dominio/` — los 17, uno por uno
+
+Son los documentos del sistema que hay que construir. El título es el que
+tiene cada archivo:
+
+| Archivo | Título |
+|---|---|
+| [`REQUISITOS_FUNCIONALES.md`](dominio/REQUISITOS_FUNCIONALES.md) | Requisitos funcionales |
+| [`REQUISITOS_NO_FUNCIONALES.md`](dominio/REQUISITOS_NO_FUNCIONALES.md) | Requisitos no funcionales |
+| [`REGLAS_DE_NEGOCIO.md`](dominio/REGLAS_DE_NEGOCIO.md) | Reglas de negocio |
+| [`DISENO_BD.md`](dominio/DISENO_BD.md) | Diseño de base de datos |
+| [`ARQUITECTURA.md`](dominio/ARQUITECTURA.md) | Arquitectura |
+| [`POLITICA_DE_ERRORES.md`](dominio/POLITICA_DE_ERRORES.md) | Política de errores |
+| [`GLOSARIO.md`](dominio/GLOSARIO.md) | Glosario |
+| [`DATOS_DE_PRUEBA.md`](dominio/DATOS_DE_PRUEBA.md) | Datos de prueba — de dónde salió cada fila |
+| [`FUENTES.md`](dominio/FUENTES.md) | Las fuentes primarias — dónde están y qué contiene cada una |
+| [`CRONOGRAMA.md`](dominio/CRONOGRAMA.md) | Cronograma |
+| [`MANUAL_DE_MARCA.md`](dominio/MANUAL_DE_MARCA.md) | Manual de Identidad Visual Corporativa — Universidad de San Buenaventura |
+| [`PLAN_V1.md`](dominio/PLAN_V1.md) | Plan de la versión 1 |
+| [`PLAN_V2.md`](dominio/PLAN_V2.md) | Plan de la versión 2 |
+| [`SUSTENTACION_DEL_CODIGO.md`](dominio/SUSTENTACION_DEL_CODIGO.md) | Sustentación del código — diez preguntas, respondidas |
+| [`elicitacion/1_PREGUNTAS.md`](dominio/elicitacion/1_PREGUNTAS.md) | Preguntas al usuario experto |
+| [`elicitacion/2_RESPUESTAS.md`](dominio/elicitacion/2_RESPUESTAS.md) | Respuestas del usuario experto |
+| [`elicitacion/3_HISTORIAS_PROPUESTAS.md`](dominio/elicitacion/3_HISTORIAS_PROPUESTAS.md) | Historias propuestas — las que la fuente pide y no están escritas |
+
 ---
 
 ## 1. El método: SDD por versiones
