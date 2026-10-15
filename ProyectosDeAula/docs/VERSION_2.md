@@ -7,10 +7,8 @@
 > (incluidos sus commits) + 10% de entrega en equipo. La fecha exacta la fija
 > el profesor en clase.
 >
-> **Y esta es la PRIMERA versión en la que se califica la interpretabilidad:
-> 4 de esos 20 puntos.** Salen de los 10 individuales —no de los del equipo— y
-> se ganan **hablando**, no entregando. En la v1 no se evaluaba; desde aquí sí.
-> Está en §8.1.
+> **En la versión 2 se califica la interpretabilidad: 4 de esos 20 puntos.**
+> Salen de los 10 individuales, no de los del equipo. Está en §8.1.
 >
 > El método, el calendario y la rúbrica están en
 > [0_METODOLOGIA.md](0_METODOLOGIA.md). Esto es **el detalle de la v2**.

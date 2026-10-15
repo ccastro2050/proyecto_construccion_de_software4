@@ -15,9 +15,8 @@
 > cuenta en voz alta. Qué hace, por qué está así, qué pasa si falla y qué
 > cambiaría.
 >
-> **Un equipo puede pasar todos los criterios técnicos y sacar 2.9 ahí.** Es
-> el único criterio que **no se puede delegar** —ni a un compañero ni a una
-> IA—, y está desarrollado en la [§2.2](#22-la-interpretabilidad--4-de-los-20-puntos-de-cada-versión).
+> Es el criterio que cada quien responde por su cuenta, y está desarrollado
+> en la §2.2.
 
 ---
 
@@ -89,9 +88,8 @@ se reabre. Estudien el `docs/spec_kit/` de esos repos: ese es el molde.
    versiones anteriores deben seguir pasando (las versiones son
    acumulativas).
 6. **Lo que usted entrega, usted lo explica**: desde la v2 se califica en voz
-   alta, sobre el archivo que el profesor elija, y **cuenta el 20 % de la
-   versión** (§2.2). Código que nadie del equipo puede explicar es código que
-   no se entregó: se recibió.
+   alta, sobre el archivo que el profesor elija, y cuenta el 20 % de la
+   versión (§2.2).
 
 ## 2. Las 4 versiones del proyecto de aula
 
@@ -266,11 +264,9 @@ comprueba **hablando**, y es lo que separa haber construido de haber recibido.
 > **En la versión 1 ese 20 % no se evalúa** —se está aprendiendo a mover las
 > piezas— y se reparte entre los demás criterios.
 >
-> **Por qué pesa tanto, dicho sin rodeos:** es el único criterio que **no se
-> puede delegar**. La API puede funcionar porque una IA la escribió bien; el
-> front puede verse bien por lo mismo. **Explicar por qué está así solo lo
-> puede hacer quien entendió.** Un equipo puede entregar un sistema perfecto y
-> sacar 2.9 en este criterio — y es correcto que así sea.
+> **Por qué pesa:** la API puede funcionar y el front puede verse bien sin
+> que eso diga quién entendió el código. Explicar por qué está así sí lo
+> dice, y es lo que este criterio mide.
 
 **Las cuatro preguntas son siempre las mismas**, así que no hay sorpresa:
 
@@ -612,10 +608,8 @@ Dentro de la franja "Cumple", la nota (3.0 a 5.0) refleja la calidad:
 completitud, solidez ante errores, claridad del código y de la spec, y la
 sustentación individual.
 
-> **Y una advertencia sobre la última fila, porque es la que más sorprende:**
-> un equipo puede tener los otros criterios en verde y la interpretabilidad en
-> 2.9. No es un descuido de la rúbrica —es el único criterio que no se puede
-> delegar—. Ver [§2.2](#22-la-interpretabilidad--4-de-los-20-puntos-de-cada-versión).
+> La última fila se califica aparte de las demás: es la parte individual de
+> la nota. Ver §2.2.
 
 **Entregar en cada versión:** enlaces a los 2 repos (con el tag `vN`
 puesto) + evidencia del quickstart de su spec pasando. En la v4, además:
