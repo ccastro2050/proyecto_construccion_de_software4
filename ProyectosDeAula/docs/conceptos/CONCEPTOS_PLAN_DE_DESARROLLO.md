@@ -119,7 +119,46 @@ tiempo y les pone responsables.
 
 ---
 
-## 7. Referencias
+## 7. En este proyecto
+
+Hay **dos** planes, uno por versión, y conviene leerlos en orden porque el
+segundo corrige al primero:
+
+| Plan | Qué versión | Lo que vale la pena mirar |
+|---|---|---|
+| [`PLAN_V1.md`](../dominio/PLAN_V1.md) | Versión 1 — una tabla, `sede` | §2 «El primer hallazgo, y el que cambió el plan», y §4, el plan en 10 pasos |
+| [`PLAN_V2.md`](../dominio/PLAN_V2.md) | Versión 2 — diez recursos sin clave foránea | §2 «Lo primero que hubo que contar bien» y §4, la decisión que define la versión |
+
+Léalos como lo que son: **planes que se escribieron antes y se corrigieron
+después**, no informes escritos al final para justificar lo hecho. Por eso
+ambos dedican una sección entera a lo que se encontró y obligó a cambiar de
+rumbo. Un plan que no tiene esa sección casi siempre se escribió al terminar.
+
+Y para lo que este documento llama «comparar lo planeado con lo real», el
+registro está en el `git log`: cada paso del plan dejó sus commits, con fecha.
+Ahí se ve lo que costó de verdad cada cosa frente a lo que se había previsto.
+
+## 8. Referencias
+
+### Científicas actualizadas
+
+*(Las normas ya citadas abajo —ISO/IEC/IEEE 16326:2019 y 29148:2018— siguen
+siendo la base. Esto es lo que se ha publicado después.)*
+
+1. **IEEE Computer Society** (2024). ***SWEBOK Guide v4.0***, publicada el
+   **15 de octubre de 2024**, área *Software Engineering Management*.
+2. **ISO/IEC 25010:2023** — *Product quality model*. Sirve para escribir los
+   **criterios de aceptación de los entregables** en términos de
+   características de calidad medibles, y no como buenos deseos.
+3. «From Prompt to Process: a Process Taxonomy and Comparative Assessment of
+   Frameworks Supporting AI Software Development Agents».
+   arXiv **`2606.04967`**, 2026 — compara los marcos que gobiernan a un agente
+   de desarrollo. Es lo más cercano que hay hoy a literatura sobre **planear
+   un proyecto en el que parte del trabajo lo hace una IA**.
+
+> **Comprobadas en línea el 14 de septiembre de 2026.** Las que llevan DOI se pueden abrir por el DOI; las de arXiv, por su identificador.
+
+### De gurús, blogs y fuentes primarias
 
 1. ISO/IEC/IEEE 16326:2019, *Systems and software engineering — Life
    cycle processes — Project management*. Es la norma vigente para planes

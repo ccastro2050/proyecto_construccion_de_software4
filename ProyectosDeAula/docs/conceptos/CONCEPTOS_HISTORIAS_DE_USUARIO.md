@@ -103,7 +103,7 @@ formas que funcionan, en orden de utilidad:
    separadas así.
 2. **Por regla de negocio**: primero el caso normal, después las
    excepciones.
-3. **Por tipo de dato**: primero un solo catálogo, después todos.
+3. **Por tipo de dato**: primero un tipo de residuo, después todos.
 4. **Por esfuerzo**: la versión que funciona a mano, y luego la
    automática.
 
@@ -134,13 +134,71 @@ algo mal entendido, y conviene mirarlo antes de programar.
 
 No se inventan: salen de una conversación con quien tiene el problema.
 Cómo se conduce esa conversación está en
-**`CONCEPTOS_ELICITACION.md`**, y los cuatro ejemplos completos —las
-entrevistas respondidas de las que salieron las historias de cada
-módulo— están en los archivos `entrevista_*.md` de esta misma carpeta.
+**`CONCEPTOS_ELICITACION.md`**, y un ejemplo completo —la entrevista
+respondida de la que salieron las historias de esta evaluación— está en
+`CUESTIONARIO_RESPONDIDO.md`.
 
 ---
 
-## 8. Referencias
+## 8. En este proyecto
+
+Las historias de este sistema están en
+`0_historias_de_usuario.md`,
+y su numeración no es casual: es el documento **`0`** del spec kit, **antes** de
+la constitución. Las necesidades van antes que las reglas de construcción.
+
+Ábralo con este documento al lado y revise, con INVEST en la mano, si cada
+historia cumple. Después mire a dónde fueron a parar:
+
+| Del documento `0`… | …a dónde llegó |
+|---|---|
+| La historia | `2_spec.md` de su versión: qué hace el sistema |
+| Sus criterios de aceptación | `6_contracts.md`: el código de respuesta de cada caso |
+| La historia partida en tareas | `8_tasks.md` |
+| La comprobación de que quedó | `9_checklist.md`, firmado |
+
+Ese recorrido es el que hay que poder mostrar. Una historia que no llega al
+contrato se quedó en intención; un endpoint que no viene de una historia es
+código que nadie pidió.
+
+## 9. Referencias
+
+### Científicas
+
+**Fundacional, y la más útil de todas aquí**
+
+1. **Lucassen, G.; Dalpiaz, F.; van der Werf, J. M. E. M.; Brinkkemper, S.**
+   (2016). «Improving agile requirements: the Quality User Story framework and
+   tool». *Requirements Engineering* **21**(3), pp. 383-403.
+   DOI **`10.1007/s00766-016-0250-x`**
+   — El **marco QUS**: **13 criterios de calidad** para una historia, y
+   *AQUSA*, la herramienta que los detecta con procesamiento de lenguaje
+   natural. Evaluado sobre **1.023 historias reales de 18 organizaciones**.
+   Es el respaldo empírico de INVEST: donde Wake propuso seis letras por
+   experiencia, QUS mide cuáles defectos aparecen de verdad y con qué
+   frecuencia.
+
+**Las normas**
+
+2. **ISO/IEC/IEEE 29148:2018** — la historia es una forma de expresar un
+   requisito, y le aplican las mismas características.
+3. **IEEE Computer Society** (2024). ***SWEBOK Guide v4.0***, área
+   *Software Requirements*.
+
+**Actualizadas (2025-2026)**
+
+4. «Automated Alignment between Elicitation Interviews and Requirements».
+   arXiv **`2510.08622`** — cuánto de la historia refleja lo que el
+   interesado dijo de verdad.
+5. «Reverse Engineering User Stories from Code using Large Language Models».
+   arXiv **`2509.19587`** — el camino inverso: sacar historias del código ya
+   escrito. Útil para entender qué se pierde al escribirlas mal.
+6. «Supporting Stakeholder Requirements Expression with LLM Revisions: An
+   Empirical Evaluation». arXiv **`2601.16699`**.
+
+> **Comprobadas en línea el 14 de septiembre de 2026.** Las que llevan DOI se pueden abrir por el DOI; las de arXiv, por su identificador.
+
+### De gurús, blogs y fuentes primarias
 
 1. Jeffries, Ron. «Essential XP: Card, Conversation, Confirmation».
    30 de agosto de 2001 —

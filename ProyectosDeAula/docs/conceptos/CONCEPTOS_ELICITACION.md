@@ -168,7 +168,76 @@ evita construir sobre una suposición.
 
 ---
 
-## 7. Referencias
+## 7. En este proyecto
+
+Aquí la elicitación **ya ocurrió**, y quedó por escrito — con el método de
+este documento aplicado a una reunión real:
+
+| Documento | Qué contiene |
+|---|---|
+| [`elicitacion/1_PREGUNTAS.md`](../dominio/elicitacion/1_PREGUNTAS.md) | El cuestionario en las cuatro rondas, y **las seis preguntas que quedaron sin responder** |
+| [`elicitacion/2_RESPUESTAS.md`](../dominio/elicitacion/2_RESPUESTAS.md) | Las treinta respuestas del usuario experto, **literales y con el minuto**, y cada pregunta con **qué produjo** — que no siempre es una historia: a veces es el objetivo, una regla o un criterio |
+
+Y el rastro completo hasta el código, que es lo que casi nunca se puede ver:
+
+| Dónde | Qué es |
+|---|---|
+| El plan de base de datos recibido *(ya no versionado)* | El insumo tal como llegó: lo que la dependencia entregó sobre los datos |
+| El plan de API recibido *(ya no versionado)* | El insumo sobre la API |
+| `HISTORIAS_DE_USUARIO.docx` | Las historias como las recibió el equipo |
+| `0_historias_de_usuario.md` | Las mismas, ya ordenadas y versionadas, como documento `0` del kit |
+| [`PLAN_V1.md`](../dominio/PLAN_V1.md) §2 | «El primer hallazgo, y el que cambió el plan» |
+
+**Lea la sección 2 del `PLAN_V1.md`.** Ahí está lo que este documento describe
+en abstracto: alguien leyó el insumo, lo contrastó con los datos reales, y **lo
+que encontró cambió el plan**. Eso es elicitación — no transcribir lo que
+piden, sino entenderlo lo suficiente como para descubrir lo que no dijeron.
+
+## 8. Referencias
+
+### Científicas
+
+**Las normas y el cuerpo de conocimiento**
+
+1. **ISO/IEC/IEEE 29148:2018** — *Systems and software engineering — Life cycle
+   processes — Requirements engineering*. Define qué es un requisito bien
+   formado: necesario, no ambiguo, singular, verificable, trazable.
+2. **IEEE Computer Society** (2024). ***SWEBOK Guide v4.0***, publicada el
+   **15 de octubre de 2024**. El área *Software Requirements* fue **reescrita
+   por completo** frente a la v3.
+
+**Fundacionales sobre la entrevista**
+
+3. **Bano, M.; Zowghi, D.; Ferrari, A.; Spoletini, P.; Donati, B.** (2019).
+   «Teaching requirements elicitation interviews: an empirical study of learning
+   from mistakes». *Requirements Engineering* **24**(3).
+   DOI **`10.1007/s00766-019-00313-0`**
+   — 110 estudiantes en 28 grupos. Es de donde sale la afirmación de la
+   sección 1: los novatos fallan sobre todo en **formulación de la pregunta,
+   omisión de la pregunta y orden de la entrevista**, y **no mejoran solos**
+   entre una entrevista y la siguiente. Por eso aquí la entrevista se
+   **diseña antes**, no se improvisa.
+4. **Ferrari, A.** *et al.* (2018). «Learning from Mistakes: An Empirical Study
+   of Elicitation Interviews Performed by Novices». **IEEE RE 2018**.
+
+**Actualizadas — la IA en la elicitación (2024-2026)**
+
+5. «Generative AI for Requirements Engineering: A Systematic Literature
+   Review». arXiv **`2409.06741`** — la revisión sistemática del área.
+6. «From Chat to Interview: Agentic Requirements Elicitation with an Experience
+   Ontology» (*OntoAgent*). arXiv **`2605.05828`**, 2026 — un agente que
+   **entrevista** guiado por una ontología, en vez de conversar libremente.
+7. «LLM-Based Discovery of Latent Requirements from Stakeholder
+   Conversations» (*LENS*). arXiv **`2606.25867`**, 2026 — extrae los
+   requisitos explícitos **y infiere los latentes** de una transcripción.
+8. «Automated Alignment between Elicitation Interviews and Requirements»
+   (*Inter2US*). arXiv **`2510.08622`** — **mide cuánto de la historia está de
+   verdad en la entrevista**, con 0,86 de macro-F1. Es exactamente la
+   comprobación que a este proyecto le falta hacer sobre sus 15 historias.
+
+> **Comprobadas en línea el 14 de septiembre de 2026.** Las que llevan DOI se pueden abrir por el DOI; las de arXiv, por su identificador.
+
+### De gurús, blogs y fuentes primarias
 
 1. Adzic, Gojko. *Impact Mapping: Making a Big Impact with Software
    Products and Projects*. Provoking Thoughts, 2012.

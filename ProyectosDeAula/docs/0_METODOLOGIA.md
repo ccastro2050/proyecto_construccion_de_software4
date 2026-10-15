@@ -6,7 +6,7 @@
 > repositorios están en la §1.
 >
 > **Lo QUE se construye es CÁTEDRAS ABIERTAS**, y está en su propio
-> repositorio: [proyecto_catedras2](https://github.com/ccastro2050/proyecto_catedras2). Es uno solo para todo el curso.
+> repositorio: **proyecto_catedras2**. Es uno solo para todo el curso.
 >
 > ### Y lo que más sube y baja la nota no es el código: es poder explicarlo
 >
@@ -27,26 +27,48 @@ El proyecto de aula se trabaja con **Spec-Driven Development (SDD)**:
 primero la especificación, después el código, **versión por versión** —
 exactamente como el ejemplo del curso:
 
-**El ejemplo de clase de este curso son estos cuatro repositorios**, uno por
-versión, y los cuatro están publicados y cerrados con su tag:
+**El ejemplo de clase de este curso es UN repositorio**, y trae las cuatro
+versiones adentro:
 
-| Ejemplo de clase | Qué demuestra | Cerrado con |
-|---|---|---|
-| [proyecto_construccion_de_software1](https://github.com/ccastro2050/proyecto_construccion_de_software1) | La **v1**: una rebanada vertical con capas —API y front— especificada antes de codificar, y **sin una sola clave foránea** | `v1` |
-| [proyecto_construccion_de_software2](https://github.com/ccastro2050/proyecto_construccion_de_software2) | La **v2**: crecer SOBRE la v1 sin romperla —regresión y spec del delta—, con las foráneas, los procedimientos y el disparador | `v1` `v2` |
-| [proyecto_construccion_de_software3](https://github.com/ccastro2050/proyecto_construccion_de_software3) | La **v3**: el control de acceso. Contraseña con hash, token, **401 sin token y 403 sin permiso** | `v1` `v2` `v3` |
-| [proyecto_construccion_de_software4](https://github.com/ccastro2050/proyecto_construccion_de_software4) | La **v4**: el aplicativo. Diez consultas multitabla, el tablero, la marca y la publicación | `v1` `v2` `v3` `v4` |
-
-> **Un repositorio por versión, y no uno con cuatro ramas**, a propósito: así
-> cada uno se puede abrir y correr tal como quedó el día que se cerró. El
-> cuarto contiene a los otros tres —las versiones son acumulativas—, pero
-> verlos aparte deja ver **qué entró en cada paso**.
+> ### 👉 [proyecto_construccion_de_software4](https://github.com/ccastro2050/proyecto_construccion_de_software4)
 >
-> **Y no se estudian los de otros cursos.** Aplicación y Servicios Web
-> (ITM), Diseño de Software y Paradigmas construyen **el mismo sistema**
-> cambiando el motor o el front; sus repositorios sirven para comparar
-> tecnologías, no para copiar la ruta de este curso. El de aquí es
-> **C# / ASP.NET Core con PostgreSQL y un front en Blazor**.
+> `bdfacturas` construido de punta a punta: la **v4** —el aplicativo, con sus
+> diez consultas multitabla, el tablero, la marca y la publicación—, y
+> **dentro de él las tres versiones anteriores**, cada una cerrada con su tag:
+>
+> | Tag | Qué se ve al abrirlo |
+> |---|---|
+> | `v1` | Una rebanada vertical con capas —API y front— especificada antes de codificar, y **sin una sola clave foránea** |
+> | `v2` | Crecer SOBRE la v1 sin romperla —regresión y spec del delta—, con las foráneas, los procedimientos y el disparador |
+> | `v3` | El control de acceso: contraseña con hash, token, **401 sin token y 403 sin permiso** |
+> | `v4` | El aplicativo: diez consultas multitabla, el tablero, la marca y la publicación |
+>
+> Para ver una versión anterior no se busca otro repositorio: se abre **ese
+> tag**. En GitHub, el selector que dice `main` arriba a la izquierda →
+> pestaña **Tags** → `v2`.
+
+> # LAS VERSIONES NO SON REPOSITORIOS
+>
+> **El proyecto de aula va en UN repositorio** —o en **DOS**, si separan el
+> backend del front, que es lo que pide la [§4](#4-los-dos-repositorios-y-las-reglas-de-github):
+> uno para la **API** y uno para el **front**—.
+>
+> **Nunca uno por versión.** Las cuatro versiones viven en el mismo
+> repositorio: se trabaja sobre `main` y al cerrar una versión se le pone su
+> **tag `vN`**. La v2 sale del `main` de la v1, y el `main` del final del
+> curso **es** la v4 —que contiene a las otras tres, porque las versiones son
+> acumulativas—.
+>
+> ```
+> su repositorio:   main ──●────────●────────●────────●──▶
+>                          │        │        │        │
+>                        tag v1   tag v2   tag v3   tag v4
+> ```
+>
+> Es exactamente lo que hace el repositorio del ejemplo de arriba.
+>
+> La tecnología de este curso es **C# / ASP.NET Core con PostgreSQL y un
+> front en Blazor**.
 
 Lo que se replica del ejemplo **es el MÉTODO, no el contenido**: la
 constitución permanente, una carpeta de specs por versión con sus
@@ -84,7 +106,6 @@ Las antiguas "entregas" ahora son **versiones** con spec kit propio:
 | **v3** | **JWT + sesiones + control de acceso por roles** + CRUD de usuario/rol/rol_usuario (solo admin) | Regresión v1-v2 + criterios + tag `v3` |
 | **v4** | Aplicativo completo: **10 consultas multitabla** (4+ tablas c/u), **dashboard**, **imagen corporativa con su manual de marca**, páginas corporativas, responsive/PWA y **publicación** en servidor gratuito | Regresión total + criterios + tag `v4` |
 
-
 #### Lo que la v2 exige, fijado aquí para que no se negocie
 
 **1 · Al menos UN disparador, funcionando y comprobable.** No «uno escrito»:
@@ -92,25 +113,87 @@ uno que se dispare. Se comprueba haciendo la operación **por la interfaz
 gráfica** y viendo que el dato cambió **sin que la API lo haya enviado**. Si
 el código manda el valor, el disparador no está demostrando nada.
 
-**2 · Las maestro-detalle de cátedras abiertas, todas.** Un **detalle** es el
-que no existe sin su padre: no se crea suelto y después se le busca a quién
-pertenece.
+**2 · Las maestro-detalle de cátedras abiertas, todas.**
 
-| Maestro | Sus detalles |
-|---|---|
-| **`catedra`** | `sesion` ← **la principal del sistema** |
-| **`sesion`** | `enlace_registro` · `registro_asistencia` |
-| **`asistente`** | `documento_asistente` · `consentimiento_datos` |
-| **`encuesta`** | `pregunta` |
-| **`pregunta`** | `opcion_pregunta` |
-| **`registro_asistencia`** | `respuesta_encuesta` |
-| **`respuesta_encuesta`** | `respuesta_item` |
-| **`programa_academico`** | `alias_programa` |
+Primero las dos palabras, porque de eso depende entender la lista:
 
-> **Y hay dos CADENAS de tres niveles** —`encuesta → pregunta → opcion_pregunta`
-> y `registro → respuesta_encuesta → respuesta_item`—, porque el detalle de un
-> detalle sigue siendo un detalle. Si se borra la encuesta, se va la cadena
-> entera.
+- **maestro** es la tabla que **existe por sí sola**: una cátedra es una
+  cátedra aunque todavía no tenga sesiones programadas;
+- **detalle** es la que **no existe sin su maestro**: una sesión es *de* una
+  cátedra. No se crea suelta y después se le busca a quién pertenece.
+
+La prueba para saber si una tabla es detalle es **una** pregunta: ¿tiene
+sentido una fila de ésta sin una fila de la otra? Si no tiene sentido, es
+detalle. Y en la base de datos eso se ve en una columna: el detalle tiene un
+`fk_` **obligatorio** que apunta a su maestro.
+
+### Las diez relaciones, una por renglón
+
+Léalas como frases. A la izquierda el **detalle**, a la derecha el **maestro**
+del que cuelga, y en medio la columna que los une:
+
+| El detalle… | …cuelga de | Por la columna | Y significa que |
+|---|---|---|---|
+| `sesion` | **`catedra`** | `fk_catedra` | **La principal del sistema.** Cada sesión es una fecha concreta *de una* cátedra |
+| `enlace_registro` | **`sesion`** | `fk_sesion` | Cada enlace de registro sirve para *una* sesión |
+| `registro_asistencia` | **`sesion`** | `fk_sesion` | Cada asistencia es la de alguien *a una* sesión |
+| `documento_asistente` | **`asistente`** | `fk_asistente` | Un documento de identidad es *de una* persona |
+| `consentimiento_datos` | **`asistente`** | `fk_asistente` | El consentimiento lo firma *una* persona |
+| `pregunta` | **`encuesta`** | `fk_encuesta` | Cada pregunta pertenece *a una* encuesta |
+| `opcion_pregunta` | **`pregunta`** | `fk_pregunta` | Las opciones son las respuestas posibles *de una* pregunta |
+| `respuesta_encuesta` | **`registro_asistencia`** | `fk_registro` | Lo que respondió *quien asistió*. Cuelga del registro, no de la encuesta |
+| `respuesta_item` | **`respuesta_encuesta`** | `fk_respuesta` | Un ítem por cada pregunta que esa persona respondió |
+| `alias_programa` | **`programa_academico`** | `fk_programa` | Los nombres alternos con que la gente escribe *un* programa |
+
+### Y así se ve el árbol completo
+
+```
+catedra                            ← maestro
+└── sesion                         ← detalle de catedra, y maestro de los dos de abajo
+    ├── enlace_registro            ← detalle
+    └── registro_asistencia        ← detalle de sesion, y maestro de lo de abajo
+        └── respuesta_encuesta     ← detalle, y maestro de lo de abajo
+            └── respuesta_item     ← detalle
+
+asistente                          ← maestro
+├── documento_asistente            ← detalle
+└── consentimiento_datos           ← detalle
+
+encuesta                           ← maestro
+└── pregunta                       ← detalle de encuesta, y maestro de lo de abajo
+    └── opcion_pregunta            ← detalle
+
+programa_academico                 ← maestro
+└── alias_programa                 ← detalle
+```
+
+### Entonces, ¿cuáles son maestros y cuáles detalles?
+
+Las tres respuestas, porque **cuatro tablas son las dos cosas a la vez** y ahí
+es donde se enreda:
+
+| | Tablas | Por qué |
+|---|---|---|
+| **Solo maestros** | `catedra` · `asistente` · `encuesta` · `programa_academico` | Existen por sí solas. Nada las obliga a colgar de otra |
+| **Maestro Y detalle** | `sesion` · `registro_asistencia` · `pregunta` · `respuesta_encuesta` | Cuelgan de alguien **y** tienen quien cuelgue de ellas. Una sesión es detalle *de* una cátedra y maestro *de* sus asistencias |
+| **Solo detalles** | `enlace_registro` · `documento_asistente` · `consentimiento_datos` · `opcion_pregunta` · `respuesta_item` · `alias_programa` | Son el final de la rama: nada cuelga de ellas |
+
+> **Y de ahí salen dos CADENAS de tres niveles**, que son las que más cuesta
+> ver:
+>
+> ```
+> encuesta             ──▶  pregunta            ──▶  opcion_pregunta
+> registro_asistencia  ──▶  respuesta_encuesta  ──▶  respuesta_item
+> ```
+>
+> **El detalle de un detalle sigue siendo un detalle.** Una opción no existe
+> sin su pregunta, que no existe sin su encuesta: si se borra la encuesta se
+> va la cadena entera. Ésa es la prueba de que son maestro-detalle y no
+> tablas sueltas que se referencian entre sí.
+>
+> Las diez columnas `fk_` de la tabla de arriba están leídas del
+> `db/init.sql` de cátedras abiertas, y cada una con la restricción que la
+> garantiza está en [`VERSION_2.md` §3](VERSION_2.md).
 
 > **Y cada una en UNA SOLA PANTALLA:** al abrir el maestro se ve su detalle
 > ahí mismo y se le agregan renglones sin salir. No un menú aparte donde haya
@@ -460,7 +543,7 @@ cobra la ventaja de ninguna.
   el stack (las opciones están en el documento de su módulo original y
   las valida el profesor).
 - **Datos iniciales**: las tablas de catálogo se siembran con los datos de
-  referencia que trae el repositorio de [cátedras abiertas](https://github.com/ccastro2050/proyecto_catedras2) — no se
+  referencia que trae el repositorio de **cátedras abiertas** — no se
   inventan, y cada fila tiene que poder decir de dónde salió.
 - **Stack**: cada equipo elige su lenguaje/framework con aprobación del
   profesor — la metodología y los contratos son los mismos en cualquier
@@ -501,7 +584,6 @@ restricción, y no una preferencia de quien programa.
 > la relación que pide el nivel AA de las WCAG para el texto, el manual debe
 > decir para qué sirve ese color y cuál se usa en su lugar. Hay un documento
 > del curso con la fórmula y las referencias: `CONCEPTOS_IDENTIDAD_VISUAL.md`.
-
 
 ## 7. Rúbrica de evaluación
 
