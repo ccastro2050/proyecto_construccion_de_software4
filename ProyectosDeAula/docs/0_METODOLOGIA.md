@@ -5,8 +5,8 @@
 > del ejemplo que construimos en clase, `bdfacturas`, cuyos cuatro
 > repositorios están en la §1.
 >
-> **Lo QUE se construye es CÁTEDRAS ABIERTAS**, y está en su propio
-> Es uno solo para todo el curso.
+> **Lo QUE se construye es CÁTEDRAS ABIERTAS**, uno solo para todo el curso:
+> no hay un proyecto por equipo.
 >
 > ### Y lo que más sube y baja la nota no es el código: es poder explicarlo
 >
@@ -17,6 +17,19 @@
 >
 > Es el criterio que cada quien responde por su cuenta, y está desarrollado
 > en la §2.2.
+
+---
+
+## 0. Qué hay en esta carpeta y para qué sirve cada cosa
+
+| | Qué es | Para qué le sirve |
+|---|---|---|
+| **`docs/0_METODOLOGIA.md`** (este documento) | Cómo se trabaja: las cuatro versiones, qué se entrega en cada una, el calendario, las reglas de Git y la rúbrica | Saber **qué** hay que hacer, **cuándo** y **cómo se califica** |
+| **`docs/conceptos/`** · 21 documentos | Los temas del curso explicados: elicitación, historias de usuario, requisitos y requisitos no funcionales, reglas de negocio, diseño de base de datos, control de acceso, arquitectura y capas, SOLID, POO, ACID, Docker, ramas y colaboración, pruebas, programación asincrónica, identidad visual, SDD y spec kit, glosario | Estudiar el tema **antes** de escribir sus propios documentos, y tener de dónde copiar el formato |
+| **`docs/dominio/`** · 17 documentos | Los documentos del sistema que se va a construir: requisitos funcionales y no funcionales, reglas de negocio, diseño de la base de datos, datos de prueba, política de errores, glosario, cronograma, manual de marca, los planes de la v1 y la v2, la sustentación del código, las fuentes, y la `elicitacion/` completa —preguntas, respuestas e historias— | Saber **qué** construir: el dominio no se adivina |
+
+En una línea: **el método está en el primero, el tema en el segundo, y el
+sistema que hay que construir en el tercero.**
 
 ---
 
