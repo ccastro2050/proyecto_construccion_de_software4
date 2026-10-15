@@ -62,19 +62,25 @@ puente** —clave primaria compuesta, dos claves foráneas—.
 **Maestro** es el que existe por sí solo. **Detalle** es el que **no existe
 sin su padre**: no se crea suelto y después se le busca a quién pertenece.
 
-Y sí, **un maestro puede tener varios detalles**. Estas son las de cátedras
-abiertas, leídas del esquema:
+Y sí, **un maestro puede tener varios detalles** — y entonces son **varias
+relaciones**, una por cada detalle, no una sola. `sesion` tiene dos detalles,
+así que son dos maestro-detalle; `asistente` tiene otros dos, y son otras dos.
 
-| Maestro | Sus detalles | Qué lo hace detalle |
-|---|---|---|
-| **`catedra`** | `sesion` | **La principal del sistema.** Una sesión es de **una** cátedra, y su número no se repite dentro de ella: `uq_sesion_reunion` |
-| **`sesion`** | `enlace_registro` · `registro_asistencia` | Un enlace y una asistencia son de **una** sesión |
-| **`asistente`** | `documento_asistente` · `consentimiento_datos` | Un documento es **de** un asistente. Sin él no significa nada |
-| **`encuesta`** | `pregunta` | Y su `orden` es único **dentro de la encuesta**: `uq_pregunta_ord` |
-| **`pregunta`** | `opcion_pregunta` | Las opciones de una pregunta cerrada: `uq_opcion_orden` |
-| **`registro_asistencia`** | `respuesta_encuesta` | La respuesta cuelga del **registro**, no de la encuesta: `uq_respuesta_registro` |
-| **`respuesta_encuesta`** | `respuesta_item` | Un ítem por pregunta respondida |
-| **`programa_academico`** | `alias_programa` | Los nombres alternos de un programa |
+**Son DIEZ relaciones entre OCHO maestros.** Una por renglón, leídas del
+esquema:
+
+| # | Maestro | Su detalle | Qué lo hace detalle |
+|---|---|---|---|
+| 1 | **`catedra`** | `sesion` | **La principal del sistema.** Una sesión es de **una** cátedra, y su número no se repite dentro de ella: `uq_sesion_reunion` |
+| 2 | **`sesion`** | `enlace_registro` | Un enlace de registro es de **una** sesión |
+| 3 | **`sesion`** | `registro_asistencia` | Una asistencia es de **una** sesión |
+| 4 | **`asistente`** | `documento_asistente` | Un documento es **de** un asistente. Sin él no significa nada |
+| 5 | **`asistente`** | `consentimiento_datos` | Un consentimiento es **de** un asistente |
+| 6 | **`encuesta`** | `pregunta` | Y su `orden` es único **dentro de la encuesta**: `uq_pregunta_ord` |
+| 7 | **`pregunta`** | `opcion_pregunta` | Las opciones de una pregunta cerrada: `uq_opcion_orden` |
+| 8 | **`registro_asistencia`** | `respuesta_encuesta` | La respuesta cuelga del **registro**, no de la encuesta: `uq_respuesta_registro` |
+| 9 | **`respuesta_encuesta`** | `respuesta_item` | Un ítem por pregunta respondida |
+| 10 | **`programa_academico`** | `alias_programa` | Los nombres alternos de un programa |
 
 > ### Y fíjese en las dos CADENAS de tres niveles
 >
