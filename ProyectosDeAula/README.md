@@ -47,6 +47,27 @@ ejemplo.
 
 ---
 
+## Los documentos del proyecto de aula
+
+| Carpeta | Qué contiene |
+|---|---|
+| [`docs/conceptos/`](docs/conceptos/) | 21 documentos conceptuales del curso |
+| [`docs/dominio/`](docs/dominio/) | 17 documentos del dominio de cátedras abiertas, incluida la [`elicitacion/`](docs/dominio/elicitacion/) |
+
+---
+
+## Lo que SÍ está aquí: el método
+
+Es lo único que los dos proyectos comparten, y por eso se guarda al lado del
+ejemplo.
+
+| Archivo | Para qué sirve |
+|---|---|
+| [`docs/0_METODOLOGIA.md`](docs/0_METODOLOGIA.md) | **Las cuatro versiones**, el calendario y la rúbrica — incluido el **20 % de interpretabilidad** desde la v2. Es lo que ordena [`0_mapa_versiones.md`](../docs/spec_kit/versiones/0_mapa_versiones.md) |
+| [`docs/VERSION_2.md`](docs/VERSION_2.md) | Qué se espera de la versión 2, criterio por criterio |
+
+---
+
 ## Y aquí está el proyecto de aula entero, para leerlo sin cambiar de repositorio
 
 Los documentos de **cátedras abiertas** están copiados aquí, en dos carpetas,

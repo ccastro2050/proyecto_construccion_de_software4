@@ -44,13 +44,12 @@ versiones adentro:
 > | `v4` | El aplicativo: diez consultas multitabla, el tablero, la marca y la publicación |
 >
 > Para ver una versión anterior no se busca otro repositorio: se abre **ese
-> tag**. En GitHub, el selector que dice `main` arriba a la izquierda →
-> pestaña **Tags** → `v2`.
+> tag**.
 
 > # LAS VERSIONES NO SON REPOSITORIOS
 >
 > **El proyecto de aula va en UN repositorio** —o en **DOS**, si separan el
-> backend del front, que es lo que pide la [§4](#4-los-dos-repositorios-y-las-reglas-de-github):
+> backend del front, que es lo que pide la §4:
 > uno para la **API** y uno para el **front**—.
 >
 > **Nunca uno por versión.** Las cuatro versiones viven en el mismo
@@ -64,8 +63,7 @@ versiones adentro:
 >                          │        │        │        │
 >                        tag v1   tag v2   tag v3   tag v4
 > ```
->
-> Es exactamente lo que hace el repositorio del ejemplo de arriba.
+
 >
 > La tecnología de este curso es **C# / ASP.NET Core con PostgreSQL y un
 > front en Blazor**.
