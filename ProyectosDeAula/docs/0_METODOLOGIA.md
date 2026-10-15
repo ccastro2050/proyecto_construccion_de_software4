@@ -439,6 +439,11 @@ Lo que no cambia es la separación entre las dos partes:
   encargado cuando los criterios de aceptación pasan).
 - Commits pequeños, frecuentes y con mensajes descriptivos en español —
   "avances" no es un mensaje.
+- **Las ramas NO se borran.** Ni después de que el PR se haya integrado, ni
+  al cerrar una versión. Cada rama queda en el repositorio con su historia:
+  de ahí sale la parte individual de la nota —el 10 % de sustentación
+  individual incluye sus commits (§2.1)—. GitHub ofrece borrar la rama al
+  aceptar el PR: **no acepten esa opción.**
 
 ```
 rama-mariana ──●──●──●──╮ PR
