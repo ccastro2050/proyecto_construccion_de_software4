@@ -26,7 +26,7 @@
 |---|---|---|
 | **`docs/0_METODOLOGIA.md`** (este documento) | Cómo se trabaja: las cuatro versiones, qué se entrega en cada una, el calendario, las reglas de Git y la rúbrica | Saber **qué** hay que hacer, **cuándo** y **cómo se califica** |
 | **`docs/conceptos/`** · 21 documentos | Los temas del curso explicados: elicitación, historias de usuario, requisitos y requisitos no funcionales, reglas de negocio, diseño de base de datos, control de acceso, arquitectura y capas, SOLID, POO, ACID, Docker, ramas y colaboración, pruebas, programación asincrónica, identidad visual, SDD y spec kit, glosario | Estudiar el tema **antes** de escribir sus propios documentos, y tener de dónde copiar el formato |
-| **`docs/dominio/`** · 17 documentos | **Los requisitos iniciales**, sacados de las conversaciones con el **profesor Hugo Nelson** —director del CIDEH, el usuario experto— antes de empezar el curso: requisitos funcionales y no funcionales, reglas de negocio, diseño de la base de datos, datos de prueba, política de errores, glosario, cronograma, manual de marca, los planes de la v1 y la v2, la sustentación del código, las fuentes, y la `elicitacion/` completa —preguntas, respuestas e historias— | **El punto de partida.** Saber qué construir: el dominio no se adivina |
+| **`docs/dominio/`** · 17 documentos | **Los requisitos iniciales**, sacados de las conversaciones con el **profesor Hugo Nelson** —director del CIDEH, el usuario experto— antes de empezar el curso: requisitos funcionales y no funcionales, reglas de negocio, diseño de la base de datos, datos de prueba, política de errores, glosario, cronograma, manual de marca, los planes de la v1 y la v2, la sustentación del código, las fuentes, y la `elicitacion/` completa —preguntas, respuestas e historias— | **El punto de partida.** Saber qué construir: el dominio no se adivina. **Son los iniciales: cada equipo los va ajustando con lo que salga de sus reuniones con el profesor Hugo Nelson** |
 
 En una línea: **el método está en el primero, el tema en el segundo, y el
 sistema que hay que construir en el tercero.**
@@ -36,6 +36,11 @@ sistema que hay que construir en el tercero.**
 **Son los requisitos iniciales del sistema**, sacados de lo que se conversó
 con el **profesor Hugo Nelson** —director del CIDEH, el usuario experto— antes
 de que empezara el curso. **De aquí se parte.**
+
+Y de aquí no se queda: **cada equipo los va ajustando** con lo que salga de
+**sus propias reuniones con el profesor Hugo Nelson**. Lo que esté en estos
+documentos y la reunión diga otra cosa, se corrige en el documento del
+equipo.
 
 El título es el que tiene cada archivo:
 
