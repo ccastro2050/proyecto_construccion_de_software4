@@ -49,7 +49,7 @@ versiones adentro:
 > # LAS VERSIONES NO SON REPOSITORIOS
 >
 > **El proyecto de aula va en UN repositorio** —o en **DOS**, si separan el
-> backend del front, que es lo que pide la §4:
+> backend del front, que es lo que admite la §4:
 > uno para la **API** y uno para el **front**—.
 >
 > **Nunca uno por versión.** Las cuatro versiones viven en el mismo
@@ -378,22 +378,27 @@ a…", **párenla**: eso es una ambigüedad de la especificación disfrazada de
 detalle de implementación, y la respuesta va a la spec — no solo al chat.
 El chat se cierra; la spec queda.
 
-## 4. Los dos repositorios (y las reglas de GitHub)
+## 4. El repositorio —uno o dos— y las reglas de GitHub
 
-El sistema son **DOS proyectos separados**, cada uno con su repositorio:
+**Pueden ser UN repositorio o DOS.** Las dos formas se aceptan:
 
-| Repositorio | Qué es | Regla de oro |
+- **uno**, con la API y el front adentro;
+- **dos**, uno para cada cosa.
+
+Lo que no cambia es la separación entre las dos partes:
+
+| Parte | Qué es | Regla de oro |
 |---|---|---|
-| `<equipo>-api` | El backend: REST + JSON, conecta a la BD | NO genera HTML |
-| `<equipo>-frontend` | La interfaz: consume la API por HTTP | NO se conecta a la BD |
+| La API (`<equipo>-api`) | El backend: REST + JSON, conecta a la BD | NO genera HTML |
+| El front (`<equipo>-frontend`) | La interfaz: consume la API por HTTP | NO se conecta a la BD |
 
-**Requisitos obligatorios de ambos repositorios:**
+**Requisitos obligatorios, sea uno o sean dos:**
 
 1. **Privados.** El código del equipo no es público.
 2. **Invitar al profesor** como colaborador desde el primer día:
    *Settings → Collaborators → Add people* → **`ccastro2050`**.
    Sin acceso del profesor, la entrega no existe.
-3. El spec kit vive en el repo de la API (`docs/spec_kit/`).
+3. El spec kit vive en `docs/spec_kit/` — del repositorio de la API si son dos, o del único si es uno.
 
 ### 4.1 El flujo de ramas (obligatorio desde la v1)
 
