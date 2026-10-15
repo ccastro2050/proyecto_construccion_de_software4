@@ -361,10 +361,10 @@ que escribir esto, en este orden, cada vez:
 
 ```powershell
 # 1. Crear la red, para que los contenedores se encuentren por su nombre
-docker network create proyecto_catedras2_default
+docker network create <equipo>-api_default
 
 # 2. postgres
-docker run -d --name catedras2-postgres --network proyecto_catedras2_default --restart unless-stopped `
+docker run -d --name <equipo>-postgres --network <equipo>-api_default --restart unless-stopped `
   -e "POSTGRES_USER=catedras" `
   -e "POSTGRES_PASSWORD=Catedras123!" `
   -e "POSTGRES_DB=catedras" `
@@ -376,7 +376,7 @@ docker run -d --name catedras2-postgres --network proyecto_catedras2_default --r
 
 # 4. Construir la imagen de api-catedras y encenderla
 docker build -t api-catedras ./api_catedras
-docker run -d --name catedras2-api --network proyecto_catedras2_default --restart unless-stopped `
+docker run -d --name <equipo>-api --network <equipo>-api_default --restart unless-stopped `
   -e "ConnectionStrings__PostgreSql=Host=postgres;Port=5432;Database=catedras;Username=catedras;Password=Catedras123!" `
   -v "${PWD}/api_catedras:/app" `
   -v /app/bin `
@@ -385,7 +385,7 @@ docker run -d --name catedras2-api --network proyecto_catedras2_default --restar
 
 # 5. Construir la imagen de front-flask y encenderla
 docker build -t front-flask ./front_flask
-docker run -d --name catedras2-front --network proyecto_catedras2_default --restart unless-stopped `
+docker run -d --name <equipo>-front --network <equipo>-api_default --restart unless-stopped `
   -e "API_CATEDRAS_URL=http://api-catedras:8039" `
   -e "CLAVE_SESION=Catedras123!Sesion" `
   -v "${PWD}/front_flask:/app" `
@@ -519,7 +519,7 @@ Porque tiene las mismas piezas que la red de una oficina. No es una metáfora:
 son los mismos componentes, hechos por software. Véalos:
 
 ```powershell
-docker network inspect proyecto_catedras2_default
+docker network inspect <equipo>-api_default
 ```
 
 `inspect` muestra la ficha completa de la red. Esto es lo que trae, y por qué
@@ -540,8 +540,8 @@ en una LAN**, igual que `www.usb.edu.co` en la de la universidad.
 #### ¿Cómo se llama la red de un proyecto?
 
 **Compose la bautiza solo**: toma el nombre de la carpeta que contiene el
-`docker-compose.yml` y le pega `_default`. La carpeta `proyecto_catedras2` produce
-la red `proyecto_catedras2_default`. Tres formas de confirmarlo:
+`docker-compose.yml` y le pega `_default`. La carpeta `<equipo>-api` produce
+la red `<equipo>-api_default`. Tres formas de confirmarlo:
 
 ```powershell
 # 1. Todas las redes del computador, una línea por cada una.
@@ -553,7 +553,7 @@ docker compose config --format json
 
 # 3. Preguntarle al contenedor en cuál red está metido. Lo de las llaves es una
 #    plantilla de Go: recorre las redes del contenedor e imprime su nombre.
-docker inspect catedras2-front --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}'
+docker inspect <equipo>-front --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}'
 ```
 
 #### Bajar una red y subir la de otro proyecto
@@ -563,7 +563,7 @@ contenedores dentro no se puede borrar, y Docker se lo dice:
 
 ```
 Error response from daemon: error while removing network:
-network proyecto_catedras2_default has active endpoints (name:"catedras2-front" …)
+network <equipo>-api_default has active endpoints (name:"<equipo>-front" …)
 ```
 
 Ese error no rompe nada: la red sigue viva y los contenedores también. Lo que
@@ -577,7 +577,7 @@ docker compose down
 
 # Subir el OTRO: cambiarse a su carpeta y levantarlo. Ahí Compose le crea a
 # ÉL su propia red, con el nombre de ESA carpeta.
-cd ..\proyecto_catedras2
+cd ..\<equipo>-api
 docker compose up -d
 ```
 
@@ -612,7 +612,7 @@ flowchart LR
         apiA -->|"Host=postgres"| dbA
     end
 
-    subgraph redB["Red: proyecto_catedras2_default"]
+    subgraph redB["Red: <equipo>-api_default"]
         direction TB
         frontB["front-flask<br/>:8040"]
         apiB["api-catedras<br/>:8039"]
@@ -671,7 +671,7 @@ flowchart LR
         apiA -->|"mariadb:3306<br/>POR EL NOMBRE"| dbA
     end
 
-    subgraph redB["Red: proyecto_catedras2_default"]
+    subgraph redB["Red: <equipo>-api_default"]
         direction TB
         frontB["front-php<br/>:8084"]
         apiB["api-facturas<br/>:8086"]

@@ -240,7 +240,7 @@ así que no hay método que enrutar. La imposibilidad está **en el tipo**, y un
 ```mermaid
 flowchart TD
     subgraph HOST["Máquina del usuario · Docker Desktop"]
-      subgraph RED["red catedras2_default · DNS interno"]
+      subgraph RED["red <equipo>-api_default · DNS interno"]
         F["front-flask"]
         A["api-catedras"]
         D[("postgres")]

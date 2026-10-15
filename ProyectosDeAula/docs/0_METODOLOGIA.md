@@ -6,7 +6,7 @@
 > repositorios están en la §1.
 >
 > **Lo QUE se construye es CÁTEDRAS ABIERTAS**, y está en su propio
-> repositorio: **proyecto_catedras2**. Es uno solo para todo el curso.
+> Es uno solo para todo el curso.
 >
 > ### Y lo que más sube y baja la nota no es el código: es poder explicarlo
 >

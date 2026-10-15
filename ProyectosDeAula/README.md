@@ -92,6 +92,3 @@ lea la vieja.
 > aplica se puedan leer uno junto al otro, en un mismo sitio, sin cambiar de
 > repositorio a mitad de una clase.
 >
-> La copia **se actualiza desde `proyecto_catedras2`**, que es donde esos
-> documentos se escriben. Si los dos difieren, el que manda es el del
-> repositorio de cátedras.
